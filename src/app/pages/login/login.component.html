@@ -1,0 +1,30 @@
+<h1> Login </h1>
+
+<form [formGroup]="form"  (ngSubmit)="onSubmit()" >
+  <div>
+    <input type="text" placeholder="Email" formControlName="email" required>
+    @if (form.controls.email.errors) {
+      <div class="invalid-feedback">
+        @if (form.controls.email.errors['required']) {
+          <div>Email is required</div>
+        }
+      </div>
+    }
+  </div>
+  <div>
+    <input type="password" placeholder="Password" formControlName="password" required>
+    @if (form.controls.password.errors) {
+      <div class="invalid-feedback">
+        @if (form.controls.password.errors['required']) {
+          <div>Email is required</div>
+        }
+      </div>
+    }
+  </div>
+  <div>
+    <button type="submit" routerLink="initial-page" [disabled]="!form.valid">Sign In</button>
+  </div>
+</form>
+
+<button type="button" routerLink="register">Não possui conta</button>
+<button type="button" (click)="loginWithGoogle()">Login With Google</button>
