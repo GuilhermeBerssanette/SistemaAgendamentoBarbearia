@@ -33,6 +33,8 @@ export class RegisterComponent {
 
     this.authService.register(rawForm.email, rawForm.password);
 
+    this.router.navigate(['/login']).then();
+
   }
 
 }

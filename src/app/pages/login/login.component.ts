@@ -3,7 +3,7 @@ import {Component, inject} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Router, RouterLink} from "@angular/router";
-import {signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, Auth, user} from "@angular/fire/auth";
+import {signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, Auth} from "@angular/fire/auth";
 
 @Component({
   selector: 'app-login',
@@ -39,7 +39,7 @@ export class LoginComponent {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        this.router.navigate(['/initial-page']).then();
         // ...
       })
       .catch((error) => {
@@ -55,26 +55,12 @@ export class LoginComponent {
       signInWithPopup(this.auth, this.provider).then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         // this.router.navigate(['/', 'register']);
-        console.log(credential)
-        return credential;
+        // console.log(credential)
+        // return credential;
+        this.router.navigate(['/initial-page']).then();
       })
     }
   }
 
 
-// canActivate = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-//   const authPipeFactory = next.data['authGuardPipe'] as AuthPipeGenerator || (() => loggedIn);
-//   return user(this.auth).pipe(
-//     take(1),
-//     authPipeFactory(next, state),
-//     map(can => {
-//       if (typeof can === 'boolean') {
-//         return can;
-//       } else if (Array.isArray(can)) {
-//         return this.router.createUrlTree(can);
-//       } else {
-//         return this.router.parseUrl(can);
-//       }
-//     })
-//   );
-// }
+
