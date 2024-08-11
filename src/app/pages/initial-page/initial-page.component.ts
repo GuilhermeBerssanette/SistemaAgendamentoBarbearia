@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import {ModalFilterComponent} from "../modals/modal-filter/modal-filter.component";
 import { MatDialog } from '@angular/material/dialog';
+import {RouterLink} from "@angular/router";
 
 
 @Component({
   selector: 'app-initial-page',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './initial-page.component.html',
   styleUrl: './initial-page.component.scss'
 })
