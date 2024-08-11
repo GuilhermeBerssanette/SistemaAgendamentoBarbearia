@@ -8,6 +8,8 @@ import {provideHttpClient, withFetch} from "@angular/common/http";
 import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
 import {environment} from "../environments/environment";
 import {getAuth, provideAuth} from "@angular/fire/auth";
+import {provideFirestore} from "@angular/fire/firestore";
+import {getFirestore} from "@angular/fire/firestore";
 
 
 
@@ -17,5 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
     ]}

@@ -6,5 +6,5 @@ import {InitialPageComponent} from "./pages/initial-page/initial-page.component"
 export const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'register', component: RegisterComponent },
-  {path: 'initial-page', component: InitialPageComponent, }
+  {path: 'initial-page', component: InitialPageComponent, },
 ];
