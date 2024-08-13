@@ -1,0 +1,25 @@
+---
+version: '3.9'
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agendamento-barbearia
+    ports:
+      - "9299:9299"
+      - "9199:9199"
+      - "9099:9099"
+      - "9005:9005"
+      - "8080:8080"
+      - "5001:5001"
+      - "5050:5050"
+      - "4500:4500"
+      - "4400:4400"
+      - "4200:4200"
+      - "4000:4000"
+    volumes:
+      - "./:/home/node/app"
+    environment:
+      - NODE_ENV=development
+
