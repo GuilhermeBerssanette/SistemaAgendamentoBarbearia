@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+*{
+    background-color: #05465F;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: 'Nunito Sans', sans-serif;
+    color: #FFFFFF;
+}
+
+.color{
+    background-color: #05465F;
+}
+
+.btn {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.btn i {
+    vertical-align: text-top;
+    background-color: #028090;
+}
+
+
+.btn-outline-custom{
+    color: #000;
+    background-color: #028090;
+    border-color: #FFFFFF;
+}
+
+.btn-outline-custom:hover{
+    background-color: #028090;
+    border-color: #FFFFFF;
+}
+
+.btn-login{
+    background-color: #00A896;
+}
+
+.btn-login:hover{
+    background-color: #09685e;
+}
+
+.bg-holder{
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    max-height: 50%;
+    margin-top: 2.5em;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bg-agendamento{
+    position: absolute;
+    margin-top: 50%;
+    margin-left: 75%;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+input{
+    background-color: #028090;
+}
+
+@media (max-width: 576px) { 
+        .bg-holder {
+            padding: 0;
+            position: fixed;
+            min-height: 25%;
+            max-height: 50%;
+            margin-top: 3em;
+        }
+    
+        .containerLateral {
+            padding-top: 100px; /* Remove o padding superior */
+            margin-top: 10px; /* Suba o formulário ajustando o valor conforme necessário */
+        }
+}
+
+@media (max-width: 767.98px) { 
+    .bg-holder{
+        min-height: 20%;
+        max-height: 40%;
+        margin-top: 3.5em;
+    }
+    .containerLateral {
+        padding-top: 55px; /* Remove o padding superior */
+        margin-top: 50px; /* Suba o formulário ajustando o valor conforme necessário */
+    }
+ }
+
+ @media (max-width: 991.98px) { 
+    .bg-holder {
+        position: fixed;
+        min-height: 40vh;
+        max-height: 40vh;
+        margin-top: 4rem;
+      }
+      .containerLateral {
+        padding-top: 10rem;
+        margin-top: 5.5rem;
+      }
+ }
