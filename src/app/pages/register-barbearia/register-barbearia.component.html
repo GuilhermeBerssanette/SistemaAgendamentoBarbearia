@@ -1,0 +1,26 @@
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >
+  <div>
+    <input type="text" placeholder="Contato" formControlName="contato">
+  </div>
+  <div>
+    <input type="text" placeholder="CPF/CNPJ" formControlName="cpf">
+  </div>
+  <div>
+    <input type="text" placeholder="Endereco" formControlName="endereco">
+  </div>
+  <div>
+    <input type="text" placeholder="Email" formControlName="inscricaoEstadual">
+  </div>
+  <div>
+    <input type="text" placeholder="Email" formControlName="nomeFantasia">
+  </div>
+  <div>
+    <input type="text" placeholder="Email" formControlName="razaoSocial">
+  </div>
+
+  <div>
+    <button type="submit">Sign In</button>
+  </div>
+</form>
