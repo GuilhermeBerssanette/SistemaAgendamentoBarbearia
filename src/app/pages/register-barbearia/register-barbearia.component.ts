@@ -5,6 +5,7 @@ import {BarbeariasService} from "../../services/barbearias.service";
 import {Router} from "@angular/router";
 import { Barbearias } from "../../interfaces/barbearias";
 
+
 @Component({
   selector: 'app-register-barbearia',
   standalone: true,
@@ -21,36 +22,66 @@ export class RegisterBarbeariaComponent {
   router = inject(Router)
 
   form = new FormGroup({
-    contato: new FormControl(''),
+    name: new FormControl(''),
     cpf: new FormControl(''),
-    endereco: new FormControl(''),
+    cnpj: new FormControl(''),
     inscricaoEstadual: new FormControl(''),
     nomeFantasia: new FormControl(''),
     razaoSocial: new FormControl(''),
+    estado: new FormControl(''),
+    cidade: new FormControl(''),
+    rua: new FormControl(''),
+    numero: new FormControl(''),
+    contato: new FormControl(''),
+    instagram: new FormControl(''),
+    facebook: new FormControl(''),
+    comodidades: new FormControl(''),
+    servicos: new FormControl(''),
   });
+
 
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue()
 
     if(
-      rawForm.contato === null ||
+      rawForm.name === null ||
       rawForm.cpf === null ||
-      rawForm.endereco === null ||
+      rawForm.cnpj === null ||
       rawForm.inscricaoEstadual === null ||
       rawForm.nomeFantasia === null ||
-      rawForm.razaoSocial === null){
+      rawForm.razaoSocial === null ||
+      rawForm.estado === null ||
+      rawForm.cidade === null ||
+      rawForm.rua === null ||
+      rawForm.numero === null ||
+      rawForm.contato === null ||
+      rawForm.instagram === null ||
+      rawForm.facebook === null ||
+      rawForm.comodidades === null ||
+      rawForm.servicos === null
+      ){
       return;
     }
 
     const barbeariaData: Barbearias = {
-      contato: rawForm.contato,
+      name: rawForm.name,
       cpf: rawForm.cpf,
-      endereco: rawForm.endereco,
+      cnpj: rawForm.cnpj,
       inscricaoEstadual: rawForm.inscricaoEstadual,
       nomeFantasia: rawForm.nomeFantasia,
-      razaoSocial: rawForm.razaoSocial
+      razaoSocial: rawForm.razaoSocial,
+      estado: rawForm.estado,
+      cidade: rawForm.cidade,
+      rua: rawForm.rua,
+      numero: rawForm.numero,
+      contato: rawForm.contato,
+      instagram: rawForm.instagram,
+      facebook: rawForm.facebook,
+      comodidades: rawForm.comodidades,
+      servicos: rawForm.servicos
     };
+
 
     this.barbeariasService.addBarbearia(barbeariaData).then(() => {
       // console.log('Barbearia cadastrada com sucesso!');
