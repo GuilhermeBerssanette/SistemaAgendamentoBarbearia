@@ -1,44 +1,77 @@
 
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+
   <div>
     <input type="text" placeholder="name" formControlName="name">
   </div>
+
   <div>
     <input type="text" placeholder="CPF" formControlName="cpf">
+    <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
+      <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
+      <small *ngIf="form.get('cpf')?.errors?.['invalidCpfFormat']">Formato do CPF inválido. Use xxx.xxx.xxx-xx.</small>
+      <small *ngIf="form.get('cpf')?.errors?.['invalidCpf']">CPF inválido.</small>
+    </div>
   </div>
+
   <div>
     <input type="text" placeholder="CNPJ" formControlName="cnpj">
+    <div *ngIf="form.get('cnpj')?.invalid && (form.get('cnpj')?.dirty || form.get('cnpj')?.touched)">
+      <small *ngIf="form.get('cnpj')?.errors?.['required']">CNPJ é obrigatório.</small>
+      <small *ngIf="form.get('cnpj')?.errors?.['invalidCnpjFormat']">Formato do CNPJ inválido. Use xx.xxx.xxx/xxxx-xx.</small>
+      <small *ngIf="form.get('cnpj')?.errors?.['invalidCnpj']">CNPJ inválido.</small>
+    </div>
   </div>
+
   <div>
     <input type="text" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
   </div>
+
   <div>
     <input type="text" placeholder="Nome Fantasia" formControlName="nomeFantasia">
   </div>
+
   <div>
     <input type="text" placeholder="Razão Social" formControlName="razaoSocial">
   </div>
+
   <div>
     <input type="text" placeholder="Estado" formControlName="estado">
   </div>
+
   <div>
     <input type="text" placeholder="Cidade" formControlName="cidade">
   </div>
+
   <div>
     <input type="text" placeholder="Rua" formControlName="rua">
   </div>
+
   <div>
     <input type="text" placeholder="Numero" formControlName="numero">
   </div>
+
   <div>
-    <input type="text" placeholder="Contato" formControlName="contato">
+    <input type="text" placeholder="Contato" formControlName="contato" />
+    <div *ngIf="form.get('contato')?.invalid && (form.get('contato')?.dirty || form.get('contato')?.touched)">
+      <small *ngIf="form.get('contato')?.errors?.['required']">Contato é obrigatório.</small>
+      <small *ngIf="form.get('contato')?.errors?.['invalidContato']">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
+    </div>
   </div>
   <div>
+
     <input type="text" placeholder="Instagram" formControlName="instagram">
+    <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
+      <small *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">O URL do Instagram é inválido. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
+    </div>
   </div>
+
   <div>
     <input type="text" placeholder="Facebook" formControlName="facebook">
+    <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
+      <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+    </div>
   </div>
 
   <div>
@@ -56,8 +89,7 @@
     </mat-form-field>
   </div>
 
-
   <div>
-    <button type="submit">Cadastrar</button>
+    <button type="submit" [disabled]="!form.valid">Cadastrar</button>
   </div>
 </form>
