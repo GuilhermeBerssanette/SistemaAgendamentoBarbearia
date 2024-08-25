@@ -5,13 +5,25 @@ import {BarbeariasService} from "../../services/barbearias.service";
 import {Router} from "@angular/router";
 import { Barbearias } from "../../interfaces/barbearias";
 
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {NgForOf, NgIf} from "@angular/common";
+import {MatOptionModule} from "@angular/material/core";
 
 @Component({
   selector: 'app-register-barbearia',
   standalone: true,
-    imports: [
-        ReactiveFormsModule
-    ],
+  imports: [
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatFormFieldModule, // Import the MatFormFieldModule
+    MatSelectModule, // Import the MatSelectModule
+    MatOptionModule, // Import the MatOptionModule
+    NgIf,
+    NgForOf
+
+  ],
   templateUrl: './register-barbearia.component.html',
   styleUrl: './register-barbearia.component.scss'
 })
@@ -20,6 +32,8 @@ export class RegisterBarbeariaComponent {
   http = inject(HttpClient);
   barbeariasService = inject(BarbeariasService)
   router = inject(Router)
+
+  comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'não sei o que', 'não sei o que lá'];
 
   form = new FormGroup({
     name: new FormControl(''),
@@ -36,7 +50,6 @@ export class RegisterBarbeariaComponent {
     instagram: new FormControl(''),
     facebook: new FormControl(''),
     comodidades: new FormControl(''),
-    servicos: new FormControl(''),
   });
 
 
@@ -58,8 +71,7 @@ export class RegisterBarbeariaComponent {
       rawForm.contato === null ||
       rawForm.instagram === null ||
       rawForm.facebook === null ||
-      rawForm.comodidades === null ||
-      rawForm.servicos === null
+      rawForm.comodidades === null
       ){
       return;
     }
@@ -79,7 +91,6 @@ export class RegisterBarbeariaComponent {
       instagram: rawForm.instagram,
       facebook: rawForm.facebook,
       comodidades: rawForm.comodidades,
-      servicos: rawForm.servicos
     };
 
 

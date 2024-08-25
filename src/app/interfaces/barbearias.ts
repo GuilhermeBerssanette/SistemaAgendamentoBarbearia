@@ -14,7 +14,6 @@ export interface Barbearias {
   instagram: string,
   facebook: string,
   comodidades: string,
-  servicos: string
 
 }
 

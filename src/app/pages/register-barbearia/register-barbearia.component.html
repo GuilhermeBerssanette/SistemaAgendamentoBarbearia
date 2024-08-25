@@ -40,14 +40,24 @@
   <div>
     <input type="text" placeholder="Facebook" formControlName="facebook">
   </div>
-  <div>
-    <input type="text" placeholder="Comodidades" formControlName="comodidades">
-  </div>
-  <div>
-    <input type="text" placeholder="Serviços" formControlName="servicos">
-  </div>
 
   <div>
-    <button type="submit">Sign In</button>
+    <mat-form-field>
+      <mat-label>Comodidades</mat-label>
+      <mat-select formControlName="comodidades" multiple>
+        <mat-select-trigger>
+          {{form.controls['comodidades'].value?.[0] || ''}}
+          <span *ngIf="(form.controls['comodidades'].value?.length || 0) > 1" class="example-additional-selection">
+            (+{{(form.controls['comodidades'].value?.length || 0) - 1}} {{form.controls['comodidades'].value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{comodidade}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <div>
+    <button type="submit">Cadastrar</button>
   </div>
 </form>
