@@ -80,6 +80,13 @@ input.form-control.form-control-lg{
   background-color:  var(--input-color, transparent);
 }
 
+.iconGoogle{
+  cursor: pointer;
+  display: flex;
+  justify-content: center; /* Alinha horizontalmente */
+  align-items: center;
+}
+
 @media (max-width: 576px) {
         .bg-holder {
             padding: 0;
