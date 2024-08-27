@@ -61,10 +61,11 @@
 
 
           <!-- Logar com o tio google-->
-           <button class="btn btn-lg btn-outline-secondary btn-outline-custom btn-lg w-100 color"  type="button" (click)="loginWithGoogle()" >
-            <i class="bi bi-google"></i>Login com o Google
-           </button>
+          <div class="iconGoogle">
+            <img src="/assets/LogoGoogle.svg" style="height: 35px; width: 35px; margin-right: 0.2rem;" (click)="loginWithGoogle()" alt=""><small>Continuar com o Google</small>
+          </div>
           <!-- /Logar com o tio google-->
+
 
           <div class="text-center mt-1">
             <small>Não tem conta? <a routerLink="register" href="#" class="fw-bold">Criar conta</a></small>
