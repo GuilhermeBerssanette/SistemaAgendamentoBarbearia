@@ -1,0 +1,128 @@
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >
+
+  <div>
+    <input type="text" placeholder="Nome" formControlName="name">
+    <div *ngIf="form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)">
+      <small *ngIf="form.get('name')?.errors?.['required']">Nome é obrigatório.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="CPF" formControlName="cpf">
+    <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
+      <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
+      <small *ngIf="form.get('cpf')?.errors?.['invalidCpfFormat']">Formato do CPF inválido. Use xxx.xxx.xxx-xx.</small>
+      <small *ngIf="form.get('cpf')?.errors?.['invalidCpf']">CPF inválido.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="CNPJ" formControlName="cnpj">
+    <div *ngIf="form.get('cnpj')?.invalid && (form.get('cnpj')?.dirty || form.get('cnpj')?.touched)">
+      <small *ngIf="form.get('cnpj')?.errors?.['required']">CNPJ é obrigatório.</small>
+      <small *ngIf="form.get('cnpj')?.errors?.['invalidCnpjFormat']">Formato do CNPJ inválido. Use xx.xxx.xxx/xxxx-xx.</small>
+      <small *ngIf="form.get('cnpj')?.errors?.['invalidCnpj']">CNPJ inválido.</small>
+    </div>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado" (selectionChange)="onStateChange($event.value)">
+        <mat-option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</mat-option>
+        <!--        <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>-->
+      </mat-select>
+
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Cidade</mat-label>
+      <mat-select formControlName="cidade">
+        <mat-option *ngFor="let cidade of cidadesList" [value]="cidade.nome">{{ cidade.nome }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <div>
+    <input type="text" placeholder="Rua" formControlName="rua">
+    <div *ngIf="form.get('rua')?.invalid && (form.get('rua')?.dirty || form.get('rua')?.touched)">
+      <small *ngIf="form.get('rua')?.errors?.['required']">Rua é obrigatória.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Numero" formControlName="numero">
+    <div *ngIf="form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)">
+      <small *ngIf="form.get('numero')?.errors?.['required']">Número é obrigatório.</small>
+      <small *ngIf="form.get('numero')?.errors?.['invalidNumber']">Só são aceitos números</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
+    <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
+      <small *ngIf="form.get('inscricaoEstadual')?.errors?.['required']">Inscrição Estadual é obrigatória.</small>
+      <small *ngIf="form.get('inscricaoEstadual')?.errors?.['invalidIeFormat']">{{ getIeFormatErrorMessage() }}</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Nome Fantasia" formControlName="nomeFantasia">
+    <div *ngIf="form.get('nomeFantasia')?.invalid && (form.get('nomeFantasia')?.dirty || form.get('nomeFantasia')?.touched)">
+      <small *ngIf="form.get('nomeFantasia')?.errors?.['required']">Nome Fantasia é obrigatório.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Razão Social" formControlName="razaoSocial">
+    <div *ngIf="form.get('razaoSocial')?.invalid && (form.get('razaoSocial')?.dirty || form.get('razaoSocial')?.touched)">
+      <small *ngIf="form.get('razaoSocial')?.errors?.['required']">Razão Social é obrigatório.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Contato" formControlName="contato" />
+    <div *ngIf="form.get('contato')?.invalid && (form.get('contato')?.dirty || form.get('contato')?.touched)">
+      <small *ngIf="form.get('contato')?.errors?.['required']">Contato é obrigatório.</small>
+      <small *ngIf="form.get('contato')?.errors?.['invalidContato']">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
+    </div>
+  </div>
+  <div>
+
+    <input type="text" placeholder="Instagram" formControlName="instagram">
+    <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
+      <small *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">O URL do Instagram é inválido. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Facebook" formControlName="facebook">
+    <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
+      <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+    </div>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Comodidades</mat-label>
+      <mat-select formControlName="comodidades" multiple>
+        <mat-select-trigger>
+          {{form.controls['comodidades'].value?.[0] || ''}}
+          <span *ngIf="(form.controls['comodidades'].value?.length || 0) > 1" class="example-additional-selection">
+            (+{{(form.controls['comodidades'].value?.length || 0) - 1}} {{form.controls['comodidades'].value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{comodidade}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="!form.valid">Cadastrar</button>
+  </div>
+</form>
