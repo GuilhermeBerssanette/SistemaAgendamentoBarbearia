@@ -3,7 +3,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" >
 
   <div>
-    <input type="text" placeholder="name" formControlName="name">
+    <input type="text" placeholder="Nome" formControlName="name">
+    <div *ngIf="form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)">
+      <small *ngIf="form.get('name')?.errors?.['required']">Nome é obrigatório.</small>
+    </div>
   </div>
 
   <div>
@@ -25,31 +28,61 @@
   </div>
 
   <div>
-    <input type="text" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado" (selectionChange)="onStateChange($event.value)">
+        <mat-option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</mat-option>
+        <!--        <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>-->
+      </mat-select>
+
+    </mat-form-field>
   </div>
 
   <div>
-    <input type="text" placeholder="Nome Fantasia" formControlName="nomeFantasia">
+    <mat-form-field>
+      <mat-label>Cidade</mat-label>
+      <mat-select formControlName="cidade">
+        <mat-option *ngFor="let cidade of cidadesList" [value]="cidade.nome">{{ cidade.nome }}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
-  <div>
-    <input type="text" placeholder="Razão Social" formControlName="razaoSocial">
-  </div>
-
-  <div>
-    <input type="text" placeholder="Estado" formControlName="estado">
-  </div>
-
-  <div>
-    <input type="text" placeholder="Cidade" formControlName="cidade">
-  </div>
 
   <div>
     <input type="text" placeholder="Rua" formControlName="rua">
+    <div *ngIf="form.get('rua')?.invalid && (form.get('rua')?.dirty || form.get('rua')?.touched)">
+      <small *ngIf="form.get('rua')?.errors?.['required']">Rua é obrigatória.</small>
+    </div>
   </div>
 
   <div>
     <input type="text" placeholder="Numero" formControlName="numero">
+    <div *ngIf="form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)">
+      <small *ngIf="form.get('numero')?.errors?.['required']">Número é obrigatório.</small>
+      <small *ngIf="form.get('numero')?.errors?.['invalidNumber']">Só são aceitos números</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
+    <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
+      <small *ngIf="form.get('inscricaoEstadual')?.errors?.['required']">Inscrição Estadual é obrigatória.</small>
+      <small *ngIf="form.get('inscricaoEstadual')?.errors?.['invalidIeFormat']">{{ getIeFormatErrorMessage() }}</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Nome Fantasia" formControlName="nomeFantasia">
+    <div *ngIf="form.get('nomeFantasia')?.invalid && (form.get('nomeFantasia')?.dirty || form.get('nomeFantasia')?.touched)">
+      <small *ngIf="form.get('nomeFantasia')?.errors?.['required']">Nome Fantasia é obrigatório.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Razão Social" formControlName="razaoSocial">
+    <div *ngIf="form.get('razaoSocial')?.invalid && (form.get('razaoSocial')?.dirty || form.get('razaoSocial')?.touched)">
+      <small *ngIf="form.get('razaoSocial')?.errors?.['required']">Razão Social é obrigatório.</small>
+    </div>
   </div>
 
   <div>

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -18,6 +18,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatOptionModule} from "@angular/material/core";
+import {MatInput} from "@angular/material/input";
+
 
 @Component({
   selector: 'app-register-barbearia',
@@ -29,19 +31,93 @@ import {MatOptionModule} from "@angular/material/core";
     MatSelectModule,
     MatOptionModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatInput
 
   ],
   templateUrl: './register-barbearia.component.html',
   styleUrl: './register-barbearia.component.scss'
 })
-export class RegisterBarbeariaComponent {
+export class RegisterBarbeariaComponent implements OnInit {
 
   http = inject(HttpClient);
   barbeariasService = inject(BarbeariasService)
   router = inject(Router)
 
   comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'Sinuca', 'TV'];
+  estadosList: any[] = [];
+  cidadesList: any[] = [];
+
+  iePatterns: { [key: string]: { pattern: RegExp, format: string } } = {
+    'AC': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
+    'DF': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
+    'MG': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
+    'AL': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'AP': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'AM': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'CE': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'MA': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'PA': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'PB': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'RR': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'SC': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'SE': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'TO': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'ES': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'GO': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'PE': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'PI': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'RN': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
+    'BA': { pattern: /^\d{8}$/, format: 'xxxxxxx' },
+    'PR': { pattern: /^\d{8}$/, format: 'xxxxxxx' },
+    'RJ': { pattern: /^\d{8}$/, format: 'xxxxxxx' },
+    'MS': { pattern: /^\d{10}$/, format: 'xxxxxxxxxx' },
+    'RS': { pattern: /^\d{10}$/, format: 'xxxxxxxxxx' },
+    'MT': { pattern: /^\d{11}$/, format: 'xxxxxxxxxxx' },
+    'SP': { pattern: /^\d{12}$/, format: 'xxxxxxxxxxxx' },
+    'RO': { pattern: /^\d{14}$/, format: 'xxxxxxxxxxxxxx' }
+  };
+
+  createIeValidator(regex: RegExp): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const ie = control.value;
+
+      if (!ie) {
+        return null;
+      }
+
+      if (!regex.test(ie)) {
+        return { invalidIeFormat: true };
+      }
+
+      return null;
+    };
+  }
+
+  updateIeValidator() {
+    const estado = this.form.controls['estado'].value;
+
+    if (typeof estado === 'string' && estado in this.iePatterns) {
+      const { pattern } = this.iePatterns[estado];
+      const ieValidator = this.createIeValidator(pattern);
+      this.form.controls['inscricaoEstadual'].setValidators([Validators.required, ieValidator]);
+    } else {
+      this.form.controls['inscricaoEstadual'].setValidators([Validators.required]);
+    }
+
+    this.form.controls['inscricaoEstadual'].updateValueAndValidity();
+  }
+
+  getIeFormatErrorMessage(): string | null {
+    const estado = this.form.controls['estado'].value;
+
+    if (typeof estado === 'string' && this.iePatterns[estado]) {
+      const { format } = this.iePatterns[estado];
+      return `Formato correto para ${estado}: ${format}`;
+    }
+
+    return null;
+  }
 
   cpfValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -98,27 +174,22 @@ export class RegisterBarbeariaComponent {
         return null;
       }
 
-      // Expressão regular para validar o formato xx.xxx.xxx/xxxx-xx
       const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
 
       if (!cnpjRegex.test(cnpj)) {
         return { invalidCnpjFormat: true };
       }
 
-      // Remove caracteres não numéricos
       const cleanedCnpj = cnpj.replace(/\D+/g, '');
 
-      // Verifica se o CNPJ tem 14 dígitos
       if (cleanedCnpj.length !== 14) {
         return { invalidCnpj: true };
       }
 
-      // Verifica se todos os dígitos são iguais
       if (/^(\d)\1+$/.test(cleanedCnpj)) {
         return { invalidCnpj: true };
       }
 
-      // Função para calcular o dígito verificador
       const calculateCheckDigit = (cnpj: string, weights: number[]) => {
         let sum = 0;
         for (let i = 0; i < weights.length; i++) {
@@ -128,20 +199,35 @@ export class RegisterBarbeariaComponent {
         return result < 2 ? 0 : 11 - result;
       };
 
-      // Pesos para o cálculo dos dígitos verificadores
       const firstWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
       const secondWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
 
-      // Verifica o primeiro dígito verificador
       const firstCheckDigit = calculateCheckDigit(cleanedCnpj, firstWeights);
       if (firstCheckDigit !== parseInt(cleanedCnpj.charAt(12))) {
         return { invalidCnpj: true };
       }
 
-      // Verifica o segundo dígito verificador
       const secondCheckDigit = calculateCheckDigit(cleanedCnpj, secondWeights);
       if (secondCheckDigit !== parseInt(cleanedCnpj.charAt(13))) {
         return { invalidCnpj: true };
+      }
+
+      return null;
+    };
+  }
+
+  numeroValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const number = control.value;
+
+      if (!number) {
+        return null;
+      }
+
+      const numberRegex = /^\d+$/;
+
+      if (!numberRegex.test(number)) {
+        return { invalidNumber: true };
       }
 
       return null;
@@ -156,7 +242,6 @@ export class RegisterBarbeariaComponent {
         return null;
       }
 
-      // Expressão regular para validar o formato (xx)xxxxx-xxxx
       const contatoRegex = /^\(\d{2}\)\d{5}-\d{4}$/;
 
       if (!contatoRegex.test(contato)) {
@@ -201,8 +286,6 @@ export class RegisterBarbeariaComponent {
     };
   }
 
-
-
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
     cpf: new FormControl('', [Validators.required, this.cpfValidator()]),
@@ -210,17 +293,39 @@ export class RegisterBarbeariaComponent {
     inscricaoEstadual: new FormControl('', [Validators.required]),
     nomeFantasia: new FormControl('', [Validators.required]),
     razaoSocial: new FormControl('', [Validators.required]),
-    estado: new FormControl(''),
-    cidade: new FormControl(''),
-    rua: new FormControl(''),
-    numero: new FormControl(''),
+    estado: new FormControl('', [Validators.required]),
+    cidade: new FormControl('', [Validators.required]),
+    rua: new FormControl('', [Validators.required]),
+    numero: new FormControl('', [Validators.required, this.numeroValidator()]),
     contato: new FormControl('', [Validators.required, this.contatoValidator()]),
     instagram: new FormControl('', [this.instagramValidator()]),
     facebook: new FormControl('', [this.facebookValidator()]),
     comodidades: new FormControl(''),
   });
 
+  ngOnInit(): void {
+    this.loadEstados();
+    this.form.controls['estado'].valueChanges.subscribe(() => this.updateIeValidator());
+  }
 
+  loadEstados() {
+    this.http.get<any[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+      .subscribe(estados => {
+        this.estadosList = estados.sort((a, b) => a.nome.localeCompare(b.nome));
+      });
+  }
+
+  onStateChange(siglaEstado: string) {
+    this.cidadesList = [];
+    this.form.controls['cidade'].setValue('');
+
+    if (siglaEstado) {
+      this.http.get<any[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${siglaEstado}/municipios`)
+        .subscribe(cidades => {
+          this.cidadesList = cidades.sort((a, b) => a.nome.localeCompare(b.nome));
+        });
+    }
+  }
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue()
@@ -261,9 +366,7 @@ export class RegisterBarbeariaComponent {
       comodidades: rawForm.comodidades,
     };
 
-
     this.barbeariasService.addBarbearia(barbeariaData).then(() => {
-      // console.log('Barbearia cadastrada com sucesso!');
       this.router.navigate(['']).then();
     })
       .catch((error) => {
@@ -271,6 +374,3 @@ export class RegisterBarbeariaComponent {
       });
   }
 }
-
-
-
