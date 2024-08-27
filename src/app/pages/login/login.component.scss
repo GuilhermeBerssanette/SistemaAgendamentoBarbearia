@@ -70,10 +70,17 @@ a:hover{
 }
 
 input{
-    background-color: var(--input-color) 
+    background-color: var(--input-color)
 }
 
-@media (max-width: 576px) { 
+input.form-control.form-control-lg{
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color:  var(--input-color, transparent);
+}
+
+@media (max-width: 576px) {
         .bg-holder {
             padding: 0;
             position: fixed;
@@ -81,14 +88,14 @@ input{
             max-height: 50%;
             margin-top: 3em;
         }
-    
+
         .containerLateral {
             padding-top: 100px; /* Remove o padding superior */
             margin-top: 10px; /* Suba o formulário ajustando o valor conforme necessário */
         }
 }
 
-@media (max-width: 767.98px) { 
+@media (max-width: 767.98px) {
     .bg-holder{
         min-height: 20%;
         max-height: 40%;
@@ -100,7 +107,7 @@ input{
     }
  }
 
- @media (max-width: 991.98px) { 
+ @media (max-width: 991.98px) {
     .bg-holder {
         position: fixed;
         min-height: 40vh;
