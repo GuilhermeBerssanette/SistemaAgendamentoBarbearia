@@ -81,41 +81,28 @@ input.form-control.form-control-lg{
 }
 
 @media (max-width: 576px) {
-        .bg-holder {
-            padding: 0;
-            position: fixed;
-            min-height: 25%;
-            max-height: 50%;
-            margin-top: 3em;
-        }
-
-        .containerLateral {
-            padding-top: 100px; /* Remove o padding superior */
-            margin-top: 10px; /* Suba o formulário ajustando o valor conforme necessário */
-        }
+  .bg-holder {
+      padding: 0;
+      position: fixed;
+      min-height: 25%;
+      max-height: 50%;
+      margin-top: 3em;
+  }
 }
 
-@media (max-width: 767.98px) {
+  @media (max-width: 767.98px) {
     .bg-holder{
-        min-height: 20%;
-        max-height: 40%;
-        margin-top: 3.5em;
+      min-height: 20%;
+      max-height: 40%;
+      margin-top: 3.5em;
     }
-    .containerLateral {
-        padding-top: 55px; /* Remove o padding superior */
-        margin-top: 50px; /* Suba o formulário ajustando o valor conforme necessário */
-    }
- }
+}
 
- @media (max-width: 991.98px) {
-    .bg-holder {
-        position: fixed;
-        min-height: 40vh;
-        max-height: 40vh;
-        margin-top: 4rem;
-      }
-      .containerLateral {
-        padding-top: 10rem;
-        margin-top: 5.5rem;
-      }
- }
+@media (max-width: 991.98px) {
+  .bg-holder {
+    position: fixed;
+    min-height: 40vh;
+    max-height: 40vh;
+    margin-top: 4rem;
+    }
+}
