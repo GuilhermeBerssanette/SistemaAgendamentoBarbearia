@@ -1,4 +1,4 @@
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 <!-- TELA LOGIN -->
   <div class="row min-vh-100 g-0 ">
     <!-- IMG <XL DEVICES-->
@@ -32,7 +32,7 @@
               }
             </div>
             <div class="mb-3">
-              <input class="form-control form-control-lg fs-6" type="text" placeholder="Digite sua senha" formControlName="email" required>
+              <input class="form-control form-control-lg fs-6" type="password" placeholder="Digite sua senha" formControlName="email" required>
               @if (form.controls.password.errors) {
                 <div class="invalid-feedback">
                   @if (form.controls.password.errors['required']) {
@@ -43,14 +43,7 @@
             </div>
 
             <!-- Lembrar de mim-->
-             <div class="input-group mb-3 d-flex justify-content-between">
-              <div class="form-check">
 
-              </div>
-              <div>
-                <small><a href="#">Recuperar senha</a></small>
-              </div>
-             </div>
             <!-- /Lembrar de mim-->
              <button class="btn btn-login btn-lg w-100 mb-3">
                   Login
@@ -59,9 +52,23 @@
            <!-- /FORM -->
 
           <!-- Logar com o tio google-->
+          <button class="btn btn-lg btnGoogle justify-content-center align-items-center w-100">
           <div class="iconGoogle">
-            <img src="/assets/LogoGoogle.svg" style="height: 35px; width: 35px; margin-right: 0.2rem;" (click)="loginWithGoogle()" alt=""><small>Continuar com o Google</small>
+            <img src="/assets/LogoGoogle.svg" style="height: 25px; width: 25px; margin-right: 0.2rem; background-color: #5F6368;" (click)="loginWithGoogle()" alt="">
+            <small (click)="loginWithGoogle()" style="background-color: #5F6368;">Continuar com o Google</small>
           </div>
+        </button>
+
+        <div class="input-group mb-1 mt-2 d-flex justify-content-between">
+          <div class="form-check">
+
+          </div>
+          <div>
+            <small><a href="#">Recuperar senha</a></small>
+          </div>
+         </div>
+
+
           <!-- /Logar com o tio google-->
 
 
