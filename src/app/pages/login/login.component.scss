@@ -34,6 +34,20 @@
     border-color: #FFFFFF;
 }
 
+/*BTN */
+
+.btnGoogle{
+  background-color: #5F6368;
+}
+
+.iconGoogle{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5F6368;
+}
+
 .btn-login{
     background-color: #00A896;
 }
@@ -80,12 +94,7 @@ input.form-control.form-control-lg{
   background-color:  var(--input-color, transparent);
 }
 
-.iconGoogle{
-  cursor: pointer;
-  display: flex;
-  justify-content: center; /* Alinha horizontalmente */
-  align-items: center;
-}
+
 
 @media (max-width: 576px) {
         .bg-holder {
