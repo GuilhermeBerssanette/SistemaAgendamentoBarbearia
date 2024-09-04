@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
-*{
+* {
     background-color: var(--primary-color);
     overflow-x: hidden;
     overflow-y: hidden;
@@ -8,6 +8,32 @@
     color: #FFFFFF;
 }
 
-.bg-holder{
-  background-color: #028090;
+.altura {
+    height: 180px;
+    background-color: #028090;
 }
+
+.bg-holder {
+    background-color: #028090;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding-right: 15px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+.linhaBranca {
+  height: 2px;
+  background-color: #ffffff;
+  position: absolute; /* A div ficará fixa na janela do navegador */
+  top: 11.1rem; /* Ajuste esta distância de acordo com o layout desejado */
+  left: 0;
+  right: 0;
+}
+
