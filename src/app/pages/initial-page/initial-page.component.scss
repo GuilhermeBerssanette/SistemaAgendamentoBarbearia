@@ -61,6 +61,7 @@ header a:hover {
 .fixedButtons {
   padding-left: 215px;
   padding-top: 5px;
+  display: blockfle;
 }
 
 .margin{
@@ -80,4 +81,15 @@ strong,p{
 
 .itens{
   background-color: #D9D9D9;
+}
+
+.profile img {
+  width: 50px; /* Defina um valor adequado para a largura */
+  height: 50px; /* Mantenha a altura igual à largura */
+  border-radius: 50%; /* Torna a imagem circular */
+}
+
+.profile {
+  justify-content: left; /* Centraliza o conteúdo, se necessário */
+  padding: 10px; /* Adicione algum preenchimento se necessário */
 }
