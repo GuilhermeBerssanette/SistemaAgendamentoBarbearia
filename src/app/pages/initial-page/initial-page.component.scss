@@ -1,0 +1,77 @@
+/* Estilos globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 10px 0; /* Ajusta o padding conforme necessário */
+}
+
+.linhaBranca {
+  height: 2px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.container {
+  max-width: 1140px; /* Limite de largura da página */
+}
+
+.color01{
+  background-color: #05465F;
+  width: 250%;
+  height: 250%;
+}
+
+.profile {
+  position: absolute;
+  border-radius: 50%; /* Torna a imagem circular */
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  left: 10px;
+  z-index: 10; /* Mantém o perfil visível sobre outros elementos */
+}
+
+.profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Torna a imagem circular */
+}
+
+.containerBtn{
+  max-width: 1140px;
+  background-color: #05465F;
+  margin: 0 auto;
+
+}
+
+.btnFilter{
+  border-radius: 10px;
+  width: 90px;
+  height: 22px;
+  margin-right: 0.5rem;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  background-color: #D9D9D9;
+}
+
+.filter-icon {
+  width: 15px; /* Ajuste o tamanho conforme necessário */
+  height: 20px; /* Mantém a proporção da imagem */
+  margin-left: 0.1rem; /* Espaço entre o texto e o ícone */
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+
+.card{
+  background-color: #D9D9D9;
+}
+
+.bgColor{
+  background-color: #05465F;
+}
