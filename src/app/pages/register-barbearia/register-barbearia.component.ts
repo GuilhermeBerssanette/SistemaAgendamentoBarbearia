@@ -20,6 +20,8 @@ import {NgForOf, NgIf} from "@angular/common";
 import {MatOptionModule} from "@angular/material/core";
 import {MatInput} from "@angular/material/input";
 
+import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
+
 
 @Component({
   selector: 'app-register-barbearia',
@@ -32,7 +34,9 @@ import {MatInput} from "@angular/material/input";
     MatOptionModule,
     NgIf,
     NgForOf,
-    MatInput
+    MatInput,
+    NgxMaskDirective,
+    NgxMaskPipe
 
   ],
   templateUrl: './register-barbearia.component.html',
@@ -47,6 +51,9 @@ export class RegisterBarbeariaComponent implements OnInit {
   comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'Sinuca', 'TV'];
   estadosList: any[] = [];
   cidadesList: any[] = [];
+
+  isPJ = false;
+  isPF = false;
 
   iePatterns: { [key: string]: { pattern: RegExp, format: string } } = {
     'AC': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
@@ -108,150 +115,6 @@ export class RegisterBarbeariaComponent implements OnInit {
     this.form.controls['inscricaoEstadual'].updateValueAndValidity();
   }
 
-  getIeFormatErrorMessage(): string | null {
-    const estado = this.form.controls['estado'].value;
-
-    if (typeof estado === 'string' && this.iePatterns[estado]) {
-      const { format } = this.iePatterns[estado];
-      return `Formato correto para ${estado}: ${format}`;
-    }
-
-    return null;
-  }
-
-  cpfValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const cpf = control.value;
-
-      if (!cpf) {
-        return null;
-      }
-
-      const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-
-      if (!cpfRegex.test(cpf)) {
-        return { invalidCpfFormat: true };
-      }
-
-      const cleanedCpf = cpf.replace(/\D+/g, '');
-
-      if (cleanedCpf.length !== 11) {
-        return { invalidCpf: true };
-      }
-
-      if (/^(\d)\1+$/.test(cleanedCpf)) {
-        return { invalidCpf: true };
-      }
-
-      const calculateCheckDigit = (cpf: string, factor: number) => {
-        let sum = 0;
-        for (let i = 0; i < factor - 1; i++) {
-          sum += parseInt(cpf.charAt(i)) * (factor - i);
-        }
-        const result = (sum * 10) % 11;
-        return result === 10 ? 0 : result;
-      };
-
-      const firstCheckDigit = calculateCheckDigit(cleanedCpf, 10);
-      if (firstCheckDigit !== parseInt(cleanedCpf.charAt(9))) {
-        return { invalidCpf: true };
-      }
-
-      const secondCheckDigit = calculateCheckDigit(cleanedCpf, 11);
-      if (secondCheckDigit !== parseInt(cleanedCpf.charAt(10))) {
-        return { invalidCpf: true };
-      }
-
-      return null;
-    };
-  }
-
-  cnpjValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const cnpj = control.value;
-
-      if (!cnpj) {
-        return null;
-      }
-
-      const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
-
-      if (!cnpjRegex.test(cnpj)) {
-        return { invalidCnpjFormat: true };
-      }
-
-      const cleanedCnpj = cnpj.replace(/\D+/g, '');
-
-      if (cleanedCnpj.length !== 14) {
-        return { invalidCnpj: true };
-      }
-
-      if (/^(\d)\1+$/.test(cleanedCnpj)) {
-        return { invalidCnpj: true };
-      }
-
-      const calculateCheckDigit = (cnpj: string, weights: number[]) => {
-        let sum = 0;
-        for (let i = 0; i < weights.length; i++) {
-          sum += parseInt(cnpj.charAt(i)) * weights[i];
-        }
-        const result = sum % 11;
-        return result < 2 ? 0 : 11 - result;
-      };
-
-      const firstWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-      const secondWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-
-      const firstCheckDigit = calculateCheckDigit(cleanedCnpj, firstWeights);
-      if (firstCheckDigit !== parseInt(cleanedCnpj.charAt(12))) {
-        return { invalidCnpj: true };
-      }
-
-      const secondCheckDigit = calculateCheckDigit(cleanedCnpj, secondWeights);
-      if (secondCheckDigit !== parseInt(cleanedCnpj.charAt(13))) {
-        return { invalidCnpj: true };
-      }
-
-      return null;
-    };
-  }
-
-  numeroValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const number = control.value;
-
-      if (!number) {
-        return null;
-      }
-
-      const numberRegex = /^\d+$/;
-
-      if (!numberRegex.test(number)) {
-        return { invalidNumber: true };
-      }
-
-      return null;
-    };
-  }
-
-  contatoValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const contato = control.value;
-
-      if (!contato) {
-        return null;
-      }
-
-      const contatoRegex = /^\(\d{2}\)\d{5}-\d{4}$/;
-
-      if (!contatoRegex.test(contato)) {
-        return { invalidContato: true };
-      }
-
-      return null;
-    };
-  }
-
   instagramValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const instagramUrl = control.value;
@@ -286,26 +149,97 @@ export class RegisterBarbeariaComponent implements OnInit {
     };
   }
 
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    cpf: new FormControl('', [Validators.required, this.cpfValidator()]),
-    cnpj: new FormControl('', [Validators.required, this.cnpjValidator()]),
-    inscricaoEstadual: new FormControl('', [Validators.required]),
-    nomeFantasia: new FormControl('', [Validators.required]),
-    razaoSocial: new FormControl('', [Validators.required]),
-    estado: new FormControl('', [Validators.required]),
-    cidade: new FormControl('', [Validators.required]),
-    rua: new FormControl('', [Validators.required]),
-    numero: new FormControl('', [Validators.required, this.numeroValidator()]),
-    contato: new FormControl('', [Validators.required, this.contatoValidator()]),
-    instagram: new FormControl('', [this.instagramValidator()]),
-    facebook: new FormControl('', [this.facebookValidator()]),
-    comodidades: new FormControl(''),
-  });
+  tiktokValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const tiktokUrl = control.value;
+
+      if (!tiktokUrl) {
+        return null;
+      }
+
+      const tiktokRegex = /^https:\/\/(www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)$/;
+
+      if (!tiktokRegex.test(tiktokUrl)) {
+        return { invalidTiktokUrl: true };
+      }
+
+      return null;
+    };
+  }
+
+  twitterValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const twitterUrl = control.value;
+
+      if (!twitterUrl) {
+        return null;
+      }
+
+      const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
+
+      if (!twitterRegex.test(twitterUrl)) {
+        return { invalidTwitterUrl: true };
+      }
+
+      return null;
+    };
+  }
+
+  onTipoPessoaChange(tipo: string): void {
+    this.isPJ = tipo === 'PJ';
+    this.isPF = tipo === 'PF';
+
+    if (tipo === 'PJ') {
+      this.form.get('cnpj')?.setValidators([Validators.required]);
+      this.form.get('inscricaoEstadual')?.setValidators([Validators.required]);
+      this.form.get('cpf')?.clearValidators();
+      this.form.get('rg')?.clearValidators();
+    } else if (tipo === 'PF') {
+      this.form.get('cpf')?.setValidators([Validators.required]);
+      this.form.get('rg')?.setValidators([Validators.required]);
+      this.form.get('cnpj')?.clearValidators();
+      this.form.get('inscricaoEstadual')?.clearValidators();
+    }
+
+    // Atualizando o estado dos campos
+    this.form.get('cnpj')?.updateValueAndValidity();
+    this.form.get('inscricaoEstadual')?.updateValueAndValidity();
+    this.form.get('cpf')?.updateValueAndValidity();
+    this.form.get('rg')?.updateValueAndValidity();
+  }
 
   ngOnInit(): void {
     this.loadEstados();
     this.form.controls['estado'].valueChanges.subscribe(() => this.updateIeValidator());
+
+    this.form.get('tipoPessoa')?.valueChanges.subscribe(value => {
+      if (value === 'PJ') {
+        this.isPJ = true;
+        this.isPF = false;
+        this.form.get('cnpj')?.setValidators([Validators.required]);
+        this.form.get('cpf')?.clearValidators();
+        this.form.get('inscricaoEstadual')?.setValidators([Validators.required]);
+        this.form.get('rg')?.clearValidators();
+      } else if (value === 'PF') {
+        this.isPJ = false;
+        this.isPF = true;
+        this.form.get('cpf')?.setValidators([Validators.required]);
+        this.form.get('cnpj')?.clearValidators();
+        this.form.get('inscricaoEstadual')?.clearValidators();
+        this.form.get('rg')?.setValidators([Validators.required]);
+      } else {
+        this.isPJ = false;
+        this.isPF = false;
+        this.form.get('cpf')?.clearValidators();
+        this.form.get('cnpj')?.clearValidators();
+        this.form.get('inscricaoEstadual')?.clearValidators();
+        this.form.get('rg')?.clearValidators();
+      }
+      this.form.get('cpf')?.updateValueAndValidity();
+      this.form.get('cnpj')?.updateValueAndValidity();
+      this.form.get('inscricaoEstadual')?.updateValueAndValidity();
+      this.form.get('rg')?.updateValueAndValidity();
+    });
   }
 
   loadEstados() {
@@ -327,42 +261,88 @@ export class RegisterBarbeariaComponent implements OnInit {
     }
   }
 
+  form = new FormGroup({
+    tipoPessoa: new FormControl('', [Validators.required]),
+    cnpj: new FormControl('', []),
+    inscricaoEstadual: new FormControl('', []),
+    cpf: new FormControl('', []),
+    rg: new FormControl('', []),
+    nomeFantasia: new FormControl('', [Validators.required]),
+    razaoSocial: new FormControl('', [Validators.required]),
+    estado: new FormControl('', [Validators.required]),
+    cidade: new FormControl('', [Validators.required]),
+    rua: new FormControl('', [Validators.required]),
+    numero: new FormControl('', []),
+    celular: new FormControl('', [Validators.required]),
+    whats: new FormControl('', [Validators.required]),
+    telefone: new FormControl('', [Validators.required]),
+    instagram: new FormControl('', [this.instagramValidator()]),
+    facebook: new FormControl('', [this.facebookValidator()]),
+    email: new FormControl('', [Validators.required ,Validators.email]),
+    tiktok: new FormControl('', [this.tiktokValidator()]),
+    twitter: new FormControl('', [this.twitterValidator()]),
+    comodidades: new FormControl(''),
+  });
+
+
   onSubmit(): void {
     const rawForm = this.form.getRawValue()
 
     if(
-      rawForm.name === null ||
+      rawForm.nomeFantasia === null ||
+      rawForm.razaoSocial === null ||
+
+      rawForm.rg === null ||
       rawForm.cpf === null ||
       rawForm.cnpj === null ||
       rawForm.inscricaoEstadual === null ||
-      rawForm.nomeFantasia === null ||
-      rawForm.razaoSocial === null ||
+
       rawForm.estado === null ||
       rawForm.cidade === null ||
       rawForm.rua === null ||
       rawForm.numero === null ||
-      rawForm.contato === null ||
+
+      rawForm.email === null ||
+      rawForm.celular === null ||
+      rawForm.whats === null ||
+      rawForm.telefone === null ||
+
+
       rawForm.instagram === null ||
       rawForm.facebook === null ||
+
+      rawForm.tiktok === null ||
+      rawForm.twitter === null  ||
+
       rawForm.comodidades === null
-      ){
+    ){
       return;
     }
 
     const barbeariaData: Barbearias = {
-      name: rawForm.name,
+      nomeFantasia: rawForm.nomeFantasia,
+      razaoSocial: rawForm.razaoSocial,
+
+      rg: rawForm.rg,
       cpf: rawForm.cpf,
       cnpj: rawForm.cnpj,
       inscricaoEstadual: rawForm.inscricaoEstadual,
-      nomeFantasia: rawForm.nomeFantasia,
-      razaoSocial: rawForm.razaoSocial,
+
       estado: rawForm.estado,
       cidade: rawForm.cidade,
       rua: rawForm.rua,
       numero: rawForm.numero,
-      contato: rawForm.contato,
+
+      email: rawForm.email,
+      celular: rawForm.celular,
+      whats: rawForm.whats,
+      telefone: rawForm.telefone,
+
       instagram: rawForm.instagram,
       facebook: rawForm.facebook,
+      tiktok: rawForm.tiktok,
+      twitter: rawForm.twitter,
+
       comodidades: rawForm.comodidades,
     };
 
