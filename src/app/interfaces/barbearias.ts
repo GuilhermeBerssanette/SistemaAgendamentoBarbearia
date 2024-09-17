@@ -1,19 +1,34 @@
 export interface Barbearias {
 
-  name: string,
-  cpf: string,
-  cnpj: string,
-  inscricaoEstadual: string,
+  // Dados da barbearia
   nomeFantasia: string,
   razaoSocial: string,
+
+  // PF ou PJ
+  cpf: string,
+  cnpj: string,
+  rg: string,
+  inscricaoEstadual: string,
+
+  // Endereço
   estado: string,
   cidade: string,
   rua: string,
   numero: string,
-  contato: string,
+
+  // Contato
+  email: string,
+  celular: string,
+  whats: string,
+  telefone: string,
+
+  // Redes Sociais
   instagram: string,
   facebook: string,
-  comodidades: string,
+  tiktok: string,
+  twitter: string,
 
+  // Comodidades
+  comodidades: string,
 }
 

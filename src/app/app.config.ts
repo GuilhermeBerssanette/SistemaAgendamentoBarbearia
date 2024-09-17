@@ -10,11 +10,13 @@ import {environment} from "../environments/environment";
 import {getAuth, provideAuth} from "@angular/fire/auth";
 import {provideFirestore} from "@angular/fire/firestore";
 import {getFirestore} from "@angular/fire/firestore";
+import {provideEnvironmentNgxMask} from "ngx-mask";
 
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
+    provideEnvironmentNgxMask(),
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),

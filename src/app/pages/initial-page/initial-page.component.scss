@@ -1,5 +1,4 @@
-
-/* Estilos globais */
+/* Reseta as margens e o padding, e define box-sizing */
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +21,7 @@
   max-width: 1140px; /* Limite de largura da página */
 }
 
-.color01{
+.color01 {
   background-color: #05465F;
   width: 250%;
   height: 250%;
@@ -44,14 +43,13 @@
   border-radius: 50%; /* Torna a imagem circular */
 }
 
-.containerBtn{
+.containerBtn {
   max-width: 1140px;
   background-color: #05465F;
   margin: 0 auto;
-
 }
 
-.btnFilter{
+.btnFilter {
   border-radius: 10px;
   width: 90px;
   height: 22px;
@@ -67,92 +65,12 @@
   margin-left: 0.1rem; /* Espaço entre o texto e o ícone */
   margin-bottom: 0.2rem;
   text-align: center;
-=======
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-
-* {
-    background-color: var(--primary-color);
-    overflow-x: hidden;
-    overflow-y: hidden;
-    font-family: 'Nunito Sans', sans-serif;
-    color: #FFFFFF;
 }
 
-.altura {
-    height: 180px;
-    background-color: #028090;
-}
-
-.bg-holder {
-    background-color: #028090;
-}
-
-header a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    padding-right: 15px;
-}
-
-header a:hover {
-    text-decoration: underline;
-}
-
-.linhaBranca {
-  height: 2px;
-  background-color: #ffffff;
-  position: absolute; /* A div ficará fixa na janela do navegador */
-  top: 11.1rem; /* Ajuste esta distância de acordo com o layout desejado */
-  left: 0;
-  right: 0;
-}
-
-.btnFilters{
-  border-radius: 20px;
-  background-color: #D9D9D9;
-  color: black;
-  border: #D9D9D9;
-  height: 22px;
-  width: 91px;
-  line-height: 3px;
-}
-
-.btnFilters:hover,
-.imgFilter:hover{
-  background-color: #a9a8a8;
-}
-
-.imgFilter{
-  background-color: #D9D9D9;
-  margin-left: 4px;
-  display: inline-block;
-}
-
-.fixedButtons {
-  padding-left: 215px;
-  padding-top: 5px;
-}
-
-.margin{
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-
-.card{
+.card {
   background-color: #D9D9D9;
 }
 
-.bgColor{
+.bgColor {
   background-color: #05465F;
-=======
-  cursor: pointer;
-}
-
-strong,p{
-  color: #000000;
-  background-color: #D9D9D9;
-}
-
-.itens{
-  background-color: #D9D9D9;
 }
