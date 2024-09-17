@@ -1,166 +1,197 @@
-<div class="row min-vh-100 g-0">
-  <!-- IMG -->
-   <div class="col-lg-4 col-md-5 order-md-1 d-flex justify-content-center align-items-center">
-    <div class="position-relative m-0 p-0">
-      <img class="bg-holder py-3 px-md-5" src="/assets/Logo.svg" alt="Logo">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >
+
+
+  <!--  Dados da barbearia-->
+  <div>
+    <input type="text" placeholder="Nome Fantasia" formControlName="nomeFantasia">
+    <div *ngIf="form.get('nomeFantasia')?.invalid && (form.get('nomeFantasia')?.dirty || form.get('nomeFantasia')?.touched)">
+      <small *ngIf="form.get('nomeFantasia')?.errors?.['required']">Nome Fantasia é obrigatório.</small>
     </div>
-   </div>
-   <!-- COL-FORM -->
-      <div class="col-lg-8 col-md-12 order-md-2 d-flex align-items-center">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 col-sm-10 col-lg-8 col-xl-6 col-xxl-6">
-              <!-- FORM -->
-              <form [formGroup]="form" (ngSubmit)="onSubmit()" >
-                <!-- NOME -->
-                <div class="row g-3 mb-3">
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6" type="text" placeholder="Nome" formControlName="name">
-                      <div *ngIf="form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)">
-                        <small *ngIf="form.get('name')?.errors?.['required']">Nome é obrigatório.</small>
-                      </div>
-                  </div>
-                  <!-- CPF -->
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6" type="text" placeholder="CPF" formControlName="cpf">
-                      <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
-                        <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
-                        <small *ngIf="form.get('cpf')?.errors?.['invalidCpfFormat']">Formato do CPF inválido. Use xxx.xxx.xxx-xx.</small>
-                        <small *ngIf="form.get('cpf')?.errors?.['invalidCpf']">CPF inválido.</small>
-                      </div>
-                  </div>
-                </div>
+  </div>
 
-                <!-- CNPJ -->
-                <div class="row g-3 mb-3">
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6" type="text" placeholder="CNPJ" formControlName="cnpj">
-                    <div *ngIf="form.get('cnpj')?.invalid && (form.get('cnpj')?.dirty || form.get('cnpj')?.touched)">
-                      <small *ngIf="form.get('cnpj')?.errors?.['required']">CNPJ é obrigatório.</small>
-                      <small *ngIf="form.get('cnpj')?.errors?.['invalidCnpjFormat']">Formato do CNPJ inválido. Use xx.xxx.xxx/xxxx-xx.</small>
-                      <small *ngIf="form.get('cnpj')?.errors?.['invalidCnpj']">CNPJ inválido.</small>
-                    </div>
-                  </div>
+  <div>
+    <input type="text" placeholder="Razão Social" formControlName="razaoSocial">
+    <div *ngIf="form.get('razaoSocial')?.invalid && (form.get('razaoSocial')?.dirty || form.get('razaoSocial')?.touched)">
+      <small *ngIf="form.get('razaoSocial')?.errors?.['required']">Razão Social é obrigatório.</small>
+    </div>
+  </div>
 
-                  <!-- ESTADO -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <select id="estado" class="form-select" formControlName="estado">
-                        <option value="" disabled selected>Selecione o Estado</option>
-                        <option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
+  <div>
+    <input type="text" placeholder="Responsavel" formControlName="razaoSocial">
+  </div>
 
-                <!-- CIDADE -->
-                <div class="row g-3 mb-3">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <select class="form-select" formControlName="cidade">
-                        <option value="" disabled>Selecione a Cidade</option>
-                        <option *ngFor="let cidade of cidadesList" [value]="cidade.nome">{{ cidade.nome }}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- RUA -->
-                   <div class="col-md-6">
-                      <input class="form-control form-control-lg fs-6"type="text" placeholder="Rua" formControlName="rua">
-                      <div *ngIf="form.get('rua')?.invalid && (form.get('rua')?.dirty || form.get('rua')?.touched)">
-                        <small *ngIf="form.get('rua')?.errors?.['required']">Rua é obrigatória.</small>
-                      </div>
-                   </div>
-                </div>
 
-                <div class="row g-3 mb-3">
-                  <!-- Número -->
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6" type="text" placeholder="Numero" formControlName="numero">
-                      <div *ngIf="form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)">
-                        <small *ngIf="form.get('numero')?.errors?.['required']">Número é obrigatório.</small>
-                        <small *ngIf="form.get('numero')?.errors?.['invalidNumber']">Só são aceitos números</small>
-                      </div>
-                  </div>
-                  <!-- Insc Estadual -->
-                  <div class="col-md-6">
-                      <input class="form-control form-control-lg fs-6"type="text" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
-                      <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
-                        <small *ngIf="form.get('inscricaoEstadual')?.errors?.['required']">Inscrição Estadual é obrigatória.</small>
-                        <small *ngIf="form.get('inscricaoEstadual')?.errors?.['invalidIeFormat']">{{ getIeFormatErrorMessage() }}</small>
-                      </div>
-                  </div>
-                </div>
 
-                <div class="row g-3 mb-3">
-                  <!-- NOME FANTASIA -->
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6"type="text" placeholder="Nome Fantasia" formControlName="nomeFantasia">
-                      <div *ngIf="form.get('nomeFantasia')?.invalid && (form.get('nomeFantasia')?.dirty || form.get('nomeFantasia')?.touched)">
-                        <small *ngIf="form.get('nomeFantasia')?.errors?.['required']">Nome Fantasia é obrigatório.</small>
-                      </div>
-                  </div>
-                  <!-- Razão Social-->
-                  <div class="col-md-6 mb-3">
-                    <input class="form-control form-control-lg fs-6"type="text" placeholder="Razão Social" formControlName="razaoSocial">
-                      <div *ngIf="form.get('razaoSocial')?.invalid && (form.get('razaoSocial')?.dirty || form.get('razaoSocial')?.touched)">
-                        <small *ngIf="form.get('razaoSocial')?.errors?.['required']">Razão Social é obrigatório.</small>
-                      </div>
-                  </div>
-                </div>
+  <div>
+    <label>
+      <input type="radio" formControlName="tipoPessoa" value="PJ" (change)="onTipoPessoaChange('PJ')"> Pessoa Jurídica
+    </label>
+    <label>
+      <input type="radio" formControlName="tipoPessoa" value="PF" (change)="onTipoPessoaChange('PF')"> Pessoa Física
+    </label>
+  </div>
 
-                <div class="row g-3 mb-3">
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6" type="text" placeholder="Contato" formControlName="contato" />
-                      <div *ngIf="form.get('contato')?.invalid && (form.get('contato')?.dirty || form.get('contato')?.touched)">
-                        <small *ngIf="form.get('contato')?.errors?.['required']">Contato é obrigatório.</small>
-                        <small *ngIf="form.get('contato')?.errors?.['invalidContato']">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
-                      </div>
-                  </div>
-                  <!--INSTA-->
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6"type="text" placeholder="Instagram" formControlName="instagram">
-                      <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
-                        <small *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">O URL do Instagram é inválido. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
-                      </div>
-                  </div>
-                </div>
+  <!-- Campos para Pessoa Jurídica -->
+  <div *ngIf="isPJ">
 
-                <div class="row g-3 mb-3">
-                  <div class="col-md-6">
-                    <input class="form-control form-control-lg fs-6" type="text" placeholder="Facebook" formControlName="facebook">
-                      <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
-                        <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
-                      </div>
-                    </div>
-                  </div>
+    <div>
+      <input type="text" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
+    </div>
 
-                <div class="row g-3 mb-3">
-                  <div class="col-md-12">
-                    <mat-form-field>
-                      <mat-label>Comodidades</mat-label>
-                      <mat-select formControlName="comodidades" multiple>
-                        <mat-select-trigger>
-                          {{form.controls['comodidades'].value?.[0] || ''}}
-                          <span *ngIf="(form.controls['comodidades'].value?.length || 0) > 1" class="example-additional-selection">
-                            (+{{(form.controls['comodidades'].value?.length || 0) - 1}} {{form.controls['comodidades'].value?.length === 2 ? 'other' : 'others'}})
-                          </span>
-                        </mat-select-trigger>
-                        <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{comodidade}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div class="row g-3 mb-3">
-                  <div class="col-md-12">
-                    <button class="btn w-100 btn-lg btn-submit" type="submit" [disabled]="!form.valid">
-                      Cadastrar
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+    <div>
+      <input type="text" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
+      <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
+        <small *ngIf="form.get('inscricaoEstadual')?.errors?.['required']">Inscrição Estadual é obrigatória.</small>
       </div>
     </div>
+  </div>
+
+  <!-- Campos para Pessoa Física -->
+  <div *ngIf="isPF">
+    <div>
+      <input type="text" placeholder="CPF" formControlName="cpf" mask="000.000.000-00">
+    </div>
+    <div>
+      <input type="text" placeholder="RG" formControlName="rg" mask="00.000.000-0">
+      <div *ngIf="form.get('rg')?.invalid && (form.get('rg')?.dirty || form.get('rg')?.touched)">
+        <small *ngIf="form.get('rg')?.errors?.['required']">RG é obrigatório.</small>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--  Endereço-->
+
+  <div>
+    <mat-form-field>
+      <mat-label>UF</mat-label>
+      <mat-select formControlName="estado" (selectionChange)="onStateChange($event.value)">
+        <mat-option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</mat-option>
+        <!--        <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>-->
+      </mat-select>
+
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Cidade</mat-label>
+      <mat-select formControlName="cidade">
+        <mat-option *ngFor="let cidade of cidadesList" [value]="cidade.nome">{{ cidade.nome }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Rua" formControlName="rua">
+    <div *ngIf="form.get('rua')?.invalid && (form.get('rua')?.dirty || form.get('rua')?.touched)">
+      <small *ngIf="form.get('rua')?.errors?.['required']">Rua é obrigatória.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Numero" formControlName="numero">
+    <div *ngIf="form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)">
+      <small *ngIf="form.get('numero')?.errors?.['required']">Número é obrigatório.</small>
+      <small *ngIf="form.get('numero')?.errors?.['invalidNumber']">Só são aceitos números</small>
+    </div>
+  </div>
+
+
+
+
+
+  <!--Contato-->
+
+  <div>
+    <input type="email" placeholder="Email" formControlName="email" />
+    <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
+      <small *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
+      <small *ngIf="form.get('email')?.errors?.['email']">siga o padrão"</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Celular" formControlName="celular" mask="(00)00000-0000" />
+    <div *ngIf="form.get('celular')?.invalid && (form.get('celular')?.dirty || form.get('celular')?.touched)">
+      <small *ngIf="form.get('celular')?.errors?.['required']">Numero de celular é obrigatório.</small>
+      <small *ngIf="form.get('celular')?.errors?.['invalidContato']">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
+    </div>
+  </div>
+
+
+  <div>
+    <input type="text" placeholder="Whats" formControlName="whats" mask="(00)00000-0000" />
+    <div *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
+      <small *ngIf="form.get('whats')?.errors?.['required']">Numero do whats é obrigatório.</small>
+      <small *ngIf="form.get('whats')?.errors?.['invalidContato']">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
+    </div>
+  </div>
+
+
+  <div>
+    <input type="text" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000" />
+    <div *ngIf="form.get('telefone')?.invalid && (form.get('telefone')?.dirty || form.get('telefone')?.touched)">
+      <small *ngIf="form.get('telefone')?.errors?.['required']">Numero de telefone é obrigatório.</small>
+      <small *ngIf="form.get('telefone')?.errors?.['invalidContato']">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
+    </div>
+  </div>
+
+
+  <!--    Redes Sociais-->
+  <div>
+    <input type="text" placeholder="Instagram" formControlName="instagram">
+    <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
+      <small *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">O URL do Instagram é inválido. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Facebook" formControlName="facebook">
+    <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
+      <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Tik Tok" formControlName="tiktok" />
+    <div *ngIf="form.get('tiktok')?.invalid && (form.get('tiktok')?.dirty || form.get('tiktok')?.touched)">
+      <small *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok inválida. O formato deve ser https://www.tiktok.com/username</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Twitter" formControlName="twitter" />
+    <div *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
+      <small *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']" >URL do Twitter inválida. O formato deve ser https://www.twitter.com/username </small>
+    </div>
+  </div>
+
+
+
+
+
+  <!--  Comodidades-->
+
+  <div>
+    <mat-form-field>
+      <mat-label>Comodidades</mat-label>
+      <mat-select formControlName="comodidades" multiple>
+        <mat-select-trigger>
+          {{form.controls['comodidades'].value?.[0] || ''}}
+          <span *ngIf="(form.controls['comodidades'].value?.length || 0) > 1" class="example-additional-selection">
+  (+{{(form.controls['comodidades'].value?.length || 0) - 1}} {{form.controls['comodidades'].value?.length === 2 ? 'other' : 'others'}})
+</span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{comodidade}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <div>
+    <button type="submit" [disabled]="form.invalid">Cadastrar</button>
+  </div>
+</form>
