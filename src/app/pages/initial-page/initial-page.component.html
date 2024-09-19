@@ -21,33 +21,19 @@
       Limpar
     </button>
 
-
     <div class="row g-3">
       <div *ngFor="let barbearia of barbearias" class="col-md-6 mt-3">
-        <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm">
+        <!-- Card que redireciona para a página da barbearia -->
+        <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm"
+             (click)="goToBarbearia(barbearia.id)">
           <img ngSrc="/assets/FtPerfil.svg" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">
           <div class="itens">
             <p class="mb-1"><strong>Nome:</strong> {{ barbearia.nomeFantasia }}</p>
-            <p class="mb-1"><strong>Endereço:</strong> {{ barbearia.cidade }}, {{ barbearia.rua }}, {{barbearia.numero}}</p>
+            <p class="mb-1"><strong>Endereço:</strong> {{ barbearia.estado }}, {{ barbearia.cidade }}, {{ barbearia.rua }}, {{ barbearia.numero }}</p>
           </div>
         </div>
       </div>
     </div>
-
-<!--    <div class="row g-3">-->
-<!--      <div class="col-md-6 mt-3">-->
-<!--        <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm">-->
-<!--          <img ngSrc="/assets/FtPerfil.svg" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">-->
-<!--          <div class="itens">-->
-<!--            <p class="mb-1"><strong>Nome:</strong> John Doe</p>-->
-<!--            <p class="mb-1"><strong>Endereço:</strong> 123 Main St</p>-->
-<!--            <p class="mb-0"><strong>Avaliação:</strong>-->
-<!--              <span class="text-warning itens">★</span>-->
-<!--              <span class="text-muted itens">★★★★</span>-->
-<!--            </p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
 
   </div>
 </div>
