@@ -17,9 +17,13 @@ export class BarbeariasService {
   }
 
   async getBarbearias() {
-    const barbeariasCollection = collection(this.firestore, 'barbearia');
-    const barbeariasSnapshot = await getDocs(barbeariasCollection);
-    return barbeariasSnapshot.docs.map(doc => doc.data());
+    const barbeariaCollection = collection(this.firestore, 'barbearia');
+    const barbeariaSnapshot = await getDocs(barbeariaCollection);
+
+    return barbeariaSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
   }
 
 }
