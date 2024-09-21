@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ModalFilterComponent} from "../modals/modal-filter/modal-filter.component";
+import {ModalFilterComponent} from "./modals/modal-filter/modal-filter.component";
 import { MatDialog } from '@angular/material/dialog';
 import {HttpClient} from "@angular/common/http";
 import {Router, RouterLink} from "@angular/router";
