@@ -276,11 +276,11 @@ export class RegisterBarbeariaComponent implements OnInit {
     celular: new FormControl('', [Validators.required]),
     whats: new FormControl('', [Validators.required]),
     telefone: new FormControl('', [Validators.required]),
-    instagram: new FormControl('', [this.instagramValidator()]),
-    facebook: new FormControl('', [this.facebookValidator()]),
     email: new FormControl('', [Validators.required ,Validators.email]),
     tiktok: new FormControl('', [this.tiktokValidator()]),
     twitter: new FormControl('', [this.twitterValidator()]),
+    instagram: new FormControl('', [this.instagramValidator()]),
+    facebook: new FormControl('', [this.facebookValidator()]),
     comodidades: new FormControl(''),
   });
 
