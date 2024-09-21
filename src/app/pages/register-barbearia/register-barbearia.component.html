@@ -109,7 +109,7 @@
     <input type="email" placeholder="Email" formControlName="email" />
     <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
       <small *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
-      <small *ngIf="form.get('email')?.errors?.['email']">siga o padrão"</small>
+      <small *ngIf="form.get('email')?.errors?.['email']">siga o padrão: username&#64;gmail.com</small>
     </div>
   </div>
 
