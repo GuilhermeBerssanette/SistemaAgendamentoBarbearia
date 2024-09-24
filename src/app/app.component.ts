@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import {HttpClient} from "@angular/common/http";
-import {LoginComponent} from "./pages/login/login.component";
+import {LoginComponent} from "./pages/user/login/login.component";
 
 
 @Component({

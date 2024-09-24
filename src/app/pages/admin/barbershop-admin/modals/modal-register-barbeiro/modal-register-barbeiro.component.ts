@@ -1,6 +1,6 @@
 import {Component, Inject, inject, OnInit} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { BarbeariasService } from "../../../../services/barbearias.service";
+import { BarbeariasService } from "../../../../../services/barbearias.service";
 import { Router } from "@angular/router";
 import {
   AbstractControl,
@@ -24,7 +24,7 @@ import {NgIf} from "@angular/common";
     NgxMaskDirective,
     NgIf
   ],
-  styleUrls: ['./modal-register-barbeiro.component.scss'] // Corrigido de styleUrl para styleUrls
+  styleUrls: ['./modal-register-barbeiro.component.scss']
 })
 export class ModalRegisterBarbeiroComponent implements OnInit {
 
