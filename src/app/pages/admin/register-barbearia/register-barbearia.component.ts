@@ -9,9 +9,9 @@ import {
   ValidationErrors
 } from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {BarbeariasService} from "../../services/barbearias.service";
+import {BarbeariasService} from "../../../services/barbearias.service";
 import {Router} from "@angular/router";
-import { Barbearias } from "../../interfaces/barbearias";
+import { Barbearias } from "../../../interfaces/barbearias";
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from "@angular/material/form-field";
