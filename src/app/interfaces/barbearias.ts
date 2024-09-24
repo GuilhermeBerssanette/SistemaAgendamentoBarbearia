@@ -1,3 +1,5 @@
+import {Barbeiros} from "./barbeiros";
+
 export interface Barbearias {
 
   // Dados da barbearia
@@ -30,5 +32,8 @@ export interface Barbearias {
 
   // Comodidades
   comodidades: string,
+
+  // Barbeiros
+  barbers?: Barbeiros[]
 }
 

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {HttpClient} from "@angular/common/http";
 import {Router, RouterLink} from "@angular/router";
 import {NgForOf, NgOptimizedImage} from "@angular/common";
-import {BarbeariasService} from "../../services/barbearias.service";
+import {BarbeariasService} from "../../../services/barbearias.service";
 
 
 @Component({

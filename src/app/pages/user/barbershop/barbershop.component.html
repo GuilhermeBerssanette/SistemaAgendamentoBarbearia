@@ -1,0 +1,16 @@
+<div class="container mt-5">
+  <h1>{{ barbearia?.nomeFantasia }}</h1>
+  <p><strong>Endereço:</strong> {{ barbearia?.estado }}, {{ barbearia?.cidade }}, {{ barbearia?.rua }}, {{ barbearia?.numero }}</p>
+  <p><strong>Telefone:</strong> {{ barbearia?.telefone }}</p>
+
+
+  <h3>Barbeiros:</h3>
+  <ul *ngIf="(barbearia?.barbers ?? []).length > 0">
+    <li *ngFor="let barbeiro of barbearia?.barbers">
+      <a [routerLink]="['/barber', barbeariaId, encodeURIComponent(barbeiro.nome)]">{{ barbeiro.nome }}</a>
+
+
+    </li>
+  </ul>
+  <p *ngIf="(barbearia?.barbers ?? []).length === 0">Nenhum barbeiro cadastrado.</p>
+</div>
