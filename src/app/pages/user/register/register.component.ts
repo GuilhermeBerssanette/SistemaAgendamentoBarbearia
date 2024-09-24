@@ -1,14 +1,17 @@
 import {Component, inject} from '@angular/core';
 import {FormGroup, FormControl, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import {Router, RouterLink} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink,
+    NgOptimizedImage
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

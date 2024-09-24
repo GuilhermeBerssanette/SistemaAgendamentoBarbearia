@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
-import { LoginComponent} from "./pages/login/login.component";
-import { RegisterComponent} from "./pages/register/register.component";
-import {InitialPageComponent} from "./pages/initial-page/initial-page.component";
-import {RegisterBarbeariaComponent} from "./pages/register-barbearia/register-barbearia.component";
-import {BarbershopComponent} from "./pages/barbershop/barbershop.component";
-import {BarbershopAdminComponent} from "./pages/barbershop-admin/barbershop-admin.component";
-import {ModalRegisterBarbeiroComponent} from "./pages/barbershop-admin/modals/modal-register-barbeiro/modal-register-barbeiro.component";
+import { LoginComponent} from "./pages/user/login/login.component";
+import { RegisterComponent} from "./pages/user/register/register.component";
+import {InitialPageComponent} from "./pages/user/initial-page/initial-page.component";
+import {RegisterBarbeariaComponent} from "./pages/admin/register-barbearia/register-barbearia.component";
+import {BarbershopComponent} from "./pages/user/barbershop/barbershop.component";
+import {BarbershopAdminComponent} from "./pages/admin/barbershop-admin/barbershop-admin.component";
+import {ModalRegisterBarbeiroComponent} from "./pages/admin/barbershop-admin/modals/modal-register-barbeiro/modal-register-barbeiro.component";
+import {BarbersComponent} from "./pages/barber/barbers/barbers.component";
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -14,5 +15,8 @@ export const routes: Routes = [
   {path: 'register-barbearia', component: RegisterBarbeariaComponent},
   {path: 'barbearia/:id', component: BarbershopComponent},
   {path: 'barbearia/:id/admin', component: BarbershopAdminComponent},
-  {path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent}
+  {path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent},
+  {path: 'barber/:id/:barberIndex', component: BarbersComponent},
+  { path: 'barber/:id/:barberIndex', component: BarbersComponent },
+
 ];
