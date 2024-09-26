@@ -1,4 +1,5 @@
 export interface Barbeiros {
+  id?: string,
 
   nome: string,
   rg: string,

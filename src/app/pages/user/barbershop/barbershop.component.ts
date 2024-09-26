@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import {collection, doc, Firestore, getDoc, getDocs} from '@angular/fire/firestore';
 
 import { CommonModule } from '@angular/common';
-import {Barbearias} from "../../../interfaces/barbearias"; // importando o CommonModule
+import {Barbearias} from "../../../interfaces/barbearias";
+import {Barbeiros} from "../../../interfaces/barbeiros"; // importando o CommonModule
 
 @Component({
   selector: 'app-barbershop',
   standalone: true,
-  imports: [CommonModule, RouterLink], // garantindo que o CommonModule esteja importado
+  imports: [CommonModule, RouterLink, ], // garantindo que o CommonModule esteja importado
   templateUrl: './barbershop.component.html',
   styleUrls: ['./barbershop.component.scss']
 })
@@ -16,25 +17,34 @@ export class BarbershopComponent implements OnInit {
   barbearia?: Barbearias;
   id?: string;
   barbeariaId?: string;
+  barbers: Barbeiros[] = [];
 
   constructor(private route: ActivatedRoute, private firestore: Firestore) {}
 
   async ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id')!;
+    this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
 
-    const docRef = doc(this.firestore, `barbearia/${this.id}`);
-    const docSnap = await getDoc(docRef);
+    if (this.barbeariaId) {
+      const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
+      const barbeariaDoc = await getDoc(barbeariaDocRef);
+      if (barbeariaDoc.exists()) {
+        const barbeariaData = barbeariaDoc.data() as Barbearias;
+        this.barbearia = {
+          id: barbeariaDoc.id,
+          ...barbeariaData,
+        } as Barbearias;
+      } else {
+        console.error("Barbearia não encontrada!");
+      }
 
-    if (docSnap.exists()) {
-      const data = docSnap.data() as Barbearias;
-      this.barbearia = {
-        ...data,
-        barbers: data.barbers || []
-      };
-    } else {
-      console.log('Barbearia não encontrada');
+      const barbersCollection = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
+      const querySnapshot = await getDocs(barbersCollection);
+
+      this.barbers = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Barbeiros[];
     }
-  }
 
-  protected readonly encodeURIComponent = encodeURIComponent;
+  }
 }
