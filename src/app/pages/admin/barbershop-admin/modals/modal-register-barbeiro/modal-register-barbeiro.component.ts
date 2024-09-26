@@ -77,7 +77,6 @@ export class ModalRegisterBarbeiroComponent implements OnInit {
     };
   }
 
-  // Formulário com validações
   form = new FormGroup({
     nome: new FormControl('', [Validators.required]),
     rg: new FormControl('', [Validators.required]),
@@ -108,7 +107,6 @@ export class ModalRegisterBarbeiroComponent implements OnInit {
       return;
     }
 
-    // Garantir que nenhum valor seja null ao invés de string
     const barberData = {
       nome: this.form.get('nome')?.value ?? '',
       rg: this.form.get('rg')?.value ?? '',
@@ -129,6 +127,6 @@ export class ModalRegisterBarbeiroComponent implements OnInit {
       .catch((error) => {
         console.error('Erro ao cadastrar barbeiro: ', error);
       });
-  }
 
+  }
 }
