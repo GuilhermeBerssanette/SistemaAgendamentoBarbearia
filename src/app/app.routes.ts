@@ -16,7 +16,8 @@ export const routes: Routes = [
   {path: 'barbearia/:id', component: BarbershopComponent},
   {path: 'barbearia/:id/admin', component: BarbershopAdminComponent},
   {path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent},
-  {path: 'barber/:id/:barberIndex', component: BarbersComponent},
-  { path: 'barber/:id/:barberIndex', component: BarbersComponent },
+  {path: 'barbearia/:id/barber/:barberId', component: BarbersComponent}
+
+
 
 ];

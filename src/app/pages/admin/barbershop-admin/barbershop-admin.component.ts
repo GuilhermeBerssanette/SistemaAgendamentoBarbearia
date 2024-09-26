@@ -33,10 +33,8 @@ export class BarbershopAdminComponent implements OnInit{
   barbeariaId!: string;
 
     ngOnInit(): void {
-      console.log(this.route.snapshot.paramMap.get('id'));  // Verifique se o ID está presente
       this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
       if (!this.barbeariaId) {
-      console.error('ID da barbearia não encontrado');
     }
   }
 
