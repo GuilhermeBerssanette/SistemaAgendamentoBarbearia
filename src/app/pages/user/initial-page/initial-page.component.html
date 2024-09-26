@@ -14,17 +14,16 @@
 
 <div class="bgColor">
   <div class="containerBtn min-vh-100">
+    <input type="text" placeholder="Buscar por barbearia ou cidade..." (input)="onSearch($event)" class="form-control mt-3" />
+
     <button class="btn btnFilter ms-3 mt-3" type="button" (click)="openModalFilter()">
       Filtros
       <img ngSrc="/assets/FilterIcon.svg" class="filter-icon img-fluid" alt="Ícone de filtro" width="20" height="20">
     </button>
-    <button class="btn btnFilter mt-3" type="button">
-      Limpar
-    </button>
+    <button class="btn btnFilter mt-3" type="button" (click)="clearSearch()">Limpar</button>
 
     <div class="row g-3">
-      <div *ngFor="let barbearia of barbearias" class="col-md-6 mt-3">
-        <!-- Card que redireciona para a página da barbearia -->
+      <div *ngFor="let barbearia of filteredBarbearias" class="col-md-6 mt-3">
         <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm"
              (click)="goToBarbearia(barbearia.id)">
           <img ngSrc="/assets/FtPerfil.svg" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">
