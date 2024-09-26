@@ -1,11 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ModalFilterComponent} from "./modals/modal-filter/modal-filter.component";
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {HttpClient} from "@angular/common/http";
-import {Router, RouterLink} from "@angular/router";
-import {NgForOf, NgOptimizedImage} from "@angular/common";
-import {BarbeariasService} from "../../../services/barbearias.service";
-
+import { HttpClient } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
+import { NgForOf, NgOptimizedImage } from '@angular/common';
+import { BarbeariasService } from '../../../services/barbearias.service';
+import {ModalFilterComponent} from "./modals/modal-filter/modal-filter.component";
 
 @Component({
   selector: 'app-initial-page',
@@ -16,21 +15,37 @@ import {BarbeariasService} from "../../../services/barbearias.service";
     RouterLink
   ],
   templateUrl: './initial-page.component.html',
-  styleUrl: './initial-page.component.scss'
+  styleUrls: ['./initial-page.component.scss']
 })
-export class InitialPageComponent implements OnInit{
+export class InitialPageComponent implements OnInit {
 
   http = inject(HttpClient);
-  router = inject(Router)
+  router = inject(Router);
 
   barbearias: any[] = [];
+  filteredBarbearias: any[] = [];
 
-  constructor(public dialog: MatDialog,
-              private barbeariasService: BarbeariasService) {
-  }
+  constructor(public dialog: MatDialog, private barbeariasService: BarbeariasService) {}
 
   async ngOnInit() {
     this.barbearias = await this.barbeariasService.getBarbearias();
+    this.filteredBarbearias = this.barbearias;
+  }
+
+  onSearch(event: Event) {
+    const query = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredBarbearias = this.barbearias.filter(barbearia =>
+      this.removeAccents(barbearia.nomeFantasia.toLowerCase()).includes(this.removeAccents(query)) ||
+      this.removeAccents(barbearia.cidade.toLowerCase()).includes(this.removeAccents(query))
+    );
+  }
+
+  removeAccents(str: string) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  clearSearch() {
+    this.filteredBarbearias = this.barbearias;
   }
 
   goToBarbearia(id: string) {
@@ -43,5 +58,4 @@ export class InitialPageComponent implements OnInit{
       height: '410px'
     });
   }
-
 }
