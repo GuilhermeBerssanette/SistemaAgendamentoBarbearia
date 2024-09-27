@@ -76,9 +76,10 @@ export class BarbershopComponent implements OnInit {
       data: barber
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       console.log('O modal foi fechado');
     });
   }
+
 
 }
