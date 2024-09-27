@@ -7,8 +7,8 @@ export interface Barbeiros {
   telefone: string,
   whats: string,
   email: string,
-  instagram: string,
-  tiktok: string,
-  twitter: string,
-  facebook: string
+  instagram?: string,
+  tiktok?: string,
+  twitter?: string,
+  facebook?: string
 }
