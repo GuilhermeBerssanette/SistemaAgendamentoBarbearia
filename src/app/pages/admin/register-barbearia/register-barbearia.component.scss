@@ -1,0 +1,144 @@
+*{
+  background-color: var(--primary-color);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  font-family: 'Nunito Sans', sans-serif;
+  color: #FFFFFF;
+}
+
+.bg-holder {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  max-height: 50%;
+  margin-top: 2.5em;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media (max-width: 991px ) {
+      position: relative;
+      display: flex;
+      min-height: 10vh;
+      max-height: 19vh;
+      margin-top: 0;
+      padding-top: 0;
+  }
+  @media (max-width: 767px) { // Estilo para celulares
+    position: relative; // Para telas de celulares
+    width: 100%;
+    height: auto;
+    max-height: 19vh; // Ajuste de altura para celulares
+
+  }
+}
+
+.area-form{
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.form-field {
+  width: 100%; // Garantir que o campo ocupe toda a largura disponível
+  background-color: #f9f9f9; // Cor de fundo leve
+  border-radius: 8px; // Bordas arredondadas
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra sutil
+  transition: box-shadow 0.3s ease; // Transição suave para a sombra
+  background-color: #05465F;
+
+  // Estilização ao focar no campo
+  &:focus-within {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Aumenta a sombra ao focar
+    background-color: #fff; // Muda a cor de fundo ao focar
+  }
+}
+
+// Ajustes de margem e padding
+.mat-form-field {
+  margin-bottom: 1rem; // Espaço entre os campos
+
+}
+
+// Estilização do mat-select
+.mat-select {
+  font-size: 1rem; // Tamanho da fonte
+  padding: 10px; // Espaçamento interno
+}
+
+// Ajustes para a label
+.mat-label {
+  color: #555; // Cor da label
+  font-weight: bold; // Negrito
+}
+
+mat-form-field {
+  width: 100%;
+
+  .mat-form-field-flex {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .mat-select {
+    padding-left: 0;
+  }
+
+  .mat-select-value {
+    font-size: 1rem;
+    color: #495057;
+  }
+
+  .mat-select-placeholder {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+}
+
+.mat-form-field {
+  width: 100%;  // Certifique-se de que o campo ocupe toda a largura disponível, como um form-control.
+  background-color: #05465F;
+
+  .mat-select {
+    height: calc(1.5em + .75rem + 2px);  // Ajusta a altura do select para corresponder ao padrão do Bootstrap.
+    padding: .375rem .75rem;  // Padding semelhante ao form-control do Bootstrap.
+    border: 1px solid #05465F;  // Cor de borda semelhante ao Bootstrap.
+    border-radius: .25rem;  // Borda arredondada como o Bootstrap.
+    font-size: 1rem;
+    background-color: #05465F !important;
+    box-shadow: none;
+
+    &:focus {
+      border-color: #05465F;  // Cor de borda ao focar (cor azul do Bootstrap).
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  .mat-option {
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    color: #05465F;
+  }
+
+  .mat-label {
+    font-size: 1rem;
+    margin-bottom: .5rem;  // Margin similar à label do Bootstrap.
+    color: #05465F;  // Cor de texto similar ao Bootstrap.
+  }
+
+  .example-additional-selection {
+    font-size: 0.875rem;
+    color: #05465F;
+    margin-left: 5px;
+  }
+
+}
+
+.btnCadastro{
+  background-color: #00A896;
+  border: #00A896;
+}

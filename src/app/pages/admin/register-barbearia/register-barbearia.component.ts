@@ -36,7 +36,7 @@ import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
     NgForOf,
     MatInput,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
 
   ],
   templateUrl: './register-barbearia.component.html',
@@ -249,7 +249,9 @@ export class RegisterBarbeariaComponent implements OnInit {
       });
   }
 
-  onStateChange(siglaEstado: string) {
+  onStateChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const siglaEstado = target.value;
     this.cidadesList = [];
     this.form.controls['cidade'].setValue('');
 
