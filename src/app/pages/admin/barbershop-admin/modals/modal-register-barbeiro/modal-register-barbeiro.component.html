@@ -1,7 +1,6 @@
 <h2>Cadastro de Barbeiro</h2>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-
+<form [formGroup]="form" (ngSubmit)="addBarberToBarbearia()">
   <div>
     <input type="text" placeholder="Nome" formControlName="nome">
     <div *ngIf="form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)">
@@ -10,21 +9,21 @@
   </div>
 
   <div>
-    <input type="text" placeholder="Rg" formControlName="rg" mask="00.000.000-00">
+    <input type="text" placeholder="RG" formControlName="rg" mask="00.000.000-00">
     <div *ngIf="form.get('rg')?.invalid && (form.get('rg')?.dirty || form.get('rg')?.touched)">
       <small *ngIf="form.get('rg')?.errors?.['required']">RG é obrigatório.</small>
     </div>
   </div>
 
   <div>
-    <input type="text" placeholder="Cpf" formControlName="cpf" mask="000.000.000-00">
+    <input type="text" placeholder="CPF" formControlName="cpf" mask="000.000.000-00">
     <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
       <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
     </div>
   </div>
 
   <div>
-    <input type="email" placeholder="Email" formControlName="email" />
+    <input type="email" placeholder="Email" formControlName="email">
     <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
       <small *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
       <small *ngIf="form.get('email')?.errors?.['email']">Siga o padrão: username&#64;gmail.com</small>
@@ -39,9 +38,9 @@
   </div>
 
   <div>
-    <input type="text" placeholder="Whats" formControlName="whats" mask="(00)00000-0000">
+    <input type="text" placeholder="WhatsApp" formControlName="whats" mask="(00)00000-0000">
     <div *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
-      <small *ngIf="form.get('whats')?.errors?.['required']">Whats é obrigatório.</small>
+      <small *ngIf="form.get('whats')?.errors?.['required']">WhatsApp é obrigatório.</small>
     </div>
   </div>
 
@@ -56,24 +55,23 @@
   <div>
     <input type="text" placeholder="Facebook" formControlName="facebook">
     <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
-      <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+      <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook é inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
     </div>
   </div>
 
   <div>
-    <input type="text" placeholder="TikTok" formControlName="tiktok" />
+    <input type="text" placeholder="TikTok" formControlName="tiktok">
     <div *ngIf="form.get('tiktok')?.invalid && (form.get('tiktok')?.dirty || form.get('tiktok')?.touched)">
-      <small *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok inválida. Deve seguir o formato https://www.tiktok.com/&#64;SeuUsername</small>
+      <small *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok é inválida. Deve seguir o formato https://www.tiktok.com/&#64;SeuUsername</small>
     </div>
   </div>
 
   <div>
     <input type="text" placeholder="Twitter" formControlName="twitter">
     <div *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
-      <small *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
+      <small *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter é inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
     </div>
   </div>
 
   <button type="submit" [disabled]="form.invalid">Registrar</button>
-
 </form>

@@ -1,0 +1,28 @@
+<h2>Registrar Serviço</h2>
+<form [formGroup]="serviceForm" (ngSubmit)="registerService()">
+  <div>
+    <select formControlName="name">
+      <option *ngFor="let service of availableServices" [value]="service">{{ service }}</option>
+    </select>
+    <div *ngIf="serviceForm.controls['name'].invalid && serviceForm.controls['name'].touched">
+      Nome é obrigatório.
+    </div>
+  </div>
+
+  <div>
+    <input type="number" placeholder="Valor R$" formControlName="value" />
+    <div *ngIf="serviceForm.controls['value'].invalid && serviceForm.controls['value'].touched">
+      Valor é obrigatório.
+    </div>
+  </div>
+
+  <div>
+    <input type="number" placeholder="Duração (em minutos)" formControlName="duration" />
+    <div *ngIf="serviceForm.controls['duration'].invalid && serviceForm.controls['duration'].touched">
+      Duração é obrigatória.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="serviceForm.invalid">Cadastrar</button>
+  <button type="button" (click)="closeModal()">Cancelar</button>
+</form>
