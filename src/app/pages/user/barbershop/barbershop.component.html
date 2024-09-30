@@ -11,9 +11,8 @@
   <h3>Barbeiros:</h3>
   <ul>
     <li *ngFor="let barber of barbers">
-      <button class="btn btnFilter ms-3 mt-3" type="button" (click)="openModalInfos(barber)">infos</button>
       <a [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-        {{ barber.nome }}
+        {{ barber.nome }} <button type="button" (click)="openModalInfos(barber)">infos</button>
       </a>
     </li>
   </ul>

@@ -40,9 +40,9 @@ export class BarbershopAdminComponent implements OnInit{
 
   openModalRegisterBarber() {
     this.dialog.open(ModalRegisterBarbeiroComponent, {
-      data: { id: this.barbeariaId },
-      width: '1000px',
-      height: '510px',
+      data: { barbeariaId: this.barbeariaId },
+      width: '300px',
+      height: '300px',
     });
   }
 }
