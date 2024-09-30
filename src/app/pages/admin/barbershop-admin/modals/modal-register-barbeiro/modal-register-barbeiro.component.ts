@@ -1,24 +1,15 @@
-import {Component, Inject, inject, OnInit} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { BarbeariasService } from "../../../../../services/barbearias.service";
-import { Router } from "@angular/router";
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  ValidationErrors,
-  Validators,
-  ReactiveFormsModule
-} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Barbeiros } from '../../../../../interfaces/barbeiros';
+import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import {NgxMaskDirective} from "ngx-mask";
 import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-modal-register-barbeiro',
-  standalone: true,
   templateUrl: './modal-register-barbeiro.component.html',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     NgxMaskDirective,
@@ -26,107 +17,50 @@ import {NgIf} from "@angular/common";
   ],
   styleUrls: ['./modal-register-barbeiro.component.scss']
 })
-export class ModalRegisterBarbeiroComponent implements OnInit {
-
-  http = inject(HttpClient);
-  barbeariasService = inject(BarbeariasService);
-  router = inject(Router);
-
+export class ModalRegisterBarbeiroComponent {
+  form: FormGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { id: string },
+    @Inject(MAT_DIALOG_DATA) public data: { barbeariaId: string },
+    private firestore: Firestore,
     public dialogRef: MatDialogRef<ModalRegisterBarbeiroComponent>
-  ) {}
-
-
-
-  // Validações de URLs de redes sociais
-  instagramValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const instagramUrl = control.value;
-      if (!instagramUrl) return null;
-      const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
-      return !instagramRegex.test(instagramUrl) ? {invalidInstagramUrl: true} : null;
-    };
+  ) {
+    this.form = new FormGroup({
+      nome: new FormControl('', [Validators.required]),
+      rg: new FormControl('', [Validators.required]),
+      cpf: new FormControl('', [Validators.required]),
+      telefone: new FormControl('', [Validators.required]),
+      whats: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.email]),
+      instagram: new FormControl(''),
+      facebook: new FormControl(''),
+      tiktok: new FormControl(''),
+      twitter: new FormControl('')
+    });
   }
 
-  facebookValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const facebookUrl = control.value;
-      if (!facebookUrl) return null;
-      const facebookRegex = /^https:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9.]+\/?$/;
-      return !facebookRegex.test(facebookUrl) ? {invalidFacebookUrl: true} : null;
-    };
-  }
+  async addBarberToBarbearia() {
+    if (this.form.valid) {
+      const barberId = doc(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`).id; // Gera um novo ID para o barbeiro
 
-  tiktokValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const tiktokUrl = control.value;
-      if (!tiktokUrl) return null;
-      const tiktokRegex = /^https:\/\/(www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)$/;
-      return !tiktokRegex.test(tiktokUrl) ? {invalidTiktokUrl: true} : null;
-    };
-  }
+      const barberData: Barbeiros = {
+        id: barberId,
+        nome: this.form.value.nome,
+        rg: this.form.value.rg,
+        cpf: this.form.value.cpf,
+        telefone: this.form.value.telefone,
+        whats: this.form.value.whats,
+        email: this.form.value.email,
+        instagram: this.form.value.instagram || '',
+        facebook: this.form.value.facebook || '',
+        tiktok: this.form.value.tiktok || '',
+        twitter: this.form.value.twitter || '',
+      };
 
-  twitterValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const twitterUrl = control.value;
-      if (!twitterUrl) return null;
-      const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
-      return !twitterRegex.test(twitterUrl) ? {invalidTwitterUrl: true} : null;
-    };
-  }
-
-  form = new FormGroup({
-    nome: new FormControl('', [Validators.required]),
-    rg: new FormControl('', [Validators.required]),
-    cpf: new FormControl('', [Validators.required]),
-    telefone: new FormControl('', [Validators.required]),
-    whats: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    tiktok: new FormControl('', [this.tiktokValidator()]),
-    twitter: new FormControl('', [this.twitterValidator()]),
-    instagram: new FormControl('', [this.instagramValidator()]),
-    facebook: new FormControl('', [this.facebookValidator()]),
-  });
-
-  barbeariaId!: string;
-
-  ngOnInit(): void {
-    this.barbeariaId = this.data.id;
-
-    if (!this.barbeariaId) {
-      console.error('ID da barbearia não encontrado');
-      return;
+      const barbeiroDocRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}/barbers/${barberId}`);
+      await setDoc(barbeiroDocRef, barberData);
+      alert('Barbeiro registrado com sucesso!');
+      this.dialogRef.close(); // Fecha o modal após o registro
     }
-  }
-
-
-  onSubmit(): void {
-    if (this.form.invalid) {
-      return;
-    }
-
-    const barberData = {
-      nome: this.form.get('nome')?.value ?? '',
-      rg: this.form.get('rg')?.value ?? '',
-      cpf: this.form.get('cpf')?.value ?? '',
-      telefone: this.form.get('telefone')?.value ?? '',
-      whats: this.form.get('whats')?.value ?? '',
-      email: this.form.get('email')?.value ?? '',
-      tiktok: this.form.get('tiktok')?.value ?? '',
-      twitter: this.form.get('twitter')?.value ?? '',
-      instagram: this.form.get('instagram')?.value ?? '',
-      facebook: this.form.get('facebook')?.value ?? ''
-    };
-
-    this.barbeariasService.addBarberToBarbearia(this.barbeariaId, barberData)
-      .then(() => {
-        this.dialogRef.close();
-      })
-      .catch((error) => {
-        console.error('Erro ao cadastrar barbeiro: ', error);
-      });
-
   }
 }

@@ -1,0 +1,27 @@
+.modal {
+  display: block; /* Mostrar modal */
+  position: fixed; /* Ficar em posição fixa */
+  z-index: 1000; /* Ficar acima de outros conteúdos */
+  left: 0;
+  top: 0;
+  width: 100%; /* Largura total */
+  height: 100%; /* Altura total */
+  overflow: auto; /* Habilitar rolagem se necessário */
+  background-color: rgb(0,0,0); /* Cor de fundo */
+  background-color: rgba(0,0,0,0.4); /* Fundo com opacidade */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* Margem superior e centralização */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Largura do conteúdo do modal */
+}
+
+.close {
+  color: #aaa;
+  float: right; /* Posicionar no canto direito */
+  font-size: 28px;
+  font-weight: bold;
+}
