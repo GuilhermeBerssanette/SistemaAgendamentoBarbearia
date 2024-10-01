@@ -12,14 +12,14 @@ import { Barbeiros } from "../../../interfaces/barbeiros";
   styleUrls: ['./barbers.component.scss']
 })
 export class BarbersComponent implements OnInit {
-  barbeiro?: Barbeiros; // O barbeiro que será exibido
-  barbeariaId?: string; // O ID da barbearia
-  barberId?: string; // O ID do barbeiro
+  barbeiro?: Barbeiros;
+  barbeariaId?: string;
+  barberId?: string;
+  currentSection: string = 'info';
 
   constructor(private route: ActivatedRoute, private firestore: Firestore) {}
 
   async ngOnInit() {
-
     this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
     this.barberId = this.route.snapshot.paramMap.get('barberId')!;
 
@@ -31,5 +31,9 @@ export class BarbersComponent implements OnInit {
         this.barbeiro = docSnap.data() as Barbeiros;
       }
     }
+  }
+
+  showSection(section: string) {
+    this.currentSection = section;
   }
 }
