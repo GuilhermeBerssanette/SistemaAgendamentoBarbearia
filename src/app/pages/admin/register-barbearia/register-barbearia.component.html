@@ -32,7 +32,7 @@
             </div>
 
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Responsavel" formControlName="razaoSocial">
+              <input type="text" class="form-control" placeholder="Responsavel" formControlName="responsavel">
             </div>
 
             <div class="container radio-label">
@@ -83,9 +83,9 @@
               <div class="col-6 mb-2">
                 <div class="form-group">
                   <label for="estado">UF</label>
-                  <select class="form-select" (change)="onStateChange($event)">
-                    <option value=""></option>
-                    <option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</option>
+                  <select id="estado" class="form-select" (change)="onStateChange($event)" formControlName="estado">
+                    <option  value=""></option>
+                    <option  *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</option>
                   </select>
                 </div>
               </div>
@@ -218,8 +218,9 @@
 
             <div class="row">
               <div class="col-12 col-md-12 mb-4">
-                  <button type="submit" class="btn w-100 btnCadastro" [disabled]="form.invalid">Enviar</button>
-                <!--<button class="btn w-100 btnCadastro" type="submit">Cadastrar</button>-->
+
+                <button class="btn w-100 btnCadastro" type="submit" >Cadastrar</button>
+
               </div>
             </div>
           </div>

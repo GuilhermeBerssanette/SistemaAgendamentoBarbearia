@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <h1>{{ barbeiro?.nome }}</h1>
+
+  <div class="button-group">
+    <button (click)="showSection('info')">Tela Inicial</button>
+    <button (click)="showSection('gallery')">Galeria de Fotos</button>
+    <button (click)="showSection('reviews')">Avaliações</button>
+  </div>
+
+  <ng-container *ngIf="currentSection === 'info'">
+    <p><strong>WhatsApp:</strong> <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank">{{ barbeiro?.whats }}</a></p>
+
+    <p *ngIf="barbeiro?.instagram"><a [href]="barbeiro?.instagram" target="_blank"><strong>Instagram</strong></a></p>
+    <p *ngIf="barbeiro?.facebook"><a [href]="barbeiro?.facebook" target="_blank"><strong>Facebook</strong></a></p>
+    <p *ngIf="barbeiro?.tiktok"><a [href]="barbeiro?.tiktok" target="_blank"><strong>TikTok</strong></a></p>
+    <p *ngIf="barbeiro?.twitter"><a [href]="barbeiro?.twitter" target="_blank"><strong>Twitter</strong></a></p>
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'gallery'">
+    <h1>Fotos</h1>
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'reviews'">
+    <h1>Avaliações</h1>
+  </ng-container>
+</div>

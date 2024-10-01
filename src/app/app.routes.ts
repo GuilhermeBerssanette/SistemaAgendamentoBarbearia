@@ -6,7 +6,9 @@ import {RegisterBarbeariaComponent} from "./pages/admin/register-barbearia/regis
 import {BarbershopComponent} from "./pages/user/barbershop/barbershop.component";
 import {BarbershopAdminComponent} from "./pages/admin/barbershop-admin/barbershop-admin.component";
 import {ModalRegisterBarbeiroComponent} from "./pages/admin/barbershop-admin/modals/modal-register-barbeiro/modal-register-barbeiro.component";
-import {BarbersComponent} from "./pages/barber/barbers/barbers.component";
+import { BarbersComponent } from "./pages/user/barbers/barbers.component";
+import {BarberAdminComponent} from "./pages/admin/barber-admin/barber-admin.component";
+
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -16,7 +18,8 @@ export const routes: Routes = [
   {path: 'barbearia/:id', component: BarbershopComponent},
   {path: 'barbearia/:id/admin', component: BarbershopAdminComponent},
   {path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent},
-  {path: 'barbearia/:id/barber/:barberId', component: BarbersComponent}
+  {path: 'barbearia/:id/barber/:barberId', component: BarbersComponent},
+  {path: 'barbearia/:id/barber/:barberId/admin', component: BarberAdminComponent}
 
 
 
