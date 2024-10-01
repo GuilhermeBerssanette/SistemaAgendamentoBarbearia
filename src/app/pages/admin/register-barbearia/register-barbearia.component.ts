@@ -289,7 +289,6 @@ export class RegisterBarbeariaComponent implements OnInit {
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue()
-
     if(
       rawForm.nomeFantasia === null ||
       rawForm.razaoSocial === null ||
