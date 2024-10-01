@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 *{
   background-color: var(--primary-color);
   overflow-x: hidden;
@@ -26,12 +28,11 @@
       margin-top: 0;
       padding-top: 0;
   }
-  @media (max-width: 767px) { // Estilo para celulares
-    position: relative; // Para telas de celulares
+  @media (max-width: 767px) { 
+    position: relative;
     width: 100%;
     height: auto;
-    max-height: 19vh; // Ajuste de altura para celulares
-
+    max-height: 19vh;
   }
 }
 
@@ -42,36 +43,32 @@
 }
 
 .form-field {
-  width: 100%; // Garantir que o campo ocupe toda a largura disponível
-  background-color: #f9f9f9; // Cor de fundo leve
-  border-radius: 8px; // Bordas arredondadas
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra sutil
-  transition: box-shadow 0.3s ease; // Transição suave para a sombra
+  width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
   background-color: #05465F;
 
-  // Estilização ao focar no campo
   &:focus-within {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Aumenta a sombra ao focar
-    background-color: #fff; // Muda a cor de fundo ao focar
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
   }
 }
 
-// Ajustes de margem e padding
 .mat-form-field {
-  margin-bottom: 1rem; // Espaço entre os campos
+  margin-bottom: 1rem;
 
 }
 
-// Estilização do mat-select
 .mat-select {
-  font-size: 1rem; // Tamanho da fonte
-  padding: 10px; // Espaçamento interno
+  font-size: 1rem;
+  padding: 10px;
 }
 
-// Ajustes para a label
 .mat-label {
-  color: #555; // Cor da label
-  font-weight: bold; // Negrito
+  color: #555;
+  font-weight: bold;
 }
 
 mat-form-field {
@@ -99,20 +96,20 @@ mat-form-field {
 }
 
 .mat-form-field {
-  width: 100%;  // Certifique-se de que o campo ocupe toda a largura disponível, como um form-control.
+  width: 100%;
   background-color: #05465F;
 
   .mat-select {
-    height: calc(1.5em + .75rem + 2px);  // Ajusta a altura do select para corresponder ao padrão do Bootstrap.
-    padding: .375rem .75rem;  // Padding semelhante ao form-control do Bootstrap.
-    border: 1px solid #05465F;  // Cor de borda semelhante ao Bootstrap.
-    border-radius: .25rem;  // Borda arredondada como o Bootstrap.
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    border: 1px solid #05465F;
+    border-radius: .25rem;
     font-size: 1rem;
     background-color: #05465F !important;
     box-shadow: none;
 
     &:focus {
-      border-color: #05465F;  // Cor de borda ao focar (cor azul do Bootstrap).
+      border-color: #05465F;
       outline: 0;
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
@@ -126,8 +123,8 @@ mat-form-field {
 
   .mat-label {
     font-size: 1rem;
-    margin-bottom: .5rem;  // Margin similar à label do Bootstrap.
-    color: #05465F;  // Cor de texto similar ao Bootstrap.
+    margin-bottom: .5rem;
+    color: #05465F;
   }
 
   .example-additional-selection {
@@ -141,4 +138,12 @@ mat-form-field {
 .btnCadastro{
   background-color: #00A896;
   border: #00A896;
+}
+
+input, select, select, mat-select, mat-select-trigger, mat-option, mat-label{
+  background-color: var(--input-color)
+}
+
+mat-label{
+  border-radius: 3px;
 }
