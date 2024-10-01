@@ -5,6 +5,7 @@ export interface Barbearias {
   // Dados da barbearia
   nomeFantasia: string,
   razaoSocial: string,
+  responsavel: string,
 
   // PF ou PJ
   cpf: string,
