@@ -201,7 +201,6 @@ export class RegisterBarbeariaComponent implements OnInit {
       this.form.get('inscricaoEstadual')?.clearValidators();
     }
 
-    // Atualizando o estado dos campos
     this.form.get('cnpj')?.updateValueAndValidity();
     this.form.get('inscricaoEstadual')?.updateValueAndValidity();
     this.form.get('cpf')?.updateValueAndValidity();
@@ -284,6 +283,7 @@ export class RegisterBarbeariaComponent implements OnInit {
     instagram: new FormControl('', [this.instagramValidator()]),
     facebook: new FormControl('', [this.facebookValidator()]),
     comodidades: new FormControl(''),
+    responsavel: new FormControl('', [Validators.required])
   });
 
 
@@ -293,6 +293,7 @@ export class RegisterBarbeariaComponent implements OnInit {
     if(
       rawForm.nomeFantasia === null ||
       rawForm.razaoSocial === null ||
+      rawForm.responsavel === null ||
 
       rawForm.rg === null ||
       rawForm.cpf === null ||
@@ -324,6 +325,7 @@ export class RegisterBarbeariaComponent implements OnInit {
     const barbeariaData: Barbearias = {
       nomeFantasia: rawForm.nomeFantasia,
       razaoSocial: rawForm.razaoSocial,
+      responsavel: rawForm.responsavel,
 
       rg: rawForm.rg,
       cpf: rawForm.cpf,
