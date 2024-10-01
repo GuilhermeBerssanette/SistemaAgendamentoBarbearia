@@ -6,14 +6,14 @@
   <a *ngIf="isAddressValid()" (click)="openGoogleMaps()" target="_blank">Ver no Google Maps</a>
   <p *ngIf="!isAddressValid()" class="text-danger">Endereço não encontrado. Verifique as informações fornecidas.</p>
 
-  <p><strong>Telefone:</strong> {{ barbearia?.telefone }}</p>
+  <p ><strong>Telefone:</strong> {{ barbearia?.telefone }}</p>
 
   <h3>Barbeiros:</h3>
   <ul>
     <li *ngFor="let barber of barbers">
       <a [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-        {{ barber.nome }} <button type="button" (click)="openModalInfos(barber)">infos</button>
-      </a>
+        {{ barber.nome }}
+      </a><button type="button" (click)="openModalInfos(barber)">infos</button>
     </li>
   </ul>
   <p *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
