@@ -55,7 +55,7 @@ export class InitialPageComponent implements OnInit {
   openModalFilter() {
     this.dialog.open(ModalFilterComponent, {
       width: '700px',
-      height: '410px'
+      height: '610px'
     });
   }
 }

@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  height: 15%;
+}
+
+span{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.linhaBranca {
+  height: 2px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.bgColor{
+  background-color: #05465F;
+  height: 85%;
+  z-index: 1000;
+  max-height: 600px;
+}
+
+.areaBtn{
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #05465F;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnFilter{
+  background-color: #028090;
+  width: 95%; /* Você pode ajustar conforme necessário */
+  max-width: 690px; /* Defina um valor máximo para evitar que fique muito largo */
+  margin: 0 auto; /* Centraliza horizontalmente */
+  padding: 10px; /* Adiciona algum preenchimento ao botão */
+  margin-bottom: 10px;
+}
