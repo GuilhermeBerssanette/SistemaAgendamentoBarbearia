@@ -12,6 +12,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --input-text-color: #FFFFFF;
 }
 
+.hover:hover{cursor: pointer;}
+
+
 body > app-root > app-register-barbearia > div > div.col-lg-6.col-md-12.order-md-2 > div > div > form > div > div.form-group > mat-form-field > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled{
   background-color: var(--primary-color) !important;
 
