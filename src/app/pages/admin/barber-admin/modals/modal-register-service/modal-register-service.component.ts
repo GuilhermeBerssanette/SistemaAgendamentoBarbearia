@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
-import {NgForOf, NgIf} from "@angular/common";
+import {Firestore, collection, getDocs, doc, setDoc} from '@angular/fire/firestore';
+import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
   selector: 'app-modal-register-service',
@@ -38,16 +38,18 @@ export class ModalRegisterServiceComponent implements OnInit {
   }
 
   async filterAvailableServices() {
-    const barberRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}/barbers/${this.data.barberId}`);
-    const barberSnapshot = await getDoc(barberRef);
+    // Acessar a subcoleção de serviços do barbeiro
+    const servicesCollectionRef = collection(
+      this.firestore,
+      `barbearia/${this.data.barbeariaId}/barbers/${this.data.barberId}/services`
+    );
+    const servicesSnapshot = await getDocs(servicesCollectionRef);
 
-    if (barberSnapshot.exists()) {
-      const barberData = barberSnapshot.data();
-      const registeredServices = Object.keys(barberData['services'] || {});
-      this.filteredServices = this.availableServices.filter(service => !registeredServices.includes(service));
-    } else {
-      this.filteredServices = this.availableServices;
-    }
+    // Obter os nomes dos serviços já cadastrados
+    const registeredServices = servicesSnapshot.docs.map(doc => doc.id);
+
+    // Filtrar os serviços que ainda não foram cadastrados
+    this.filteredServices = this.availableServices.filter(service => !registeredServices.includes(service));
   }
 
   async onSubmit() {
