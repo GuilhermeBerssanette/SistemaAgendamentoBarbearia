@@ -100,7 +100,6 @@ export class BarberAdminComponent implements OnInit {
       const data = doc.data();
       return {
         id: doc.id,
-        name: data['name'],
         price: data['price'],
         duration: data['duration']
       };
@@ -189,10 +188,24 @@ export class BarberAdminComponent implements OnInit {
   }
 
   openModalEditService(service: any): void {
-    this.dialog.open(ModalEditServiceComponent, {
-      data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId, service },
+    const dialogRef = this.dialog.open(ModalEditServiceComponent, {
+      data: {
+        barberId: this.barbeiroId,
+        barbeariaId: this.barbeariaId,
+        service: service
+      },
       width: '400px',
       height: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRegisteredServices().then(() => {
+          console.log('Serviços carregados com sucesso');
+        }).catch((error) => {
+          console.error('Erro ao carregar os serviços:', error);
+        });
+      }
     });
   }
 
