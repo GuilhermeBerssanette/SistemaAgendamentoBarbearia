@@ -35,6 +35,8 @@ export interface Barbearias {
   comodidades: string,
 
   // Barbeiros
-  barbers?: Barbeiros[]
+  barbers?: Barbeiros[],
+
+  profileImageUrl: string,
 }
 

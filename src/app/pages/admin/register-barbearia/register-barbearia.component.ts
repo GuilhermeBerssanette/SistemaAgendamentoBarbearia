@@ -22,6 +22,9 @@ import {MatInput} from "@angular/material/input";
 
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 
+import {getDownloadURL, getStorage, ref} from "firebase/storage";
+import {uploadBytesResumable} from "@angular/fire/storage";
+
 
 @Component({
   selector: 'app-register-barbearia',
@@ -47,6 +50,7 @@ export class RegisterBarbeariaComponent implements OnInit {
   http = inject(HttpClient);
   barbeariasService = inject(BarbeariasService)
   router = inject(Router)
+  storage = getStorage();
 
   comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'Sinuca', 'TV'];
   estadosList: any[] = [];
@@ -54,6 +58,10 @@ export class RegisterBarbeariaComponent implements OnInit {
 
   isPJ = false;
   isPF = false;
+
+
+  selectedFile: File | null = null;
+  downloadURL: string | null = null;
 
   iePatterns: { [key: string]: { pattern: RegExp, format: string } } = {
     'AC': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
@@ -283,13 +291,24 @@ export class RegisterBarbeariaComponent implements OnInit {
     instagram: new FormControl('', [this.instagramValidator()]),
     facebook: new FormControl('', [this.facebookValidator()]),
     comodidades: new FormControl(''),
-    responsavel: new FormControl('', [Validators.required])
+    responsavel: new FormControl('', [Validators.required]),
+    profileImage: new FormControl('', [Validators.required])
   });
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
 
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue()
-    if(
+
+    if (!this.selectedFile) {
+      console.error('Imagem de perfil não selecionada.');
+      return;
+    }
+
+    if (
       rawForm.nomeFantasia === null ||
       rawForm.razaoSocial === null ||
       rawForm.responsavel === null ||
@@ -314,10 +333,13 @@ export class RegisterBarbeariaComponent implements OnInit {
       rawForm.facebook === null ||
 
       rawForm.tiktok === null ||
-      rawForm.twitter === null  ||
+      rawForm.twitter === null ||
 
-      rawForm.comodidades === null
-    ){
+      rawForm.comodidades === null ||
+
+      rawForm.profileImage === null
+
+    ) {
       return;
     }
 
@@ -347,13 +369,36 @@ export class RegisterBarbeariaComponent implements OnInit {
       twitter: rawForm.twitter,
 
       comodidades: rawForm.comodidades,
+
+      profileImageUrl: rawForm.profileImage,
     };
 
-    this.barbeariasService.addBarbearia(barbeariaData).then(() => {
-      this.router.navigate(['']).then();
-    })
-      .catch((error) => {
-        console.error('Erro ao cadastrar barbearia: ', error);
-      });
+    const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
+    const fileRef = ref(this.storage, filePath);
+    const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
+
+    uploadTask.on('state_changed',
+      () => {
+      },
+      (error) => {
+        console.error('Erro ao fazer upload da imagem:', error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url: string) => {
+          this.downloadURL = url;
+          barbeariaData.profileImageUrl = url;
+          this.barbeariasService.addBarbearia(barbeariaData).then(() => {
+            this.router.navigate(['']).then(() => {
+              console.log('Navegação concluída');
+            }).catch((error) => {
+              console.error('Erro ao navegar:', error);
+            });
+          }).catch((error) => {
+            console.error('Erro ao cadastrar barbearia:', error);
+          });
+        });
+      }
+    );
   }
 }
+

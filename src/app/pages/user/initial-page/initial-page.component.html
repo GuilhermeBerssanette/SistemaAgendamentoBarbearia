@@ -28,7 +28,7 @@
     <div class="row g-3">
       <div *ngFor="let barbearia of filteredBarbearias" class="col-md-6 mt-3">
         <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm" (click)="goToBarbearia(barbearia.id)">
-          <img ngSrc="/assets/FtPerfil.svg" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">
+          <img [ngSrc]="barbearia.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">
           <div class="itens">
             <p class="mb-1"><strong>Nome:</strong> {{ barbearia.nomeFantasia }}</p>
             <p class="mb-1"><strong>Endereço:</strong> {{ barbearia.estado }}, {{ barbearia.cidade }}, {{ barbearia.rua }}, {{ barbearia.numero }}</p>

@@ -36,9 +36,7 @@ export class ModalRegisterImageComponent {
       const storage = getStorage();
       const storageRef = ref(storage, `barbers/${this.data.barberId}/${this.selectedFile.name}`);
 
-      // Fazer o upload do arquivo
       await uploadBytes(storageRef, this.selectedFile).then(async (snapshot) => {
-        // Obter a URL da imagem após o upload
         const imageUrl = await getDownloadURL(snapshot.ref);
 
         const barbeiroDocRef = doc(this.firestore, `barbearia/${this.data.id}/barbers/${this.data.barberId}`);
