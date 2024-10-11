@@ -31,6 +31,7 @@
     <h1>Avaliações</h1>
   </ng-container>
 
+
   <ng-container *ngIf="currentSection === 'services'">
     <h3>Serviços</h3>
     <button (click)="openModalRegisterService()">Cadastrar Serviço</button>
@@ -41,17 +42,17 @@
           <h4>{{ service.name }}
             <button (click)="openModalEditService(service)">Editar</button>
           </h4>
-          <p>Valor: R$ {{ service.value }}</p>
+          <p>Valor: R$ {{ service.price }}</p>
           <p>Duração: {{ service.duration }} minutos</p>
         </li>
       </ul>
     </div>
-
     <ng-template #noServices>
       <p>Nenhum serviço cadastrado ainda.</p>
     </ng-template>
-
   </ng-container>
+
+
 
 
 

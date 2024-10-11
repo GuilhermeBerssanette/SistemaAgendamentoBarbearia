@@ -1,93 +1,79 @@
-import { Component, Inject } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { Firestore, doc, setDoc, getDoc} from '@angular/fire/firestore';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NgForOf, NgIf } from "@angular/common";
+import { Component, OnInit, Inject } from '@angular/core';
+import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-modal-register-service',
-  standalone: true,
   templateUrl: './modal-register-service.component.html',
-  styleUrls: ['./modal-register-service.component.scss'],
   imports: [
     ReactiveFormsModule,
     NgIf,
     NgForOf
-  ]
+  ],
+  standalone: true
 })
-export class ModalRegisterServiceComponent {
-  serviceForm: FormGroup;
-  services: string[] = ['barba', 'cabelo', 'sobrancelha'];
-  availableServices: string[] = [];
+export class ModalRegisterServiceComponent implements OnInit {
+  form: FormGroup;
+  availableServices = ['Cabelo', 'Barba', 'Sobrancelha'];
+  filteredServices: string[] = [];
 
   constructor(
-    private fb: FormBuilder,
     private firestore: Firestore,
-    public dialogRef: MatDialogRef<ModalRegisterServiceComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { barberId: string, barbeariaId: string }
+    private dialogRef: MatDialogRef<ModalRegisterServiceComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { barberId: string; barbeariaId: string }
   ) {
-    this.serviceForm = this.fb.group({
-      name: new FormControl('', [Validators.required]),
-      value: new FormControl('', [Validators.required, Validators.min(1)]),
-      duration: new FormControl('', [Validators.required, Validators.min(1)]),
-    });
-
-    this.initializeForm().catch(error => {
-      console.error('Erro ao inicializar o formulário:', error);
+    this.form = new FormGroup({
+      service: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      duration: new FormControl('', [Validators.required]),
     });
   }
 
-  async initializeForm() {
-    try {
-      await this.loadAvailableServices();
-    } catch (error) {
-      console.error('Erro ao carregar serviços disponíveis:', error);
-    }
+  ngOnInit(): void {
+    this.filterAvailableServices()
+      .then(() => console.log('Serviços disponíveis filtrados com sucesso.'))
+      .catch((error) => console.error('Erro ao filtrar serviços disponíveis:', error));
   }
 
-  async loadAvailableServices() {
-    const { barberId, barbeariaId } = this.data;
+  async filterAvailableServices() {
+    const barberRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}/barbers/${this.data.barberId}`);
+    const barberSnapshot = await getDoc(barberRef);
 
-    const barberDocRef = doc(this.firestore, `barbearia/${barbeariaId}/barbers/${barberId}`);
-    const barberDocSnapshot = await getDoc(barberDocRef);
-
-    if (barberDocSnapshot.exists()) {
-      const barberData = barberDocSnapshot.data();
-      const registeredServices = barberData?.['services'] || {};
-
-      this.availableServices = this.services.filter(service =>
-        !Object.keys(registeredServices).includes(service) // Use keys to prevent duplicates
-      );
+    if (barberSnapshot.exists()) {
+      const barberData = barberSnapshot.data();
+      const registeredServices = Object.keys(barberData['services'] || {});
+      this.filteredServices = this.availableServices.filter(service => !registeredServices.includes(service));
     } else {
-      console.error('Documento do barbeiro não encontrado!');
+      this.filteredServices = this.availableServices;
     }
   }
 
-  async registerService() {
-    if (this.serviceForm.valid) {
+  async onSubmit() {
+    if (this.form.valid) {
       const serviceData = {
-        value: this.serviceForm.value.value,
-        duration: this.serviceForm.value.duration
+        price: this.form.value.price,
+        duration: this.form.value.duration,
       };
 
-      const {barberId, barbeariaId} = this.data;
-      const serviceName = this.serviceForm.value.name;
+      const serviceName = this.form.value.service;
+      const serviceRef = doc(
+        this.firestore,
+        `barbearia/${this.data.barbeariaId}/barbers/${this.data.barberId}/services`,
+        serviceName
+      );
 
       try {
-
-        const serviceDocRef = doc(this.firestore, `barbearia/${barbeariaId}/barbers/${barberId}/services/${serviceName}`);
-        await setDoc(serviceDocRef, serviceData);
-        this.dialogRef.close();
+        await setDoc(serviceRef, serviceData);
+        this.dialogRef.close(true);
       } catch (error) {
-        console.error('Erro ao cadastrar o serviço:', error);
+        console.error('Erro ao registrar o serviço:', error);
       }
-
     }
-
-  }
-  closeModal()
-  {
-    this.dialogRef.close();
-  }
   }
 
+  onCancel() {
+    this.dialogRef.close(false);
+  }
+}
