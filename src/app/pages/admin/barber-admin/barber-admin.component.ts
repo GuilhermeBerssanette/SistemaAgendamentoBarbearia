@@ -35,7 +35,6 @@ export class BarberAdminComponent implements OnInit {
   barbeiro?: Barbeiros;
   currentSection: string = 'appointments';
   galleryItems: { imageUrl: string, comment: string }[] = [];
-  barbers: any[] = [];
   barbeariaId!: string;
   registeredServices: any[] = [];
   form: FormGroup;
@@ -53,32 +52,25 @@ export class BarberAdminComponent implements OnInit {
       tiktok: new FormControl('', [this.tiktokValidator()]),
       twitter: new FormControl('', [this.twitterValidator()]),
     });
-    this.loadBarbers();
   }
 
   async ngOnInit(): Promise<void> {
     this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
-
-    if (!this.barbeariaId) {
-      console.error('ID da barbearia não encontrado!');
-      return;
-    }
-
     this.barbeiroId = this.route.snapshot.paramMap.get('barberId')!;
 
-    if (!this.barbeiroId) {
-      console.error('ID do barbeiro não encontrado!');
+    if (!this.barbeariaId || !this.barbeiroId) {
+      console.error('ID da barbearia ou do barbeiro não encontrado!');
       return;
     }
 
-    await this.getBarbeiroData(this.barbeiroId);
+    await this.getBarbeiroData();
     await this.getGalleryItems();
     await this.loadRegisteredServices();
     this.populateForm();
   }
 
-  async getBarbeiroData(barbeiroId: string) {
-    const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${barbeiroId}`);
+  async getBarbeiroData() {
+    const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}`);
     const barbeiroDoc = await getDoc(barbeiroDocRef);
 
     if (barbeiroDoc.exists()) {
@@ -101,20 +93,18 @@ export class BarberAdminComponent implements OnInit {
   }
 
   async loadRegisteredServices() {
-    const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}`);
-    const barbeiroDocSnapshot = await getDoc(barbeiroDocRef);
+    const servicesCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/services`);
+    const servicesSnapshot = await getDocs(servicesCollectionRef);
 
-    if (barbeiroDocSnapshot.exists()) {
-      const barberData = barbeiroDocSnapshot.data();
-      this.registeredServices = barberData?.['services']
-        ? Object.entries(barberData['services']).map(([key, value]) => ({
-          name: key,
-          ...(typeof value === 'object' && value !== null ? value : {})  // Verificação para garantir que value é um objeto
-        }))
-        : [];
-    } else {
-      console.error('Documento do barbeiro não encontrado!');
-    }
+    this.registeredServices = servicesSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        name: data['name'],
+        price: data['price'],
+        duration: data['duration']
+      };
+    });
   }
 
   instagramValidator(): ValidatorFn {
@@ -180,13 +170,6 @@ export class BarberAdminComponent implements OnInit {
         console.error('Erro ao atualizar o perfil:', error);
       }
     }
-  }
-
-  loadBarbers() {
-    const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
-    getDocs(collection(barbeariaDocRef, 'barbers')).then(snapshot => {
-      this.barbers = snapshot.docs.map(doc => doc.data());
-    });
   }
 
   openModalRegisterImage() {
