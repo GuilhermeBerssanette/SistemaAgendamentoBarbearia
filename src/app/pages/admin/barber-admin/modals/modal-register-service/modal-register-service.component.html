@@ -1,28 +1,34 @@
-<h2>Registrar Serviço</h2>
-<form [formGroup]="serviceForm" (ngSubmit)="registerService()">
-  <div>
-    <select formControlName="name">
-      <option *ngFor="let service of availableServices" [value]="service">{{ service }}</option>
-    </select>
-    <div *ngIf="serviceForm.controls['name'].invalid && serviceForm.controls['name'].touched">
-      Nome é obrigatório.
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <select formControlName="service">
+        <option value="" disabled>Selecione um serviço</option>
+        <option *ngFor="let service of filteredServices" [value]="service">
+          {{ service }}
+        </option>
+      </select>
+      <div *ngIf="form.get('service')?.invalid && form.get('service')?.touched">
+        Serviço é obrigatório.
+      </div>
     </div>
-  </div>
 
-  <div>
-    <input type="number" placeholder="Valor R$" formControlName="value" />
-    <div *ngIf="serviceForm.controls['value'].invalid && serviceForm.controls['value'].touched">
-      Valor é obrigatório.
+    <div>
+      <input type="text" formControlName="price" placeholder="Preço" />
+      <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
+        Preço é obrigatório.
+      </div>
     </div>
-  </div>
 
-  <div>
-    <input type="number" placeholder="Duração (em minutos)" formControlName="duration" />
-    <div *ngIf="serviceForm.controls['duration'].invalid && serviceForm.controls['duration'].touched">
-      Duração é obrigatória.
+    <div>
+      <input type="text" formControlName="duration" placeholder="Duração (minutos)" />
+      <div *ngIf="form.get('duration')?.invalid && form.get('duration')?.touched">
+        Duração é obrigatória.
+      </div>
     </div>
-  </div>
 
-  <button type="submit" [disabled]="serviceForm.invalid">Cadastrar</button>
-  <button type="button" (click)="closeModal()">Cancelar</button>
-</form>
+    <div>
+      <button type="submit" [disabled]="form.invalid">Cadastrar Serviço</button>
+      <button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>
