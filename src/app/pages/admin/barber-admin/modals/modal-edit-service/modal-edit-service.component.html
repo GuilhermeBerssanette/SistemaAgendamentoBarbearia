@@ -1,1 +1,22 @@
-<p>modal-edit-service works!</p>
+<h2>Editar Serviço</h2>
+
+<form [formGroup]="form" (ngSubmit)="saveService()">
+  <div>
+    <input type="number" formControlName="price" placeholder="Preço" />
+    <div *ngIf="form.get('price')?.invalid && (form.get('price')?.touched || form.get('price')?.dirty)">
+      <small *ngIf="form.get('price')?.errors?.['required']">Preço é obrigatório.</small>
+    </div>
+  </div>
+
+  <div>
+    <input type="number" formControlName="duration" placeholder="Duração (minutos)" />
+    <div *ngIf="form.get('duration')?.invalid && (form.get('duration')?.touched || form.get('duration')?.dirty)">
+      <small *ngIf="form.get('duration')?.errors?.['required']">Duração é obrigatória.</small>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="form.invalid">Salvar</button>
+    <button type="button" (click)="close()">Cancelar</button>
+  </div>
+</form>

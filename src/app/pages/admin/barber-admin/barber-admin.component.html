@@ -39,7 +39,7 @@
     <div *ngIf="registeredServices && registeredServices.length > 0; else noServices">
       <ul>
         <li *ngFor="let service of registeredServices">
-          <h4>{{ service.name }}
+          <h4>{{ service.id }}
             <button (click)="openModalEditService(service)">Editar</button>
           </h4>
           <p>Valor: R$ {{ service.price }}</p>
