@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
-import {KeyValuePipe, NgForOf, NgIf} from "@angular/common";
+import { KeyValuePipe, NgForOf, NgIf } from "@angular/common";
 import { Firestore, doc, getDoc, updateDoc, getDocs, collection } from '@angular/fire/firestore';
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import { MatDialog } from "@angular/material/dialog";
@@ -10,8 +10,7 @@ import { NgxMaskDirective } from "ngx-mask";
 import { ModalRegisterImageComponent } from "./modals/modal-register-image/modal-register-image.component";
 import { ModalRegisterServiceComponent } from "./modals/modal-register-service/modal-register-service.component";
 import { MatButton } from "@angular/material/button";
-import {ModalEditServiceComponent} from "./modals/modal-edit-service/modal-edit-service.component";
-
+import { ModalEditServiceComponent } from "./modals/modal-edit-service/modal-edit-service.component";
 
 @Component({
   selector: 'app-barber-admin',
@@ -107,7 +106,12 @@ export class BarberAdminComponent implements OnInit {
 
     if (barbeiroDocSnapshot.exists()) {
       const barberData = barbeiroDocSnapshot.data();
-      this.registeredServices = barberData?.['services'] || [];
+      this.registeredServices = barberData?.['services']
+        ? Object.entries(barberData['services']).map(([key, value]) => ({
+          name: key,
+          ...(typeof value === 'object' && value !== null ? value : {})  // Verificação para garantir que value é um objeto
+        }))
+        : [];
     } else {
       console.error('Documento do barbeiro não encontrado!');
     }
@@ -201,9 +205,9 @@ export class BarberAdminComponent implements OnInit {
     });
   }
 
-  openModalEditService(): void {
+  openModalEditService(service: any): void {
     this.dialog.open(ModalEditServiceComponent, {
-      data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
+      data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId, service },
       width: '400px',
       height: '300px',
     });
@@ -212,5 +216,4 @@ export class BarberAdminComponent implements OnInit {
   showSection(section: string): void {
     this.currentSection = section;
   }
-
 }
