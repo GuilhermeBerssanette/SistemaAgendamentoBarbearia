@@ -29,6 +29,8 @@ export class BarbersComponent implements OnInit {
 
       if (docSnap.exists()) {
         this.barbeiro = docSnap.data() as Barbeiros;
+      } else {
+        console.error('Barbeiro não encontrado!');
       }
     }
   }

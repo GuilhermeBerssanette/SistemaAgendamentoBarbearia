@@ -188,16 +188,16 @@ export class BarberAdminComponent implements OnInit {
   }
 
   deleteImage(item: { imageUrl: string, comment: string, filePath: string }) {
-    const confirmed = confirm('Você tem certeza que deseja excluir esta imagem?');
+    const confirmed = confirm('Você tem certeza que deseja excluir esta postagem?');
     if (confirmed) {
       const storageRef = ref(this.storage, item.filePath);
       deleteObject(storageRef)
         .then(() => {
           this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
-          console.log('Imagem deletada com sucesso.');
+          console.log('Postagem deletada com sucesso.');
         })
         .catch((error) => {
-          console.error('Erro ao deletar a imagem:', error);
+          console.error('Erro ao deletar a postagem:', error);
         });
     }
   }

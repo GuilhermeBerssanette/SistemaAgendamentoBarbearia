@@ -1,20 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, collection } from '@angular/fire/firestore';
 import { Barbeiros } from '../../../../../interfaces/barbeiros';
-import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
-import {NgxMaskDirective} from "ngx-mask";
-import {NgIf} from "@angular/common";
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-modal-register-barbeiro',
   templateUrl: './modal-register-barbeiro.component.html',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    NgIf
-  ],
+  imports: [ReactiveFormsModule, NgxMaskDirective, NgIf],
   styleUrls: ['./modal-register-barbeiro.component.scss']
 })
 export class ModalRegisterBarbeiroComponent {
@@ -35,16 +31,23 @@ export class ModalRegisterBarbeiroComponent {
       instagram: new FormControl(''),
       facebook: new FormControl(''),
       tiktok: new FormControl(''),
-      twitter: new FormControl('')
+      twitter: new FormControl(''),
+      atendeAutista: new FormControl(false),
+      atendeCrianca: new FormControl(false),
+      atendeDomicilio: new FormControl(false),
+      experienciaCrespo: new FormControl(false),
+      servicoEventos: new FormControl(false),
     });
   }
 
   async addBarberToBarbearia() {
     if (this.form.valid) {
-      const barberId = doc(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`).id; // Gera um novo ID para o barbeiro
+      // Gerando um novo ID automaticamente
+      const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
+      const newBarberDocRef = doc(barbersCollectionRef); // O Firestore gera o ID automaticamente
 
       const barberData: Barbeiros = {
-        id: barberId,
+        id: newBarberDocRef.id, // Usando o ID gerado automaticamente
         nome: this.form.value.nome,
         rg: this.form.value.rg,
         cpf: this.form.value.cpf,
@@ -55,12 +58,16 @@ export class ModalRegisterBarbeiroComponent {
         facebook: this.form.value.facebook || '',
         tiktok: this.form.value.tiktok || '',
         twitter: this.form.value.twitter || '',
+        atendeAutista: this.form.value.atendeAutista,
+        atendeCrianca: this.form.value.atendeCrianca,
+        atendeDomicilio: this.form.value.atendeDomicilio,
+        experienciaCrespo: this.form.value.experienciaCrespo,
+        servicoEventos: this.form.value.servicoEventos,
       };
 
-      const barbeiroDocRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}/barbers/${barberId}`);
-      await setDoc(barbeiroDocRef, barberData);
+      await setDoc(newBarberDocRef, barberData);
       alert('Barbeiro registrado com sucesso!');
-      this.dialogRef.close(); // Fecha o modal após o registro
+      this.dialogRef.close();
     }
   }
 }

@@ -5,6 +5,7 @@
     <button (click)="showSection('info')">Tela Inicial</button>
     <button (click)="showSection('gallery')">Galeria de Fotos</button>
     <button (click)="showSection('reviews')">Avaliações</button>
+    <button (click)="showSection('questions')">Perguntas Frequentes</button>
   </div>
 
   <ng-container *ngIf="currentSection === 'info'">
@@ -22,5 +23,16 @@
 
   <ng-container *ngIf="currentSection === 'reviews'">
     <h1>Avaliações</h1>
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'questions'">
+    <h1>Perguntas Frequentes</h1>
+    <div class="questions">
+      <p><strong>Atende Autista?</strong> {{ barbeiro?.atendeAutista ? 'Sim' : 'Não' }}</p>
+      <p><strong>Atende Criança?</strong> {{ barbeiro?.atendeCrianca ? 'Sim' : 'Não' }}</p>
+      <p><strong>Oferece serviços em domicílio?</strong> {{ barbeiro?.atendeDomicilio ? 'Sim' : 'Não' }}</p>
+      <p><strong>Tem experiência com cabelo crespo?</strong> {{ barbeiro?.experienciaCrespo ? 'Sim' : 'Não' }}</p>
+      <p><strong>Oferece serviços para eventos (casamentos, formaturas)?</strong> {{ barbeiro?.servicoEventos ? 'Sim' : 'Não' }}</p>
+    </div>
   </ng-container>
 </div>

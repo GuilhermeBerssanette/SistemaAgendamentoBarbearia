@@ -10,6 +10,11 @@ export interface Barbeiros {
   facebook?: string;
   tiktok?: string;
   twitter?: string;
+  atendeAutista: boolean;
+  atendeCrianca: boolean;
+  atendeDomicilio: boolean;
+  experienciaCrespo: boolean;
+  servicoEventos: boolean;
   galleryItem?: {
     imageUrl: string;
     comment: string;
