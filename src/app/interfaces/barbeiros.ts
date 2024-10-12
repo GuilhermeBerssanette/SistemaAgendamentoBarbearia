@@ -24,4 +24,5 @@ export interface Barbeiros {
     duracao: number;
     preco: number;
   }[];
+  profileImageUrl: string,
 }
