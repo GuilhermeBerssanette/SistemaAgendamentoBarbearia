@@ -378,20 +378,20 @@ export class RegisterBarbeariaComponent implements OnInit {
     const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
 
     uploadTask.on('state_changed',
-      () => {
-      },
+      () => { },
       (error) => {
         console.error('Erro ao fazer upload da imagem:', error);
       },
       () => {
+        // Obtendo a URL de download após o upload ser concluído
         getDownloadURL(uploadTask.snapshot.ref).then((url: string) => {
           this.downloadURL = url;
+          // Salvando a URL da imagem e os dados da barbearia no Firestore
           barbeariaData.profileImageUrl = url;
+
           this.barbeariasService.addBarbearia(barbeariaData).then(() => {
             this.router.navigate(['']).then(() => {
-              console.log('Navegação concluída');
-            }).catch((error) => {
-              console.error('Erro ao navegar:', error);
+              console.log('Cadastro da barbearia concluído com sucesso.');
             });
           }).catch((error) => {
             console.error('Erro ao cadastrar barbearia:', error);
