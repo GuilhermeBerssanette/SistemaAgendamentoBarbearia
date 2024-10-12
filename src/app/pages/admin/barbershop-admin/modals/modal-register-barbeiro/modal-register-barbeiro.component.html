@@ -44,6 +44,12 @@
     </div>
   </div>
 
+  <!-- Campo de Upload da Foto de Perfil -->
+  <div>
+    <label>Foto de Perfil:</label>
+    <input type="file" (change)="onFileSelected($event)">
+  </div>
+
   <!-- Validações de redes sociais -->
   <div>
     <input type="text" placeholder="Instagram" formControlName="instagram">
@@ -73,6 +79,7 @@
     </div>
   </div>
 
+  <!-- Perguntas Sim/Não -->
   <div>
     <label>Atende Autista?</label>
     <input type="checkbox" formControlName="atendeAutista">

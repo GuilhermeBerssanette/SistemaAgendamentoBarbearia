@@ -42,9 +42,9 @@
 
       <div class="boxDataBarber" *ngFor="let barber of barbers">
         <button class="barberLink btn d-flex justify-content-between align-items-center w-100" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-          <img src="assets/FtPerfil.svg" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-1 ml-4">
+          <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-1 ml-4">
           <span class="flex-grow-1 text-center">{{ barber.nome }}</span>
-          <!-- Aqui usamos $event para parar a propagação -->
+          <!-- Usamos $event para parar a propagação -->
           <button class="modalLink btn" (click)="openModalInfos(barber, $event)">infos</button>
         </button>
       </div>
