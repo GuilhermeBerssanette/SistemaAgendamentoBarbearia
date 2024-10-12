@@ -16,9 +16,7 @@
       <mat-icon style="padding-top: 4px;">upload</mat-icon>Adicionar arquivo</label>
 
     <div class="profile-image">
-      <input type="file" id="upload-profile" style="display: none;" />
-      <label for="upload-profile" class="upload-label">
-        <mat-icon>upload</mat-icon> Adicionar arquivo</label>
+      <img [ngSrc]="barbearia?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="100" height="100" class="img-fluid">
     </div>
   </div>
   <br>
@@ -29,6 +27,7 @@
     <button class="float-end btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" alt=""></button>
     <button class="float-end btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" alt=""></button>
     <button class="float-end btn btnContent" *ngIf="isAddressValid()" (click)="openGoogleMaps()" target="_blank"> <img class="imgContent" src="assets/maps-logo.svg" alt=""></button>
+    <p *ngIf="!isAddressValid()" class="text-danger">Endereço não encontrado. Verifique as informações fornecidas.</p>
 </div>
 
 <div class="container-fluid text-center bgColor min-vh-100">
@@ -39,10 +38,6 @@
 
     <div class="boxData">
       <p><strong>Endereço:</strong> {{ barbearia?.estado }}, {{ barbearia?.cidade }}, {{ barbearia?.rua }}, {{ barbearia?.numero }}</p>
-
-      <!-- Link para Google Maps -->
-      <a *ngIf="isAddressValid()" (click)="openGoogleMaps()" target="_blank">Ver no Google Maps</a>
-      <p *ngIf="!isAddressValid()" class="text-danger">Endereço não encontrado. Verifique as informações fornecidas.</p>
 
       <p ><strong>Telefone:</strong> {{ barbearia?.telefone }}</p>
 

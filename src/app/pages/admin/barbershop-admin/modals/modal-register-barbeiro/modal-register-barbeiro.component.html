@@ -73,5 +73,30 @@
     </div>
   </div>
 
+  <div>
+    <label>Atende Autista?</label>
+    <input type="checkbox" formControlName="atendeAutista">
+  </div>
+
+  <div>
+    <label>Atende Criança?</label>
+    <input type="checkbox" formControlName="atendeCrianca">
+  </div>
+
+  <div>
+    <label>Oferece serviços em domicílio?</label>
+    <input type="checkbox" formControlName="atendeDomicilio">
+  </div>
+
+  <div>
+    <label>Tem experiência com cabelo crespo?</label>
+    <input type="checkbox" formControlName="experienciaCrespo">
+  </div>
+
+  <div>
+    <label>Oferece serviços para eventos (casamentos, formaturas)?</label>
+    <input type="checkbox" formControlName="servicoEventos">
+  </div>
+
   <button type="submit" [disabled]="form.invalid">Registrar</button>
 </form>
