@@ -14,14 +14,25 @@
     <h1>Atividades</h1>
   </ng-container>
 
-  <ng-container *ngIf="currentSection === 'gallery'">
-    <h1>Fotos</h1>
-     <button type="button" (click)="openModalRegisterImage()">Cadastrar Imagem</button>
-    <!-- <div *ngFor="let item of galleryItems"> -->
-    <!-- <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="max-width: 200px; max-height: 200px;"> -->
-    <!-- <p>{{ item.comment }}</p> -->
-    <!-- </div> -->
-  </ng-container>
+  <div>
+    <ng-container *ngIf="currentSection === 'gallery'">
+      <h1>Galeria de Fotos</h1>
+      <button type="button" (click)="openModalRegisterImage()">Cadastrar Imagem</button>
+
+      <div *ngIf="galleryItems.length > 0; else noImages">
+        <div *ngFor="let item of galleryItems">
+          <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="width: 200px; height: 200px;">
+          <p>{{ item.comment }}</p>
+          <button (click)="deleteImage(item)">Excluir Imagem</button>
+        </div>
+      </div>
+
+      <ng-template #noImages>
+        <p>Nenhuma imagem cadastrada ainda.</p>
+      </ng-template>
+    </ng-container>
+  </div>
+
 
   <ng-container *ngIf="currentSection === 'finance'">
     <h1>Finanças</h1>
@@ -51,12 +62,6 @@
       <p>Nenhum serviço cadastrado ainda.</p>
     </ng-template>
   </ng-container>
-
-
-
-
-
-
 
     <ng-container *ngIf="currentSection === 'editProfile'">
     <h1>Editar perfil</h1>
