@@ -1,54 +1,71 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { arrayUnion, doc, Firestore, updateDoc } from '@angular/fire/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import {FormsModule} from "@angular/forms";
+import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: 'app-modal-register-image',
-  standalone: true,
   templateUrl: './modal-register-image.component.html',
+  standalone: true,
   imports: [
-    FormsModule
-  ],
-  styleUrls: ['./modal-register-image.component.scss']
+    ReactiveFormsModule,
+    NgIf,
+  ]
 })
-export class ModalRegisterImageComponent {
+export class ModalRegisterImageComponent implements OnInit {
+  form: FormGroup;
   selectedFile: File | null = null;
-  comment: string = '';
+  uploadProgress: number = 0;
 
   constructor(
-    public dialogRef: MatDialogRef<ModalRegisterImageComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { barberId: string, id: string },
-    private firestore: Firestore
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
+    private storage: Storage,
+    private dialogRef: MatDialogRef<ModalRegisterImageComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { barberId: string }
+  ) {
+    this.form = new FormGroup({
+      comment: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      image: new FormControl('', [Validators.required]),
+    });
   }
+
+  ngOnInit(): void {}
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      this.form.get('image')?.setValue(this.selectedFile.name);
+    }
   }
 
   async onSubmit() {
-    if (this.selectedFile) {
-      const storage = getStorage();
-      const storageRef = ref(storage, `barbers/${this.data.barberId}/${this.selectedFile.name}`);
+    if (this.form.valid && this.selectedFile) {
+      const filePath = `gallery/${this.data.barberId}/${Date.now()}_${this.selectedFile.name}`;
+      const fileRef = ref(this.storage, filePath);
 
-      await uploadBytes(storageRef, this.selectedFile).then(async (snapshot) => {
-        const imageUrl = await getDownloadURL(snapshot.ref);
+      const metadata = {
+        customMetadata: {
+          comment: this.form.value.comment
+        }
+      };
 
-        const barbeiroDocRef = doc(this.firestore, `barbearia/${this.data.id}/barbers/${this.data.barberId}`);
-        await updateDoc(barbeiroDocRef, {
-          galleryItem: arrayUnion({
-            imageUrl: imageUrl,
-            comment: this.comment
-          })
-        });
+      const uploadTask = uploadBytesResumable(fileRef, this.selectedFile, metadata);
 
-        this.dialogRef.close();
-      });
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.error('Erro ao fazer upload da imagem:', error);
+        },
+        () => {
+          this.dialogRef.close(true);
+        }
+      );
     }
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
 }

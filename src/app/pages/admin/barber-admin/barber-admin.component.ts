@@ -5,12 +5,14 @@ import { KeyValuePipe, NgForOf, NgIf } from "@angular/common";
 import { Firestore, doc, getDoc, updateDoc, getDocs, collection } from '@angular/fire/firestore';
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import { MatDialog } from "@angular/material/dialog";
-import { ReactiveFormsModule, FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors, Validators } from "@angular/forms";
+import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule} from "@angular/forms";
 import { NgxMaskDirective } from "ngx-mask";
 import { ModalRegisterImageComponent } from "./modals/modal-register-image/modal-register-image.component";
 import { ModalRegisterServiceComponent } from "./modals/modal-register-service/modal-register-service.component";
 import { MatButton } from "@angular/material/button";
 import { ModalEditServiceComponent } from "./modals/modal-edit-service/modal-edit-service.component";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { deleteObject, getMetadata, listAll } from "@angular/fire/storage";
 
 @Component({
   selector: 'app-barber-admin',
@@ -34,10 +36,11 @@ export class BarberAdminComponent implements OnInit {
   barbeiroId!: string;
   barbeiro?: Barbeiros;
   currentSection: string = 'appointments';
-  galleryItems: { imageUrl: string, comment: string }[] = [];
+  galleryItems: { imageUrl: string, comment: string, filePath: string }[] = [];
   barbeariaId!: string;
   registeredServices: any[] = [];
   form: FormGroup;
+  storage = getStorage();
 
   constructor(private dialog: MatDialog) {
     this.form = new FormGroup({
@@ -50,7 +53,7 @@ export class BarberAdminComponent implements OnInit {
       instagram: new FormControl('', [this.instagramValidator()]),
       facebook: new FormControl('', [this.facebookValidator()]),
       tiktok: new FormControl('', [this.tiktokValidator()]),
-      twitter: new FormControl('', [this.twitterValidator()]),
+      twitter: new FormControl('', [this.twitterValidator()])
     });
   }
 
@@ -81,15 +84,18 @@ export class BarberAdminComponent implements OnInit {
   }
 
   async getGalleryItems() {
-    const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}`);
-    const barbeiroDoc = await getDoc(barbeiroDocRef);
+    const galleryRef = ref(this.storage, `gallery/${this.barbeiroId}`);
+    const gallerySnapshot = await listAll(galleryRef);
 
-    if (barbeiroDoc.exists()) {
-      const data = barbeiroDoc.data();
-      if (data && data['galleryItem']) {
-        this.galleryItems = data['galleryItem'];
-      }
-    }
+    this.galleryItems = await Promise.all(
+      gallerySnapshot.items.map(async (item) => {
+        const imageUrl = await getDownloadURL(item);
+        const metadata = await getMetadata(item);
+        const comment = metadata.customMetadata?.['comment'] || 'Sem comentário';
+        const filePath = item.fullPath;
+        return { imageUrl, comment, filePath };
+      })
+    );
   }
 
   async loadRegisteredServices() {
@@ -107,38 +113,34 @@ export class BarberAdminComponent implements OnInit {
   }
 
   instagramValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
       const instagramUrl = control.value;
-      if (!instagramUrl) return null;
       const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
-      return !instagramRegex.test(instagramUrl) ? { invalidInstagramUrl: true } : null;
+      return instagramUrl && !instagramRegex.test(instagramUrl) ? { invalidInstagramUrl: true } : null;
     };
   }
 
   facebookValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
       const facebookUrl = control.value;
-      if (!facebookUrl) return null;
       const facebookRegex = /^https:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9.]+\/?$/;
-      return !facebookRegex.test(facebookUrl) ? { invalidFacebookUrl: true } : null;
+      return facebookUrl && !facebookRegex.test(facebookUrl) ? { invalidFacebookUrl: true } : null;
     };
   }
 
   tiktokValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
       const tiktokUrl = control.value;
-      if (!tiktokUrl) return null;
       const tiktokRegex = /^https:\/\/(www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)$/;
-      return !tiktokRegex.test(tiktokUrl) ? { invalidTiktokUrl: true } : null;
+      return tiktokUrl && !tiktokRegex.test(tiktokUrl) ? { invalidTiktokUrl: true } : null;
     };
   }
 
   twitterValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
       const twitterUrl = control.value;
-      if (!twitterUrl) return null;
       const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
-      return !twitterRegex.test(twitterUrl) ? { invalidTwitterUrl: true } : null;
+      return twitterUrl && !twitterRegex.test(twitterUrl) ? { invalidTwitterUrl: true } : null;
     };
   }
 
@@ -172,11 +174,32 @@ export class BarberAdminComponent implements OnInit {
   }
 
   openModalRegisterImage() {
-    this.dialog.open(ModalRegisterImageComponent, {
+    const dialogRef = this.dialog.open(ModalRegisterImageComponent, {
       data: { barberId: this.barbeiroId },
       width: '400px',
       height: '300px',
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getGalleryItems();
+      }
+    });
+  }
+
+  deleteImage(item: { imageUrl: string, comment: string, filePath: string }) {
+    const confirmed = confirm('Você tem certeza que deseja excluir esta imagem?');
+    if (confirmed) {
+      const storageRef = ref(this.storage, item.filePath);
+      deleteObject(storageRef)
+        .then(() => {
+          this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
+          console.log('Imagem deletada com sucesso.');
+        })
+        .catch((error) => {
+          console.error('Erro ao deletar a imagem:', error);
+        });
+    }
   }
 
   openModalRegisterService(): void {
