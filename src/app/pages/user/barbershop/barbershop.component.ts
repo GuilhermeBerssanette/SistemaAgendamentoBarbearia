@@ -6,11 +6,12 @@ import { Barbearias } from "../../../interfaces/barbearias";
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import {ModalInfoComponent} from "./modals/modal-info/modal-info.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-barbershop',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatIconModule],
   templateUrl: './barbershop.component.html',
   styleUrls: ['./barbershop.component.scss']
 })
