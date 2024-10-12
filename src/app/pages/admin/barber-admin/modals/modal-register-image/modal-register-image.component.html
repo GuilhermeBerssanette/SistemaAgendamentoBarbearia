@@ -1,20 +1,27 @@
-<div class="modal">
-  <div class="modal-content">
-    <span class="close" (click)="onNoClick()">&times;</span>
-    <h2>Registrar Imagem</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div>
-        <label for="file">Escolher Imagem:</label>
-        <input type="file" id="file" (change)="onFileSelected($event)" required>
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <input type="file" (change)="onFileSelected($event)" />
+      <div *ngIf="form.get('image')?.invalid && form.get('image')?.touched">
+        Imagem é obrigatória.
       </div>
+    </div>
 
-      <div>
-        <label for="comment">Comentário (até 30 caracteres):</label>
-        <input type="text" id="comment" [(ngModel)]="comment" name="comment" maxlength="30" required>
+    <div>
+      <input type="text" formControlName="comment" placeholder="Comentário (máx 50 caracteres)" />
+      <div *ngIf="form.get('comment')?.invalid && form.get('comment')?.touched">
+        <small *ngIf="form.get('comment')?.errors?.['required']">Comentário é obrigatório.</small>
+        <small *ngIf="form.get('comment')?.errors?.['maxlength']">Comentário deve ter no máximo 50 caracteres.</small>
       </div>
+    </div>
 
-      <button type="submit">Registrar</button>
-      <button type="button" (click)="onNoClick()">Cancelar</button>
-    </form>
-  </div>
+    <div *ngIf="uploadProgress > 0">
+      <p>Progresso do upload: {{ uploadProgress }}%</p>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="form.invalid || !selectedFile">Cadastrar Imagem</button>
+      <button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
 </div>
