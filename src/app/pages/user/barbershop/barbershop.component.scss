@@ -1,0 +1,223 @@
+* {
+  margin: 0 ;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+  .navbar {
+    background-color: #028090;
+    position: relative;
+    height: 20%;
+
+  .container {
+    max-width: 1140px;
+  }
+
+  .profile {
+    position: absolute;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .profile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+.linhaBranca {
+  height: 2px;
+  background-color: #ffffff;
+  position: relative;
+  z-index: 1000;
+}
+
+.banner {
+  background-color: #05465F;
+  padding: 15px;
+  position: relative;
+  text-align: center;
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: #b0b0b0;
+    border-radius: 10px;
+    margin-bottom: 40px;
+
+    .upload-label-banner {
+      position: absolute !important;
+      top: 50%;
+      left: 50%;
+      translate: (-50%, -50%);
+      color: #2535c2;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      line-height: 2;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .profile-image {
+      position: absolute !important;
+      left: 80px;
+      bottom: -40px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #888080;
+      overflow: hidden;
+
+      .upload-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #2535c2;
+        background-color: #888080;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .barbearia-name {
+    position: absolute;
+    left: 140px;
+    bottom: 50px;
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+
+  .btnContent{
+    position: relative;
+    width: 40px;
+    height: 30px;
+    margin-bottom: 15px;
+    background-color: #055574;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    object-fit: contain;
+  }
+
+  button{
+    bottom: 28px;
+    margin: 0 2px;
+  }
+
+  @media (max-width: 768px) {
+    .profile-image {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .barbearia-name {
+      left: 140px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1400px){
+    .barbearia-name {
+      left: 180px;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    .upload-label-banner,
+    .upload-label {
+      top: 50%;
+      left: 50%;
+    }
+
+    .upload-label-banner {
+      transform: translate(-50%, -50%);
+    }
+
+    .upload-label {
+      transform: translate(-25%, -25%);
+    }
+  }
+  @media (min-width: 1401px) {
+    .upload-label-banner,
+    .upload-label {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .profile-image {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.boxContent{
+  width: 95%;
+  height: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  background-color: #05465F;
+  padding-bottom: 4px;
+  padding-top: 5px;
+}
+
+.boxData{
+  width: 95%;
+  height: 100%;
+  margin: 5px auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding-bottom: 5px;
+}
+
+.boxDataBarber {
+  width: 95%;
+  height: 80%;
+  margin: 10px auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding-bottom: 8px;
+
+  .barberLink {
+    height: 60%;
+    display: flex;
+    align-items: center;          // Alinha verticalmente
+    justify-content: space-between; // Distribui os itens com espaço entre eles
+    padding: 0 10px;              // Adiciona espaçamento lateral
+
+    span {
+      flex-grow: 1;               // Faz o texto ocupar o espaço restante
+      text-align: center;         // Centraliza o texto
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+}
+
+.bgColor{
+  background-color: #05465F;
+}
+
+.modalLink {
+  border-radius: 15px;
+  display: flex;
+  z-index: 1000;
+  margin-left: auto;            // Faz o botão "infos" ir para a direita
+  border-radius: 10px;
+  text-decoration: none;
+}
