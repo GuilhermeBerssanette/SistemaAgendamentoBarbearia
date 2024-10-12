@@ -96,13 +96,14 @@ export class BarbershopComponent implements OnInit {
     }
   }
 
-  openModalInfos(barber: Barbeiros) {
+  openModalInfos(barber: any, event: Event): void {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(ModalInfoComponent, {
       width: '300px',
       data: barber
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe(result => {
       console.log('O modal foi fechado');
     });
   }

@@ -37,10 +37,6 @@
     </div>
 
     <div class="boxData">
-      <p><strong>Endereço:</strong> {{ barbearia?.estado }}, {{ barbearia?.cidade }}, {{ barbearia?.rua }}, {{ barbearia?.numero }}</p>
-
-      <p ><strong>Telefone:</strong> {{ barbearia?.telefone }}</p>
-
 
       <h3 class="fw-bold">Barbeiros:</h3>
 
@@ -48,9 +44,11 @@
         <button class="barberLink btn d-flex justify-content-between align-items-center w-100" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
           <img src="assets/FtPerfil.svg" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-1 ml-4">
           <span class="flex-grow-1 text-center">{{ barber.nome }}</span>
-          <button class="modalLink btn " (click)="openModalInfos(barber)">infos</button>
+          <!-- Aqui usamos $event para parar a propagação -->
+          <button class="modalLink btn" (click)="openModalInfos(barber, $event)">infos</button>
         </button>
       </div>
+
       <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
     </div>
   </div>
