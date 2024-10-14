@@ -18,8 +18,21 @@
   </ng-container>
 
   <ng-container *ngIf="currentSection === 'gallery'">
-    <h1>Fotos</h1>
+    <h1>Galeria de Fotos</h1>
+
+    <div *ngIf="galleryItems.length > 0; else noImages">
+      <div *ngFor="let item of galleryItems">
+        <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="width: 200px; height: 200px;">
+        <p>{{ item.comment }}</p>
+      </div>
+    </div>
+
+    <ng-template #noImages>
+      <p>Nenhuma imagem cadastrada ainda.</p>
+    </ng-template>
   </ng-container>
+
+
 
   <ng-container *ngIf="currentSection === 'reviews'">
     <h1>Avaliações</h1>
