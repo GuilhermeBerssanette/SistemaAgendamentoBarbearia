@@ -1,0 +1,32 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Selecione os serviços para o combo:</label>
+
+      <div *ngFor="let service of registeredServices">
+        <input type="checkbox" [formControlName]="service.id" (change)="onServiceSelectionChange()" />
+        <label>{{ service.id }} - Duração: {{ service.duration }} min</label>
+      </div>
+
+      <div *ngIf="!anyServiceSelected && form.touched">
+        Selecione pelo menos um serviço.
+      </div>
+    </div>
+
+    <div>
+      <input type="text" formControlName="price" placeholder="Preço do combo" />
+      <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
+        Preço é obrigatório.
+      </div>
+    </div>
+
+    <div>
+      <p>Duração total do combo: {{ totalDuration }} minutos</p>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="form.invalid || !anyServiceSelected">Cadastrar Combo</button>
+      <button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

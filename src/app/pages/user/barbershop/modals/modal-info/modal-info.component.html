@@ -1,4 +1,31 @@
-<h2>Informações do Barbeiro</h2>
-<p><strong>Nome:</strong> {{ data.nome }}</p>
-<p><strong>CPF:</strong> {{ data.cpf }}</p>
-<button mat-button (click)="close()">Fechar</button>
+<div class="header-info">
+  <img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">
+  <p><strong>{{ data.barber.nome }}</strong></p>
+</div>
+
+<hr>
+
+<div class="services-section">
+  <h3>Serviços</h3>
+  <div *ngFor="let service of services">
+    <p><strong>{{ service.id }}:</strong> {{ service.price | currency }} - {{ service.duration }} min</p>
+  </div>
+</div>
+
+<hr>
+
+<h3>Perguntas Frequentes</h3>
+<p><strong>Atende Autista?</strong> {{ data.barber.atendeAutista ? 'Sim' : 'Não' }}</p>
+<p><strong>Atende Criança?</strong> {{ data.barber.atendeCrianca ? 'Sim' : 'Não' }}</p>
+<p><strong>Atende Domicílio?</strong> {{ data.barber.atendeDomicilio ? 'Sim' : 'Não' }}</p>
+<p><strong>Experiência com Cabelo Crespo?</strong> {{ data.barber.experienciaCrespo ? 'Sim' : 'Não' }}</p>
+<p><strong>Serviço para Eventos?</strong> {{ data.barber.servicoEventos ? 'Sim' : 'Não' }}</p>
+
+<hr>
+
+<div class="contact-info">
+  <p><strong>WhatsApp:</strong> <a> {{ data.barber.whats }} </a></p>
+  <p><strong>Instagram:</strong> <a>{{ data.barber.instagram }} </a></p>
+</div>
+
+<button (click)="close()">Fechar</button>
