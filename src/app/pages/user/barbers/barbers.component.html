@@ -10,42 +10,28 @@
 
   <ng-container *ngIf="currentSection === 'info'">
     <p><strong>WhatsApp:</strong> <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank">{{ barbeiro?.whats }}</a></p>
-
     <p *ngIf="barbeiro?.instagram"><a [href]="barbeiro?.instagram" target="_blank"><strong>Instagram</strong></a></p>
     <p *ngIf="barbeiro?.facebook"><a [href]="barbeiro?.facebook" target="_blank"><strong>Facebook</strong></a></p>
     <p *ngIf="barbeiro?.tiktok"><a [href]="barbeiro?.tiktok" target="_blank"><strong>TikTok</strong></a></p>
     <p *ngIf="barbeiro?.twitter"><a [href]="barbeiro?.twitter" target="_blank"><strong>Twitter</strong></a></p>
   </ng-container>
 
-  <ng-container *ngIf="currentSection === 'gallery'">
-    <h1>Galeria de Fotos</h1>
+  <div>
+    <ng-container *ngIf="currentSection === 'gallery'">
+      <h1>Galeria de Fotos</h1>
 
-    <div *ngIf="galleryItems.length > 0; else noImages">
-      <div *ngFor="let item of galleryItems">
-        <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="width: 200px; height: 200px;">
-        <p>{{ item.comment }}</p>
+      <div *ngIf="galleryItems.length > 0; else noImages">
+        <div *ngFor="let item of galleryItems">
+          <ng-container *ngIf="item.imageUrl">
+            <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="width: 200px; height: 200px;">
+            <p>{{ item.comment }}</p>
+          </ng-container>
+        </div>
       </div>
-    </div>
 
-    <ng-template #noImages>
-      <p>Nenhuma imagem cadastrada ainda.</p>
-    </ng-template>
-  </ng-container>
-
-
-
-  <ng-container *ngIf="currentSection === 'reviews'">
-    <h1>Avaliações</h1>
-  </ng-container>
-
-  <ng-container *ngIf="currentSection === 'questions'">
-    <h1>Perguntas Frequentes</h1>
-    <div class="questions">
-      <p><strong>Atende Autista?</strong> {{ barbeiro?.atendeAutista ? 'Sim' : 'Não' }}</p>
-      <p><strong>Atende Criança?</strong> {{ barbeiro?.atendeCrianca ? 'Sim' : 'Não' }}</p>
-      <p><strong>Oferece serviços em domicílio?</strong> {{ barbeiro?.atendeDomicilio ? 'Sim' : 'Não' }}</p>
-      <p><strong>Tem experiência com cabelo crespo?</strong> {{ barbeiro?.experienciaCrespo ? 'Sim' : 'Não' }}</p>
-      <p><strong>Oferece serviços para eventos (casamentos, formaturas)?</strong> {{ barbeiro?.servicoEventos ? 'Sim' : 'Não' }}</p>
-    </div>
-  </ng-container>
+      <ng-template #noImages>
+        <p>Nenhuma imagem cadastrada ainda.</p>
+      </ng-template>
+    </ng-container>
+  </div>
 </div>

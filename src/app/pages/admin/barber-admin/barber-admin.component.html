@@ -53,7 +53,8 @@
       <ul>
         <li *ngFor="let service of registeredServices">
           <h4>{{ service.id }}
-            <button (click)="openModalEditService(service)">Editar</button>
+            <button *ngIf="isAdmin()" (click)="openModalEditService(service)">Editar</button>
+            <button *ngIf="isAdmin()" (click)="deleteService(service.id)">Excluir</button>
           </h4>
           <p>Valor: R$ {{ service.price }}</p>
           <p>Duração: {{ service.duration }} minutos</p>
@@ -69,7 +70,10 @@
     <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
       <ul>
         <li *ngFor="let combo of registeredCombos">
-          <h4>Combo: {{ combo.services.join(', ') }}<button (click)="openModalEditCombo(combo)">Editar</button></h4>
+          <h4>Combo: {{ combo.services.join(', ') }}
+            <button *ngIf="isAdmin()" (click)="openModalEditCombo(combo)">Editar</button>
+            <button *ngIf="isAdmin()" (click)="deleteCombo(combo.id)">Excluir</button>
+          </h4>
           <p>Valor: R$ {{ combo.price }}</p>
           <p>Duração: {{ combo.duration }} minutos</p>
         </li>
