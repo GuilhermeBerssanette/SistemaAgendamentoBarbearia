@@ -1,9 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <div class="profile">
-      <img ngSrc="/assets/FtPerfil.svg" alt="Foto de perfil" width="50" height="50" class="img-fluid">
+    <!-- Profile Image with Dropdown -->
+    <div class="profile position-relative" (click)="toggleDropdown()">
+      <img [src]="'/assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid rounded-circle">
+
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" [class.show]="dropdownOpen">
+        <button class="dropdown-item" (click)="goToEditProfile()">Editar Perfil</button>
+        <button class="dropdown-item" (click)="goToFavorites()">Minhas Barbearias Favoritas</button>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item" (click)="logout()">Sair</button>
+      </div>
     </div>
-    <img ngSrc="/assets/Logo_barb.svg" class="img-fluid mx-auto d-block mt-4" alt="Logo da barbearia" width="274" height="194" priority>
+
+    <img src="/assets/Logo_barb.svg" class="img-fluid mx-auto d-block mt-4" alt="Logo da barbearia" width="274" height="194" priority>
+
     <div class="position-absolute bottom-0 end-0 p-3 bg-holder">
       <a class="text-white bg-holder" routerLink="/register-barbearia">Cadastrar barbearia</a>
     </div>
@@ -11,27 +22,28 @@
 </nav>
 
 <div class="w-100 linhaBranca"></div>
-  <div class="bgColor">
-    <div class="containerBtn min-vh-100">
-      <div class="containerSearch">
-        <input type="text" class=" mt-3 inputSearch form-control" placeholder="Buscar por barbearia ou cidade..." (input)="onSearch($event)"/>
-      </div>
+<div class="bgColor">
+  <div class="containerBtn min-vh-100">
+    <div class="containerSearch">
+      <input type="text" class="mt-3 inputSearch form-control" placeholder="Buscar por barbearia ou cidade..." (input)="onSearch($event)">
+    </div>
 
     <br>
 
     <button class="btn btnFilter ms-3 mt-0" type="button" (click)="openModalFilter()">
       Filtros
-      <img ngSrc="/assets/FilterIcon.svg" class="filter-icon img-fluid" alt="Ícone de filtro" width="20" height="20">
+      <img src="/assets/FilterIcon.svg" class="filter-icon img-fluid" alt="Ícone de filtro" width="20" height="20">
     </button>
     <button class="btn btnFilter mt-0" type="button" (click)="clearSearch()">Limpar</button>
 
     <div class="row g-3">
       <div *ngFor="let barbearia of filteredBarbearias" class="col-md-6 mt-3">
         <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm" (click)="goToBarbearia(barbearia.id)">
-          <img [ngSrc]="barbearia.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">
+          <img [src]="barbearia.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">
           <div class="itens">
             <p class="mb-1"><strong>Nome:</strong> {{ barbearia.nomeFantasia }}</p>
             <p class="mb-1"><strong>Endereço:</strong> {{ barbearia.estado }}, {{ barbearia.cidade }}, {{ barbearia.rua }}, {{ barbearia.numero }}</p>
+            <p class="mb-1"><strong>Avaliações:</strong></p>
           </div>
         </div>
       </div>
