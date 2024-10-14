@@ -44,9 +44,11 @@
 
 
   <ng-container *ngIf="currentSection === 'services'">
-    <h3>Serviços</h3>
+    <h3>Serviços: </h3>
     <button (click)="openModalRegisterService()">Cadastrar Serviço</button>
+    <button (click)="openModalRegisterCombo()">Cadastrar Combo</button>
 
+    <h3>Serviços</h3>
     <div *ngIf="registeredServices && registeredServices.length > 0; else noServices">
       <ul>
         <li *ngFor="let service of registeredServices">
@@ -58,12 +60,30 @@
         </li>
       </ul>
     </div>
+
     <ng-template #noServices>
       <p>Nenhum serviço cadastrado ainda.</p>
     </ng-template>
+
+    <h3>Combos:</h3>
+    <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
+      <ul>
+        <li *ngFor="let combo of registeredCombos">
+          <h4>Combo: {{ combo.services.join(', ') }}<button (click)="openModalEditCombo(combo)">Editar</button></h4>
+          <p>Valor: R$ {{ combo.price }}</p>
+          <p>Duração: {{ combo.duration }} minutos</p>
+        </li>
+
+      </ul>
+    </div>
+
+    <ng-template #noCombos>
+      <p>Nenhum combo cadastrado ainda.</p>
+    </ng-template>
   </ng-container>
 
-    <ng-container *ngIf="currentSection === 'editProfile'">
+
+  <ng-container *ngIf="currentSection === 'editProfile'">
     <h1>Editar perfil</h1>
 
     <form [formGroup]="form" (ngSubmit)="updateProfile()">
