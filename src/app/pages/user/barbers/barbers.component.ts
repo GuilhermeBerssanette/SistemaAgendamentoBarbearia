@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
-import { getStorage, ref, listAll, getDownloadURL, getMetadata } from '@angular/fire/storage';
-import { NgForOf, NgIf } from "@angular/common";
+import { ImageService } from '../../../services/image.service';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-barber',
@@ -17,20 +17,23 @@ import { NgForOf, NgIf } from "@angular/common";
 export class BarbersComponent implements OnInit {
   barbeiro: any;
   galleryItems: { imageUrl: string, comment: string, filePath: string }[] = [];
-  currentSection: string = 'gallery';
   barberId!: string;
   barbeariaId!: string;
-  storage = getStorage();
+  currentSection: string = 'info';
 
-  constructor(private route: ActivatedRoute, private firestore: Firestore) {}
+  constructor(
+    private route: ActivatedRoute,
+    private firestore: Firestore,
+    private imageService: ImageService
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    this.barbeariaId = this.route.snapshot.paramMap.get('barbeariaId')!;
+    this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
     this.barberId = this.route.snapshot.paramMap.get('barberId')!;
 
     if (this.barbeariaId && this.barberId) {
       await this.loadBarberInfo();
-      await this.getGalleryItems();
+      await this.loadGalleryItems();
     }
   }
 
@@ -48,31 +51,15 @@ export class BarbersComponent implements OnInit {
     }
   }
 
-  async getGalleryItems(): Promise<void> {
+  async loadGalleryItems(): Promise<void> {
     try {
-      const galleryRef = ref(this.storage, `gallery/${this.barberId}`);
-      const gallerySnapshot = await listAll(galleryRef);
-
-      this.galleryItems = await Promise.all(
-        gallerySnapshot.items.map(async (item) => {
-          try {
-            const imageUrl = await getDownloadURL(item);
-            const metadata = await getMetadata(item);
-            const comment = metadata.customMetadata?.['comment'] || 'Sem comentário';
-            const filePath = item.fullPath;
-            return { imageUrl, comment, filePath };
-          } catch (error) {
-            console.error('Erro ao obter informações da imagem:', error);
-            return { imageUrl: '', comment: 'Erro ao carregar', filePath: '' };
-          }
-        })
-      );
+      this.galleryItems = await this.imageService.getGalleryItems(this.barberId);
     } catch (error) {
       console.error('Erro ao carregar a galeria de imagens:', error);
     }
   }
 
-  showSection(section: string) {
+  showSection(section: string): void {
     this.currentSection = section;
   }
 }

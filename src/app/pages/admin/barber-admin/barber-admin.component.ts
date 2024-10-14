@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
 import { KeyValuePipe, NgForOf, NgIf } from "@angular/common";
-import { Firestore, doc, getDoc, updateDoc, getDocs, collection } from '@angular/fire/firestore';
+import {Firestore, doc, getDoc, updateDoc, getDocs, collection, deleteDoc} from '@angular/fire/firestore';
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import { MatDialog } from "@angular/material/dialog";
 import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule} from "@angular/forms";
@@ -86,6 +86,7 @@ export class BarberAdminComponent implements OnInit {
       console.error('Barbeiro não encontrado!');
     }
   }
+
 
   async getGalleryItems() {
     const galleryRef = ref(this.storage, `gallery/${this.barbeiroId}`);
@@ -207,17 +208,13 @@ export class BarberAdminComponent implements OnInit {
   }
 
   deleteImage(item: { imageUrl: string, comment: string, filePath: string }) {
-    const confirmed = confirm('Você tem certeza que deseja excluir esta postagem?');
-    if (confirmed) {
+    if (confirm('Você tem certeza que deseja excluir esta postagem?')) {
       const storageRef = ref(this.storage, item.filePath);
-      deleteObject(storageRef)
-        .then(() => {
-          this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
-          console.log('Postagem deletada com sucesso.');
-        })
-        .catch((error) => {
-          console.error('Erro ao deletar a postagem:', error);
-        });
+      deleteObject(storageRef).then(() => {
+        this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
+      }).catch((error) => {
+        console.error('Erro ao deletar a postagem:', error);
+      });
     }
   }
 
@@ -281,8 +278,43 @@ export class BarberAdminComponent implements OnInit {
     });
   }
 
+  async deleteService(serviceId: string): Promise<void> {
+    const confirmDelete = confirm('Tem certeza que deseja excluir este serviço?');
+
+    if (confirmDelete) {
+      try {
+        const serviceDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/services/${serviceId}`);
+        await deleteDoc(serviceDocRef);
+        alert('Serviço excluído com sucesso.');
+        await this.loadRegisteredServices();
+      } catch (error) {
+        console.error('Erro ao excluir o serviço:', error);
+      }
+    }
+  }
+
+
+  async deleteCombo(comboId: string): Promise<void> {
+    const confirmDelete = confirm('Tem certeza que deseja excluir este combo?');
+
+    if (confirmDelete) {
+      try {
+        const comboDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/combos/${comboId}`);
+        await deleteDoc(comboDocRef);
+        alert('Combo excluído com sucesso.');
+        await this.loadRegisteredCombos();
+      } catch (error) {
+        console.error('Erro ao excluir o combo:', error);
+      }
+    }
+  }
+
 
   showSection(section: string): void {
     this.currentSection = section;
+  }
+
+  isAdmin(): boolean {
+    return this.router.url.includes('/admin');
   }
 }
