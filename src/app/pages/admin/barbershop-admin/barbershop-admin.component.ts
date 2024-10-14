@@ -27,6 +27,8 @@ export class BarbershopAdminComponent implements OnInit{
   router = inject(Router);
   route = inject(ActivatedRoute);
 
+  currentSection: string = 'finance';
+
   constructor(public dialog: MatDialog) {}
 
 
@@ -44,5 +46,9 @@ export class BarbershopAdminComponent implements OnInit{
       width: '300px',
       height: '300px',
     });
+  }
+
+  showSection(section: string): void {
+    this.currentSection = section;
   }
 }

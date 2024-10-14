@@ -1,3 +1,31 @@
-<div class="container">
-  <button type="button" (click)="openModalRegisterBarber()" >Cadastrar Barbeiro</button>
+<div class="container mt-5">
+  <h1>Administração da Barbearia</h1>
+
+  <div class="button-group">
+    <button (click)="showSection('finance')">Financeiro</button>
+    <button (click)="showSection('manageBarbers')">Gerenciar Barbeiros</button>
+    <button (click)="showSection('report')">Relatório</button>
+    <button (click)="showSection('editProfile')">Editar Perfil</button>
+  </div>
+
+  <ng-container *ngIf="currentSection === 'finance'">
+    <h2>Seção Financeiro</h2>
+    <!-- Conteúdo da seção financeiro -->
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'manageBarbers'">
+    <h2>Gerenciar Barbeiros</h2>
+    <button type="button" (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
+    <!-- Adicione aqui o conteúdo para gerenciar barbeiros -->
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'report'">
+    <h2>Relatório</h2>
+    <!-- Conteúdo da seção de relatório -->
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'editProfile'">
+    <h2>Editar Perfil</h2>
+    <!-- Conteúdo da seção de editar perfil -->
+  </ng-container>
 </div>
