@@ -13,6 +13,8 @@ import { MatButton } from "@angular/material/button";
 import { ModalEditServiceComponent } from "./modals/modal-edit-service/modal-edit-service.component";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { deleteObject, getMetadata, listAll } from "@angular/fire/storage";
+import {ModalRegisterComboComponent} from "./modals/modal-register-combo/modal-register-combo.component";
+import {ModalEditComboComponent} from "./modals/modal-edit-combo/modal-edit-combo.component";
 
 @Component({
   selector: 'app-barber-admin',
@@ -39,6 +41,7 @@ export class BarberAdminComponent implements OnInit {
   galleryItems: { imageUrl: string, comment: string, filePath: string }[] = [];
   barbeariaId!: string;
   registeredServices: any[] = [];
+  registeredCombos: any[] = [];
   form: FormGroup;
   storage = getStorage();
 
@@ -69,6 +72,7 @@ export class BarberAdminComponent implements OnInit {
     await this.getBarbeiroData();
     await this.getGalleryItems();
     await this.loadRegisteredServices();
+    await this.loadRegisteredCombos();
     this.populateForm();
   }
 
@@ -108,6 +112,21 @@ export class BarberAdminComponent implements OnInit {
         id: doc.id,
         price: data['price'],
         duration: data['duration']
+      };
+    });
+  }
+
+  async loadRegisteredCombos() {
+    const combosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/combos`);
+    const combosSnapshot = await getDocs(combosCollectionRef);
+
+    this.registeredCombos = combosSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        price: data['price'],
+        duration: data['duration'],
+        services: data['services']
       };
     });
   }
@@ -210,6 +229,18 @@ export class BarberAdminComponent implements OnInit {
     });
   }
 
+  openModalRegisterCombo(): void {
+    this.dialog.open(ModalRegisterComboComponent, {
+      data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
+      width: '400px',
+      height: '400px',
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRegisteredCombos();
+      }
+    });
+  }
+
   openModalEditService(service: any): void {
     const dialogRef = this.dialog.open(ModalEditServiceComponent, {
       data: {
@@ -231,6 +262,25 @@ export class BarberAdminComponent implements OnInit {
       }
     });
   }
+
+  openModalEditCombo(combo: any): void {
+    const dialogRef = this.dialog.open(ModalEditComboComponent, {
+      data: {
+        barberId: this.barbeiroId,
+        barbeariaId: this.barbeariaId,
+        combo: combo
+      },
+      width: '400px',
+      height: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRegisteredCombos();
+      }
+    });
+  }
+
 
   showSection(section: string): void {
     this.currentSection = section;
