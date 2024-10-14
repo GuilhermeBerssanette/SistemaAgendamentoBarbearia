@@ -1,0 +1,33 @@
+<h2>Editar Combo</h2>
+
+<form [formGroup]="form" (ngSubmit)="saveCombo()">
+  <div>
+    <h3>Valor:</h3>
+    <input type="number" formControlName="price" placeholder="Preço do combo" />
+    <div *ngIf="form.get('price')?.invalid && (form.get('price')?.touched || form.get('price')?.dirty)">
+      <small *ngIf="form.get('price')?.errors?.['required']">Preço é obrigatório.</small>
+    </div>
+  </div>
+
+  <div>
+    <h3>Serviços no combo:</h3>
+    <ul>
+      <li *ngFor="let service of comboServices">
+        {{ service.id }} - {{ service.duration }} minutos
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <p>Duração Total :</p>
+    <input type="number" formControlName="duration" placeholder="Duração total do combo" />
+    <div *ngIf="form.get('duration')?.invalid && (form.get('duration')?.touched || form.get('duration')?.dirty)">
+      <small *ngIf="form.get('duration')?.errors?.['required']">Duração é obrigatória.</small>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="form.invalid">Salvar</button>
+    <button type="button" (click)="close()">Cancelar</button>
+  </div>
+</form>

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
 import { KeyValuePipe, NgForOf, NgIf } from "@angular/common";
-import { Firestore, doc, getDoc, updateDoc, getDocs, collection } from '@angular/fire/firestore';
+import {Firestore, doc, getDoc, updateDoc, getDocs, collection, deleteDoc} from '@angular/fire/firestore';
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import { MatDialog } from "@angular/material/dialog";
 import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule} from "@angular/forms";
@@ -13,6 +13,8 @@ import { MatButton } from "@angular/material/button";
 import { ModalEditServiceComponent } from "./modals/modal-edit-service/modal-edit-service.component";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { deleteObject, getMetadata, listAll } from "@angular/fire/storage";
+import {ModalRegisterComboComponent} from "./modals/modal-register-combo/modal-register-combo.component";
+import {ModalEditComboComponent} from "./modals/modal-edit-combo/modal-edit-combo.component";
 
 @Component({
   selector: 'app-barber-admin',
@@ -39,6 +41,7 @@ export class BarberAdminComponent implements OnInit {
   galleryItems: { imageUrl: string, comment: string, filePath: string }[] = [];
   barbeariaId!: string;
   registeredServices: any[] = [];
+  registeredCombos: any[] = [];
   form: FormGroup;
   storage = getStorage();
 
@@ -69,6 +72,7 @@ export class BarberAdminComponent implements OnInit {
     await this.getBarbeiroData();
     await this.getGalleryItems();
     await this.loadRegisteredServices();
+    await this.loadRegisteredCombos();
     this.populateForm();
   }
 
@@ -82,6 +86,7 @@ export class BarberAdminComponent implements OnInit {
       console.error('Barbeiro não encontrado!');
     }
   }
+
 
   async getGalleryItems() {
     const galleryRef = ref(this.storage, `gallery/${this.barbeiroId}`);
@@ -108,6 +113,21 @@ export class BarberAdminComponent implements OnInit {
         id: doc.id,
         price: data['price'],
         duration: data['duration']
+      };
+    });
+  }
+
+  async loadRegisteredCombos() {
+    const combosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/combos`);
+    const combosSnapshot = await getDocs(combosCollectionRef);
+
+    this.registeredCombos = combosSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        price: data['price'],
+        duration: data['duration'],
+        services: data['services']
       };
     });
   }
@@ -188,17 +208,13 @@ export class BarberAdminComponent implements OnInit {
   }
 
   deleteImage(item: { imageUrl: string, comment: string, filePath: string }) {
-    const confirmed = confirm('Você tem certeza que deseja excluir esta postagem?');
-    if (confirmed) {
+    if (confirm('Você tem certeza que deseja excluir esta postagem?')) {
       const storageRef = ref(this.storage, item.filePath);
-      deleteObject(storageRef)
-        .then(() => {
-          this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
-          console.log('Postagem deletada com sucesso.');
-        })
-        .catch((error) => {
-          console.error('Erro ao deletar a postagem:', error);
-        });
+      deleteObject(storageRef).then(() => {
+        this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
+      }).catch((error) => {
+        console.error('Erro ao deletar a postagem:', error);
+      });
     }
   }
 
@@ -207,6 +223,18 @@ export class BarberAdminComponent implements OnInit {
       data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
       width: '400px',
       height: '300px',
+    });
+  }
+
+  openModalRegisterCombo(): void {
+    this.dialog.open(ModalRegisterComboComponent, {
+      data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
+      width: '400px',
+      height: '400px',
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRegisteredCombos();
+      }
     });
   }
 
@@ -232,7 +260,61 @@ export class BarberAdminComponent implements OnInit {
     });
   }
 
+  openModalEditCombo(combo: any): void {
+    const dialogRef = this.dialog.open(ModalEditComboComponent, {
+      data: {
+        barberId: this.barbeiroId,
+        barbeariaId: this.barbeariaId,
+        combo: combo
+      },
+      width: '400px',
+      height: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRegisteredCombos();
+      }
+    });
+  }
+
+  async deleteService(serviceId: string): Promise<void> {
+    const confirmDelete = confirm('Tem certeza que deseja excluir este serviço?');
+
+    if (confirmDelete) {
+      try {
+        const serviceDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/services/${serviceId}`);
+        await deleteDoc(serviceDocRef);
+        alert('Serviço excluído com sucesso.');
+        await this.loadRegisteredServices();
+      } catch (error) {
+        console.error('Erro ao excluir o serviço:', error);
+      }
+    }
+  }
+
+
+  async deleteCombo(comboId: string): Promise<void> {
+    const confirmDelete = confirm('Tem certeza que deseja excluir este combo?');
+
+    if (confirmDelete) {
+      try {
+        const comboDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/combos/${comboId}`);
+        await deleteDoc(comboDocRef);
+        alert('Combo excluído com sucesso.');
+        await this.loadRegisteredCombos();
+      } catch (error) {
+        console.error('Erro ao excluir o combo:', error);
+      }
+    }
+  }
+
+
   showSection(section: string): void {
     this.currentSection = section;
+  }
+
+  isAdmin(): boolean {
+    return this.router.url.includes('/admin');
   }
 }
