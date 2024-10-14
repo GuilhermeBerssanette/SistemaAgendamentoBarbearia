@@ -38,17 +38,15 @@ export class ModalRegisterServiceComponent implements OnInit {
   }
 
   async filterAvailableServices() {
-    // Acessar a subcoleção de serviços do barbeiro
+
     const servicesCollectionRef = collection(
       this.firestore,
       `barbearia/${this.data.barbeariaId}/barbers/${this.data.barberId}/services`
     );
     const servicesSnapshot = await getDocs(servicesCollectionRef);
 
-    // Obter os nomes dos serviços já cadastrados
     const registeredServices = servicesSnapshot.docs.map(doc => doc.id);
 
-    // Filtrar os serviços que ainda não foram cadastrados
     this.filteredServices = this.availableServices.filter(service => !registeredServices.includes(service));
   }
 
