@@ -6,6 +6,7 @@ import {NgClass, NgIf} from "@angular/common";
 import {NgxMaskDirective} from "ngx-mask";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {ModalRegisterBarbeiroComponent} from "./modals/modal-register-barbeiro/modal-register-barbeiro.component";
+import { HeaderComponent } from '../../../components/header/header.component';
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -16,7 +17,8 @@ import {ModalRegisterBarbeiroComponent} from "./modals/modal-register-barbeiro/m
     NgClass,
     NgIf,
     NgxMaskDirective,
-    MatDialogModule
+    MatDialogModule,
+    HeaderComponent,
   ],
   templateUrl: './barbershop-admin.component.html',
   styleUrls: ['./barbershop-admin.component.scss']

@@ -28,7 +28,7 @@
   border-radius: 50%; /* Torna a imagem circular */
   width: 40px;
   height: 40px;
-  top: 10px;
+  top: -70px;
   left: 10px;
   z-index: 10; /* Mantém o perfil visível sobre outros elementos */
   cursor: pointer;
@@ -103,4 +103,15 @@
 
 .bgColor {
   background-color: #05465F;
+}
+
+
+@media (min-width: 992px) {
+  .profile {
+    top: -50px; /* Ajuste conforme necessário */
+    left: 10px; /* Ajuste conforme necessário */
+  }
+  .bg-holder{
+    padding-top: 42px;
+  }
 }
