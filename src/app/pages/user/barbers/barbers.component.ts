@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { ImageService } from '../../../services/image.service';
 import { NgForOf, NgIf } from '@angular/common';
+import { HeaderComponent } from "../../../components/header/header.component";
 
 @Component({
   selector: 'app-barber',
@@ -10,8 +11,9 @@ import { NgForOf, NgIf } from '@angular/common';
   standalone: true,
   imports: [
     NgIf,
-    NgForOf
-  ],
+    NgForOf,
+    HeaderComponent
+],
   styleUrls: ['./barbers.component.scss']
 })
 export class BarbersComponent implements OnInit {
