@@ -11,6 +11,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import {Firestore, doc, getDoc, updateDoc, collection, getDocs} from "@angular/fire/firestore";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
+import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -26,7 +27,8 @@ import { MatSelectModule } from "@angular/material/select";
     NgForOf,
     MatFormFieldModule,
     MatSelectModule,
-  ],
+    HeaderAdminComponent
+],
   templateUrl: './barbershop-admin.component.html',
   styleUrls: ['./barbershop-admin.component.scss']
 })
