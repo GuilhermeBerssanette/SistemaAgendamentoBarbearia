@@ -5,11 +5,10 @@
 }
 
 .profile {
-  position: absolute;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  top: -74px;
+  top: -55px;
   left: 5px;
   z-index: 10;
   cursor: pointer;
@@ -33,13 +32,16 @@
   position: relative;
 }
 
-
-
 @media (min-width: 992px) {
-  .bg-holder {
-    padding-top: 42px;
-  }
   .profile{
-    top: -37px;
+    top: -45px;
+    left: 8px;
+  }
+}
+
+@media (min-width: 1919px){
+  .profile{
+    top: -55px;
+    left: 8px;
   }
 }
