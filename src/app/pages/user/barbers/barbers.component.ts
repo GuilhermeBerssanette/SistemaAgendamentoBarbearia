@@ -24,7 +24,7 @@ export class BarbersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private firestore: Firestore,
-    private imageService: ImageService
+    private ImageService: ImageService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -53,7 +53,7 @@ export class BarbersComponent implements OnInit {
 
   async loadGalleryItems(): Promise<void> {
     try {
-      this.galleryItems = await this.imageService.getGalleryItems(this.barberId);
+      this.galleryItems = await this.ImageService.getGalleryItems(this.barberId);
     } catch (error) {
       console.error('Erro ao carregar a galeria de imagens:', error);
     }
