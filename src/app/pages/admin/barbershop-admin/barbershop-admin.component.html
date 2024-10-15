@@ -1,32 +1,182 @@
 <app-header></app-header>
-<div class="container-fluid mt-5">
-  <h1>Administração da Barbearia</h1>
+<div class="container mt-5">
 
   <div class="button-group">
     <button (click)="showSection('finance')">Financeiro</button>
-    <button (click)="showSection('manageBarbers')">Gerenciar Barbeiros</button>
+    <button (click)="showSection('barbers')">Gerenciar Barbeiros</button>
     <button (click)="showSection('report')">Relatório</button>
     <button (click)="showSection('editProfile')">Editar Perfil</button>
   </div>
 
+  <!-- Seção Financeiro -->
   <ng-container *ngIf="currentSection === 'finance'">
-    <h2>Seção Financeiro</h2>
-    <!-- Conteúdo da seção financeiro -->
+    <h1>Seção Financeiro</h1>
+
   </ng-container>
 
-  <ng-container *ngIf="currentSection === 'manageBarbers'">
-    <h2>Gerenciar Barbeiros</h2>
-    <button type="button" (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
-    <!-- Adicione aqui o conteúdo para gerenciar barbeiros -->
+  <!-- Seção Gerenciar Barbeiros -->
+  <ng-container *ngIf="currentSection === 'barbers'">
+    <h1>Gerenciar Barbeiros</h1>
+    <button (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
+
+    <div *ngIf="barbeiros.length > 0; else noBarbers">
+      <ul>
+        <li *ngFor="let barbeiro of barbeiros">
+          <strong>Nome:</strong> {{ barbeiro.nome }}<br />
+          <strong>CPF:</strong> {{ barbeiro.cpf }}
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noBarbers>
+      <p>Nenhum barbeiro cadastrado ainda.</p>
+    </ng-template>
+
   </ng-container>
 
+  <!-- Seção Relatório -->
   <ng-container *ngIf="currentSection === 'report'">
-    <h2>Relatório</h2>
-    <!-- Conteúdo da seção de relatório -->
+    <h1>Relatório</h1>
+    <!-- Conteúdo de relatórios -->
   </ng-container>
 
+  <!-- Seção Editar Perfil -->
   <ng-container *ngIf="currentSection === 'editProfile'">
-    <h2>Editar Perfil</h2>
-    <!-- Conteúdo da seção de editar perfil -->
+    <h1>Editar Perfil</h1>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Nome Fantasia</label>
+        <input formControlName="nomeFantasia" placeholder="Nome Fantasia" />
+        <div *ngIf="profileForm.get('nomeFantasia')?.invalid && profileForm.get('nomeFantasia')?.touched">
+          <small class="text-danger">Nome Fantasia é obrigatório.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Razão Social</label>
+        <input formControlName="razaoSocial" placeholder="Razão Social" />
+        <div *ngIf="profileForm.get('razaoSocial')?.invalid && profileForm.get('razaoSocial')?.touched">
+          <small class="text-danger">Razão Social é obrigatória.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Celular</label>
+        <input formControlName="celular" placeholder="Celular" />
+        <div *ngIf="profileForm.get('celular')?.invalid && profileForm.get('celular')?.touched">
+          <small class="text-danger">Celular é obrigatório.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>WhatsApp</label>
+        <input formControlName="whats" placeholder="WhatsApp" />
+        <div *ngIf="profileForm.get('whats')?.invalid && profileForm.get('whats')?.touched">
+          <small class="text-danger">WhatsApp é obrigatório.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Email</label>
+        <input formControlName="email" placeholder="Email" />
+        <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+          <small class="text-danger">
+            <span *ngIf="profileForm.get('email')?.errors?.['required']">Email é obrigatório.</span>
+            <span *ngIf="profileForm.get('email')?.errors?.['email']">Email inválido.</span>
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <label>Telefone</label>
+        <input formControlName="telefone" placeholder="Telefone" />
+        <div *ngIf="profileForm.get('telefone')?.invalid && profileForm.get('telefone')?.touched">
+          <small class="text-danger">Telefone é obrigatório.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Rua</label>
+        <input formControlName="rua" placeholder="Rua" />
+        <div *ngIf="profileForm.get('rua')?.invalid && profileForm.get('rua')?.touched">
+          <small class="text-danger">Rua é obrigatória.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Número</label>
+        <input formControlName="numero" placeholder="Número" />
+        <div *ngIf="profileForm.get('numero')?.invalid && profileForm.get('numero')?.touched">
+          <small class="text-danger">Número é obrigatório.</small>
+        </div>
+      </div>
+
+      <!-- Redes Sociais -->
+      <div>
+        <label>Instagram</label>
+        <input formControlName="instagram" placeholder="Instagram" />
+        <div *ngIf="profileForm.get('instagram')?.invalid && profileForm.get('instagram')?.touched">
+          <small class="text-danger">
+            <span *ngIf="profileForm.get('instagram')?.errors?.['invalidInstagramUrl']">Instagram inválido.</span>
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <label>Facebook</label>
+        <input formControlName="facebook" placeholder="Facebook" />
+        <div *ngIf="profileForm.get('facebook')?.invalid && profileForm.get('facebook')?.touched">
+          <small class="text-danger">
+            <span *ngIf="profileForm.get('facebook')?.errors?.['invalidFacebookUrl']">Facebook inválido.</span>
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <label>Twitter</label>
+        <input formControlName="twitter" placeholder="Twitter" />
+        <div *ngIf="profileForm.get('twitter')?.invalid && profileForm.get('twitter')?.touched">
+          <small class="text-danger">
+            <span *ngIf="profileForm.get('twitter')?.errors?.['invalidTwitterUrl']">Twitter inválido.</span>
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <label>TikTok</label>
+        <input formControlName="tiktok" placeholder="TikTok" />
+        <div *ngIf="profileForm.get('tiktok')?.invalid && profileForm.get('tiktok')?.touched">
+          <small class="text-danger">
+            <span *ngIf="profileForm.get('tiktok')?.errors?.['invalidTiktokUrl']">TikTok inválido.</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Comodidades -->
+      <div class="form-group">
+        <mat-form-field class="w-100">
+          <mat-label>Comodidades</mat-label>
+          <mat-select formControlName="comodidades" multiple>
+            <mat-select-trigger>
+              {{ profileForm.controls['comodidades'].value?.[0] || '' }}
+              <span *ngIf="(profileForm.controls['comodidades'].value?.length || 0) > 1">
+                (+{{(profileForm.controls['comodidades'].value?.length || 0) - 1}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{ comodidade }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="profileForm.get('comodidades')?.invalid && profileForm.get('comodidades')?.touched">
+          <small class="text-danger">Comodidades é obrigatório.</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Foto de Perfil</label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+
+      <button type="submit" [disabled]="profileForm.invalid">Salvar Alterações</button>
+    </form>
   </ng-container>
 </div>
