@@ -1,10 +1,12 @@
+import { Router, RouterLink } from '@angular/router';
 import { Component, HostListener } from '@angular/core';
 import { RegisterComponent } from '../../pages/user/register/register.component';
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ RegisterComponent, ],
+  imports: [ RegisterComponent, RouterLink ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
