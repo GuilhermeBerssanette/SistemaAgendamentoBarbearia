@@ -1,9 +1,10 @@
 import { Component, HostListener } from '@angular/core';
+import { RegisterComponent } from '../../pages/user/register/register.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [ RegisterComponent, ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

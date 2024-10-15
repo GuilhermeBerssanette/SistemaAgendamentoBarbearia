@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { BarbeariasService } from '../../../services/barbearias.service';
 import { ModalFilterComponent } from './modals/modal-filter/modal-filter.component';
+import { HeaderComponent } from '../../../components/header/header.component';
 
 @Component({
   selector: 'app-initial-page',
@@ -13,7 +14,8 @@ import { ModalFilterComponent } from './modals/modal-filter/modal-filter.compone
     NgOptimizedImage,
     NgForOf,
     RouterLink,
-    NgIf
+    NgIf,
+    HeaderComponent,
   ],
   templateUrl: './initial-page.component.html',
   styleUrls: ['./initial-page.component.scss']

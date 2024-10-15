@@ -15,6 +15,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { deleteObject, getMetadata, listAll } from "@angular/fire/storage";
 import {ModalRegisterComboComponent} from "./modals/modal-register-combo/modal-register-combo.component";
 import {ModalEditComboComponent} from "./modals/modal-edit-combo/modal-edit-combo.component";
+import { HeaderComponent } from '../../../components/header/header.component';
 
 @Component({
   selector: 'app-barber-admin',
@@ -25,7 +26,8 @@ import {ModalEditComboComponent} from "./modals/modal-edit-combo/modal-edit-comb
     ReactiveFormsModule,
     NgxMaskDirective,
     MatButton,
-    KeyValuePipe
+    KeyValuePipe,
+    HeaderComponent
   ],
   templateUrl: './barber-admin.component.html',
   styleUrls: ['./barber-admin.component.scss']
