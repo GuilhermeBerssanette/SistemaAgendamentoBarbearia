@@ -38,6 +38,7 @@
   padding: 15px;
   position: relative;
   text-align: center;
+  margin-bottom: -0.2rem;
 
   .image-wrapper {
     position: relative;
@@ -169,7 +170,7 @@
   padding-top: 5px;
 }
 
-.boxData{
+.boxData {
   width: 95%;
   height: 100%;
   margin: 5px auto;
@@ -177,6 +178,29 @@
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.6);
   padding-bottom: 5px;
+  text-align: center;
+
+  h1 {
+    padding: 20px;
+  }
+}
+
+.nameBarber{
+    width: 95%;
+    height: 100%;
+    margin: 5px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+  .nameBarber h1 {
+    padding: 0;
+  }
 }
 
 .boxDataBarber {
@@ -191,13 +215,12 @@
   .barberLink {
     height: 60%;
     display: flex;
-    align-items: center;          // Alinha verticalmente
-    justify-content: space-between; // Distribui os itens com espaço entre eles
-    padding: 0 10px;              // Adiciona espaçamento lateral
-
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
     span {
-      flex-grow: 1;               // Faz o texto ocupar o espaço restante
-      text-align: center;         // Centraliza o texto
+      flex-grow: 1;
+      text-align: center;
       text-decoration: none;
       font-weight: bold;
     }
@@ -212,7 +235,7 @@
   border-radius: 15px;
   display: flex;
   z-index: 1000;
-  margin-left: auto;            // Faz o botão "infos" ir para a direita
+  margin-left: auto;            
   border-radius: 10px;
   text-decoration: none;
 }
