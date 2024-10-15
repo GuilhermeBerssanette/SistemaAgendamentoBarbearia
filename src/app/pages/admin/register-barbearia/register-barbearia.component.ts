@@ -383,10 +383,10 @@ export class RegisterBarbeariaComponent implements OnInit {
         console.error('Erro ao fazer upload da imagem:', error);
       },
       () => {
-        // Obtendo a URL de download após o upload ser concluído
+
         getDownloadURL(uploadTask.snapshot.ref).then((url: string) => {
           this.downloadURL = url;
-          // Salvando a URL da imagem e os dados da barbearia no Firestore
+
           barbeariaData.profileImageUrl = url;
 
           this.barbeariasService.addBarbearia(barbeariaData).then(() => {
