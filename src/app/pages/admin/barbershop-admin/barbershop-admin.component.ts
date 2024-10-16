@@ -8,10 +8,11 @@ import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ModalRegisterBarbeiroComponent } from "./modals/modal-register-barbeiro/modal-register-barbeiro.component";
 import { HeaderComponent } from '../../../components/header/header.component';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import {Firestore, doc, getDoc, updateDoc, collection, getDocs} from "@angular/fire/firestore";
+import { Firestore, doc, getDoc, updateDoc, collection, getDocs, addDoc, deleteDoc } from "@angular/fire/firestore";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -28,7 +29,7 @@ import { HeaderAdminComponent } from "../../../components/header-admin/header-ad
     MatFormFieldModule,
     MatSelectModule,
     HeaderAdminComponent
-],
+  ],
   templateUrl: './barbershop-admin.component.html',
   styleUrls: ['./barbershop-admin.component.scss']
 })
@@ -91,6 +92,94 @@ export class BarbershopAdminComponent implements OnInit {
     }
   }
 
+  async loadBarbeiros(): Promise<void> {
+    try {
+      const barbeirosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
+      const barbeirosSnapshot = await getDocs(barbeirosCollectionRef);
+
+      this.barbeiros = barbeirosSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    } catch (error) {
+      console.error('Erro ao carregar os barbeiros:', error);
+    }
+  }
+
+  confirmDeleteBarbeiro(barbeiro: any) {
+    const confirmed = confirm(`Tem certeza que deseja excluir o barbeiro ${barbeiro.nome}?`);
+    if (confirmed) {
+      this.deleteBarbeiro(barbeiro);
+    }
+  }
+
+  async deleteBarbeiro(barbeiro: any): Promise<void> {
+    try {
+      // Mover o barbeiro para a subcoleção "exclude"
+      const excludeCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/exclude`);
+      await addDoc(excludeCollectionRef, {
+        nome: barbeiro.nome,
+        cpf: barbeiro.cpf,
+        dataExclusao: Timestamp.now()
+      });
+
+      // Excluir o barbeiro da coleção "barbers"
+      const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${barbeiro.id}`);
+      await deleteDoc(barbeiroDocRef);
+
+      // Atualizar a lista de barbeiros
+      this.barbeiros = this.barbeiros.filter(b => b.id !== barbeiro.id);
+
+      alert('Barbeiro excluído com sucesso!');
+    } catch (error) {
+      console.error('Erro ao excluir o barbeiro:', error);
+    }
+  }
+
+  showSection(section: string): void {
+    this.currentSection = section;
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  async onSubmit(): Promise<void> {
+    if (this.profileForm.invalid) {
+      return;
+    }
+
+    const updatedData = this.profileForm.value;
+
+    if (this.selectedFile) {
+      const filePath = `profile/${Date.now()}_${this.selectedFile.name}`;
+      const fileRef = ref(this.storage, filePath);
+      const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
+
+      uploadTask.on('state_changed', () => { },
+        (error) => {
+          console.error('Erro ao fazer upload da imagem:', error);
+        },
+        async () => {
+          updatedData.profileImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          await this.updateBarbeariaData(updatedData);
+        });
+    } else {
+      await this.updateBarbeariaData(updatedData);
+    }
+  }
+
+
+  async updateBarbeariaData(data: any): Promise<void> {
+    try {
+      const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
+      await updateDoc(barbeariaDocRef, data);
+      alert('Perfil atualizado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao atualizar os dados da barbearia:', error);
+    }
+  }
+
   instagramValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const instagramUrl = control.value;
@@ -123,69 +212,11 @@ export class BarbershopAdminComponent implements OnInit {
     };
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
-
-  async onSubmit(): Promise<void> {
-    if (this.profileForm.invalid) {
-      return;
-    }
-
-    const updatedData = this.profileForm.value;
-
-    if (this.selectedFile) {
-      const filePath = `profile/${Date.now()}_${this.selectedFile.name}`;
-      const fileRef = ref(this.storage, filePath);
-      const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
-
-      uploadTask.on('state_changed', () => { },
-        (error) => {
-          console.error('Erro ao fazer upload da imagem:', error);
-        },
-        async () => {
-          const url = await getDownloadURL(uploadTask.snapshot.ref);
-          updatedData.profileImageUrl = url;
-          await this.updateBarbeariaData(updatedData);
-        });
-    } else {
-      await this.updateBarbeariaData(updatedData);
-    }
-  }
-
-  async updateBarbeariaData(data: any): Promise<void> {
-    try {
-      const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
-      await updateDoc(barbeariaDocRef, data);
-      alert('Perfil atualizado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao atualizar os dados da barbearia:', error);
-    }
-  }
-
   openModalRegisterBarber() {
     this.dialog.open(ModalRegisterBarbeiroComponent, {
       data: { barbeariaId: this.barbeariaId },
       width: '300px',
       height: '300px',
     });
-  }
-
-  async loadBarbeiros(): Promise<void> {
-    try {
-      const barbeirosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
-      const barbeirosSnapshot = await getDocs(barbeirosCollectionRef);
-
-      this.barbeiros = barbeirosSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error('Erro ao carregar os barbeiros:', error);
-    }
-  }
-
-  showSection(section: string): void {
-    this.currentSection = section;
   }
 }
