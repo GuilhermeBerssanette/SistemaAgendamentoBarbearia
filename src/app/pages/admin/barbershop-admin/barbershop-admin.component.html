@@ -11,7 +11,6 @@
   <!-- Seção Financeiro -->
   <ng-container *ngIf="currentSection === 'finance'">
     <h1>Seção Financeiro</h1>
-
   </ng-container>
 
   <!-- Seção Gerenciar Barbeiros -->
@@ -22,8 +21,11 @@
     <div *ngIf="barbeiros.length > 0; else noBarbers">
       <ul>
         <li *ngFor="let barbeiro of barbeiros">
-          <strong>Nome:</strong> {{ barbeiro.nome }}<br />
-          <strong>CPF:</strong> {{ barbeiro.cpf }}
+          <div>
+            <strong>Nome:</strong> {{ barbeiro.nome }}<br />
+            <strong>CPF:</strong> {{ barbeiro.cpf }}
+          </div>
+          <button (click)="confirmDeleteBarbeiro(barbeiro)">Excluir</button>
         </li>
       </ul>
     </div>
@@ -31,13 +33,11 @@
     <ng-template #noBarbers>
       <p>Nenhum barbeiro cadastrado ainda.</p>
     </ng-template>
-
   </ng-container>
 
   <!-- Seção Relatório -->
   <ng-container *ngIf="currentSection === 'report'">
     <h1>Relatório</h1>
-    <!-- Conteúdo de relatórios -->
   </ng-container>
 
   <!-- Seção Editar Perfil -->
@@ -153,16 +153,10 @@
       </div>
 
       <!-- Comodidades -->
-      <div class="form-group">
-        <mat-form-field class="w-100">
-          <mat-label>Comodidades</mat-label>
+      <div>
+        <label>Comodidades</label>
+        <mat-form-field>
           <mat-select formControlName="comodidades" multiple>
-            <mat-select-trigger>
-              {{ profileForm.controls['comodidades'].value?.[0] || '' }}
-              <span *ngIf="(profileForm.controls['comodidades'].value?.length || 0) > 1">
-                (+{{(profileForm.controls['comodidades'].value?.length || 0) - 1}})
-              </span>
-            </mat-select-trigger>
             <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{ comodidade }}</mat-option>
           </mat-select>
         </mat-form-field>
