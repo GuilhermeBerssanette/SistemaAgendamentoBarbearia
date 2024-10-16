@@ -24,24 +24,50 @@
           <img class="imgContent mt-2" src="assets/instagram-logo.svg" alt="" height="50" width="50">
         </a>
       </div>
-
-      <!--<p *ngIf="barbeiro?.facebook">
-        <a [href]="barbeiro?.facebook" target="_blank" class="btn">
-          <img src="assets/facebook-logo.svg" alt="Facebook" class="imgContent" height="55" width="55">
-        </a>
-      </p>-->
-
       <p *ngIf="barbeiro?.tiktok">
         <a [href]="barbeiro?.tiktok" target="_blank" class="btn">
           <img src="assets/tiktok-logo.svg" alt="TikTok" class="imgContent" height="55" width="55">
         </a>
       </p>
-
       <p *ngIf="barbeiro?.twitter">
         <a [href]="barbeiro?.twitter" target="_blank" class="btn">
           <img src="assets/twitter-logo.svg" alt="Twitter" class="imgContent" height="55" width="55">
         </a>
       </p>
+
+      <!-- Exibindo Serviços -->
+      <h3>Serviços</h3>
+      <div *ngIf="registeredServices && registeredServices.length > 0; else noServices">
+        <ul>
+          <li *ngFor="let service of registeredServices">
+            <h4>{{ service.id }}</h4>
+            <p>Valor: R$ {{ service.price }}</p>
+            <p>Duração: {{ service.duration }} minutos</p>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noServices>
+        <p>Nenhum serviço cadastrado.</p>
+      </ng-template>
+
+      <!-- Exibindo Combos -->
+      <h3>Combos</h3>
+      <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
+        <ul>
+          <li *ngFor="let combo of registeredCombos">
+            <h4>Combo {{ combo.id }}</h4>
+            <p>Valor: R$ {{ combo.price }}</p>
+            <p>Duração: {{ combo.duration }} minutos</p>
+            <p>Serviços incluídos:</p>
+            <ul>
+              <li *ngFor="let service of combo.services">{{ service }}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noCombos>
+        <p>Nenhum combo cadastrado.</p>
+      </ng-template>
 
     </ng-container>
   </div>
@@ -62,11 +88,9 @@
           </ng-container>
         </div>
       </div>
-
       <ng-template #noImages>
         <p class="text-center">Nenhuma imagem cadastrada ainda.</p>
       </ng-template>
     </ng-container>
   </div>
-
 </div>

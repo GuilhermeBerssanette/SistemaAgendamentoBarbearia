@@ -19,12 +19,12 @@
   <div class="barbearia-name">
     <p>{{ barbearia?.nomeFantasia }}</p>
   </div>
-    <button class="float-end btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" alt=""></button>
-    <button class="float-end btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" alt=""></button>
-    <button class="float-end btn btnContent" *ngIf="isAddressValid()" (click)="openGoogleMaps()" target="_blank"> <img class="imgContent" src="assets/maps-logo.svg" alt=""></button>
-    <button class="float-end btn btnContent"><img class="imgContent" src="assets/tikTok.svg" width="36" height="22"></button>
-    <button class="float-end btn btnContent"><img class="imgContent" src="assets/twitter-x.svg" width="36" height="22"></button>
-    <p *ngIf="!isAddressValid()" class="text-danger">Endereço não encontrado. Verifique as informações fornecidas.</p>
+  <button class="float-end btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" alt=""></button>
+  <button class="float-end btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" alt=""></button>
+  <button class="float-end btn btnContent" *ngIf="isAddressValid()" (click)="openGoogleMaps()" target="_blank"> <img class="imgContent" src="assets/maps-logo.svg" alt=""></button>
+  <button class="float-end btn btnContent"><img class="imgContent" src="assets/tikTok.svg" width="36" height="22"  alt=""></button>
+  <button class="float-end btn btnContent"><img class="imgContent" src="assets/twitter-x.svg" width="36" height="22" alt=""></button>
+  <p *ngIf="!isAddressValid()" class="text-danger">Endereço não encontrado. Verifique as informações fornecidas.</p>
 </div>
 
 <div class="container-fluid text-center bgColor min-vh-100">
@@ -35,14 +35,13 @@
 
     <div class="boxData">
       <h3 class="fw-bold">Barbeiros:</h3>
-        <div class="boxDataBarber" *ngFor="let barber of barbers">
-          <button class="barberLink btn d-flex justify-content-between align-items-center w-100" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-            <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-1 ml-4">
-            <span class="flex-grow-1 text-center">{{ barber.nome }}</span>
-            <!-- Usamos $event para parar a propagação -->
-            <button class="modalLink btn" (click)="openModalInfos(barber, $event)">infos</button>
-          </button>
-        </div>
+      <div class="boxDataBarber" *ngFor="let barber of barbers">
+        <button class="barberLink btn d-flex justify-content-between align-items-center w-100" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
+          <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-1 ml-4">
+          <span class="flex-grow-1 text-center">{{ barber.nome }}</span>
+          <button class="modalLink btn" (click)="openModalInfos(barber, $event)">infos</button>
+        </button>
+      </div>
       <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
     </div>
   </div>
