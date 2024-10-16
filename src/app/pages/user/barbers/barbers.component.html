@@ -8,30 +8,66 @@
     <button (click)="showSection('reviews')">Avaliações</button>
   </div>
 
+  <!-- Seção Info -->
   <ng-container *ngIf="currentSection === 'info'">
     <p><strong>WhatsApp:</strong> <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank">{{ barbeiro?.whats }}</a></p>
     <p *ngIf="barbeiro?.instagram"><a [href]="barbeiro?.instagram" target="_blank"><strong>Instagram</strong></a></p>
     <p *ngIf="barbeiro?.facebook"><a [href]="barbeiro?.facebook" target="_blank"><strong>Facebook</strong></a></p>
     <p *ngIf="barbeiro?.tiktok"><a [href]="barbeiro?.tiktok" target="_blank"><strong>TikTok</strong></a></p>
     <p *ngIf="barbeiro?.twitter"><a [href]="barbeiro?.twitter" target="_blank"><strong>Twitter</strong></a></p>
+
+    <!-- Exibindo Serviços -->
+    <h3>Serviços</h3>
+    <div *ngIf="registeredServices && registeredServices.length > 0; else noServices">
+      <ul>
+        <li *ngFor="let service of registeredServices">
+          <h4>{{ service.id }}</h4>
+          <p>Valor: R$ {{ service.price }}</p>
+          <p>Duração: {{ service.duration }} minutos</p>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noServices>
+      <p>Nenhum serviço cadastrado.</p>
+    </ng-template>
+
+    <!-- Exibindo Combos -->
+    <h3>Combos</h3>
+    <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
+      <ul>
+        <li *ngFor="let combo of registeredCombos">
+          <h4>Combo {{ combo.id }}</h4>
+          <p>Valor: R$ {{ combo.price }}</p>
+          <p>Duração: {{ combo.duration }} minutos</p>
+          <p>Serviços incluídos:</p>
+          <ul>
+            <li *ngFor="let service of combo.services">{{ service }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noCombos>
+      <p>Nenhum combo cadastrado.</p>
+    </ng-template>
   </ng-container>
 
-  <div>
-    <ng-container *ngIf="currentSection === 'gallery'">
-      <h1>Galeria de Fotos</h1>
+  <!-- Seção Galeria -->
+  <ng-container *ngIf="currentSection === 'gallery'">
+    <h1>Galeria de Fotos</h1>
 
-      <div *ngIf="galleryItems.length > 0; else noImages">
-        <div *ngFor="let item of galleryItems">
-          <ng-container *ngIf="item.imageUrl">
-            <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="width: 200px; height: 200px;">
-            <p>{{ item.comment }}</p>
-          </ng-container>
-        </div>
+    <div *ngIf="galleryItems.length > 0; else noImages">
+      <div *ngFor="let item of galleryItems">
+        <ng-container *ngIf="item.imageUrl">
+          <img [src]="item.imageUrl" alt="Imagem do barbeiro" style="width: 200px; height: 200px;">
+          <p>{{ item.comment }}</p>
+        </ng-container>
       </div>
+    </div>
 
-      <ng-template #noImages>
-        <p>Nenhuma imagem cadastrada ainda.</p>
-      </ng-template>
-    </ng-container>
-  </div>
+    <ng-template #noImages>
+      <p>Nenhuma imagem cadastrada ainda.</p>
+    </ng-template>
+  </ng-container>
 </div>
