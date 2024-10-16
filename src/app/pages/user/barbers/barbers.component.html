@@ -31,6 +31,26 @@
     <ng-template #noServices>
       <p>Nenhum serviço cadastrado.</p>
     </ng-template>
+
+    <!-- Exibindo Combos -->
+    <h3>Combos</h3>
+    <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
+      <ul>
+        <li *ngFor="let combo of registeredCombos">
+          <h4>Combo {{ combo.id }}</h4>
+          <p>Valor: R$ {{ combo.price }}</p>
+          <p>Duração: {{ combo.duration }} minutos</p>
+          <p>Serviços incluídos:</p>
+          <ul>
+            <li *ngFor="let service of combo.services">{{ service }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noCombos>
+      <p>Nenhum combo cadastrado.</p>
+    </ng-template>
   </ng-container>
 
   <!-- Seção Galeria -->
