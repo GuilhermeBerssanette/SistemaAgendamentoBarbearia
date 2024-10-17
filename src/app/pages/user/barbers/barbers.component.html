@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container-fluid">
-  <div class="d-flex justify-content-center align-items-center " style="background-color: #05465F;">
+  <div class="d-flex justify-content-center align-items-center" style="background-color: #05465F;">
     <img src="" alt="" class="rounded-circle img-fluid imgBarber mt-3">
   </div>
 
@@ -15,9 +15,10 @@
   <div class="line mt-2"></div>
 
   <div class="d-flex justify-content-center gap-1">
+
     <ng-container *ngIf="currentSection === 'info'">
       <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank" class="btn">
-        <img class="imgContent mt-2 " src="assets/whatsapp-logo.svg" alt="" height="50" width="50">
+        <img class="imgContent mt-2" src="assets/whatsapp-logo.svg" alt="" height="50" width="50">
       </a>
       <div *ngIf="barbeiro?.instagram">
         <a [href]="barbeiro?.instagram" target="_blank" class="btn">
@@ -26,62 +27,78 @@
       </div>
       <p *ngIf="barbeiro?.tiktok">
         <a [href]="barbeiro?.tiktok" target="_blank" class="btn">
-          <img src="assets/tiktok-logo.svg" alt="TikTok" class="imgContent" height="55" width="55">
+          <img src="assets/tikTok.svg" alt="TikTok" class="imgContent" height="55" width="55">
         </a>
       </p>
       <p *ngIf="barbeiro?.twitter">
         <a [href]="barbeiro?.twitter" target="_blank" class="btn">
-          <img src="assets/twitter-logo.svg" alt="Twitter" class="imgContent" height="55" width="55">
+          <img src="assets/twitter-x.svg" alt="Twitter" class="imgContent" height="55" width="55">
         </a>
       </p>
-      </ng-container>
-  </div>
 
-
-    <!-- Exibindo Serviços -->
-<ng-container>
-  <div *ngIf="registeredServices && registeredServices.length > 0; else noServices">
-    <div class="container" style="max-width: 825px; margin: 0 auto;">
-      <div class="row g-3 justify-content-center mb-1">
-        <div *ngFor="let service of registeredServices" class="col-lg-12 col-md-6 mb-3">
-          <div class="card pb-2 p-3 ms-3 me-3 align-items-center">
-            <div class="card-body text-center">
-              <h4 class="card-title">{{ service.id }}</h4>
-              <p class="card-text"><span>Valor:</span> R$ {{ service.price }}</p>
-              <p class="card-text"><span>Duração:</span> {{ service.duration }} minutos</p>
+      <ng-container>
+        <div *ngIf="registeredServices && registeredServices.length > 0; else noServices">
+          <div class="container" style="max-width: 825px; margin: 0 auto;">
+            <div class="row g-3 justify-content-center mb-1">
+              <div *ngFor="let service of registeredServices" class="col-lg-12 col-md-6 mb-3">
+                <div class="card pb-2 p-3 ms-3 me-3 align-items-center">
+                  <div class="card-body text-center">
+                    <h4 class="card-title">{{ service.id }}</h4>
+                    <p class="card-text"><span>Valor:</span> R$ {{ service.price }}</p>
+                    <p class="card-text"><span>Duração:</span> {{ service.duration }} minutos</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <ng-template #noServices>
-    <p class="text-center">Nenhum serviço cadastrado.</p>
-  </ng-template>
-</ng-container>
+        <ng-template #noServices>
+          <p class="text-center">Nenhum serviço cadastrado.</p>
+        </ng-template>
 
-
-  <!-- Exibindo Combos -->
-  <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
-    <div class="container" style="max-width: 825px; margin: 0 auto;">
-    <div class="row g-3 justify-content-center mb-4 ml-4 mr-4 px-3"> <!-- Ajuste de margem horizontal -->
-      <div *ngFor="let combo of registeredCombos" class="col-lg-12 col-md-6 mb-3">
-        <div class="card ">
-          <div class="card-body pb-2 p-3 ms-3 me-3 align-items-center">
-            <h4 class="card-title">Combo <br> {{ combo.id }}</h4>
-            <p class="card-text"><span>Valor:</span> R$ {{ combo.price }}</p>
-            <p class="card-text"><span>Duração:</span> {{ combo.duration }} minutos</p>
-            <p class="card-text"><span>Serviços incluídos:</span></p>
-            <ul class="list-unstyled">
-              <li class="liService" *ngFor="let service of combo.services">{{ service }}</li>
-            </ul>
+        <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos">
+          <div class="container" style="max-width: 825px; margin: 0 auto;">
+            <div class="row g-3 justify-content-center mb-4 px-3">
+              <div *ngFor="let combo of registeredCombos" class="col-lg-12 col-md-6 mb-3">
+                <div class="card">
+                  <div class="card-body pb-2 p-3 ms-3 me-3 align-items-center">
+                    <h4 class="card-title">Combo <br> {{ combo.id }}</h4>
+                    <p class="card-text"><span>Valor:</span> R$ {{ combo.price }}</p>
+                    <p class="card-text"><span>Duração:</span> {{ combo.duration }} minutos</p>
+                    <p class="card-text"><span>Serviços incluídos:</span></p>
+                    <ul class="list-unstyled">
+                      <li class="liService" *ngFor="let service of combo.services">{{ service }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <ng-template #noCombos>
+          <p class="text-center">Nenhum combo cadastrado.</p>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="currentSection === 'gallery'">
+    <h1 class="text-center mb-4">Galeria de Fotos</h1>
+
+    <div *ngIf="galleryItems.length > 0; else noImages" class="row g-3 justify-content-center">
+      <div *ngFor="let item of galleryItems" class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-column align-items-center mb-2 mb-md-3 mb-lg-2">
+        <ng-container *ngIf="item.imageUrl">
+          <div class="card" style="width: auto;">
+            <img [src]="item.imageUrl" alt="Imagem do barbeiro" class="img-fluid card-img-top m-0">
+            <div class="card-body text-center">
+              <p class="card-text">{{ item.comment }}</p>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
-  </div>
-  </div>
-  <ng-template #noCombos>
-    <p class="text-center">Nenhum combo cadastrado.</p>
-  </ng-template>
-  </div>
+    <ng-template #noImages>
+      <p class="text-center">Nenhuma imagem cadastrada ainda.</p>
+    </ng-template>
+  </ng-container>
+</div>

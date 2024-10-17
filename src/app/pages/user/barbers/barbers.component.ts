@@ -39,7 +39,7 @@ export class BarbersComponent implements OnInit {
       await this.loadBarberInfo();
       await this.loadGalleryItems();
       await this.loadBarberServices();
-      await this.loadBarberCombos();  // Carregar os combos
+      await this.loadBarberCombos();
     }
   }
 
@@ -92,7 +92,7 @@ export class BarbersComponent implements OnInit {
           id: doc.id,
           price: data['price'],
           duration: data['duration'],
-          services: data['services'] || []  // serviços incluídos no combo
+          services: data['services'] || []
         };
       });
     } catch (error) {
