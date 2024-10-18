@@ -1,85 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-
-*{
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  font-family: 'Nunito Sans', sans-serif;
-}
-
-.container-fluid{
+.container-fluid {
   background-color: #05465F;
 }
 
-.imgBarber{
+.imgBarber {
   height: 200px;
   width: 200px;
   object-fit: cover;
-  border: 2px solid gray;
 }
-.btnContent{
+
+.btnContent {
   border-radius: 15px;
   margin-right: 1px;
-  padding: 3px;
+  padding: 3px 15px; /* Ajuste uniforme para o padding */
   background-color: #D9D9D9;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 110px; /* Define uma largura mínima para os botões */
 }
 
 .line {
-  height: 2px;
-  border-radius: 10px;
-  background-color: #d3d3d3; /* Ajusta para o tom de cinza desejado */
+  height: 1px;
+  border-radius: 100%;
+  background-color: #d3d3d3;
   width: 100%;
-  max-width: 310px; /* Ajuste a largura conforme necessário */
-  margin: 0 auto; /* Centraliza a linha */
+  max-width: 335px;
+  margin: 0 auto;
 }
 
-.imgContent{
-    position: relative;
-    margin-bottom: 15px;
-    background-color: #055574;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    object-fit: contain;
-    font-size: 20px;
-
+.imgContent {
+  margin-bottom: 15px;
+  background-color: #055574;
+  border-radius: 100%;
+  object-fit: contain;
 }
 
-.card,
-.card-body,
-.card-title,
-.card-text,
-li,
-span{
+.card, .card-body, .card-title, .card-text, li, span {
   background-color: #D9D9D9;
-  cursor: pointer;
-  margin: 0;
-  padding-bottom: 6px;
 }
 
-.card-title,
-span{
+.card-title, span {
   font-size: 20px;
-  font-weight: 400;
   text-align: center;
 }
 
-.card-text{
+.card-text {
   font-size: 18px;
-  font-weight: 300;
   text-align: justify;
-  justify-content: center;
-  align-items: center;
 }
 
-li{
-  margin: 0;
-}
-
-.liService{
-  text-decoration: solid;
+.liService {
   font-weight: bold;
-  padding: 3px;
   padding-left: 15px;
+  text-align: left;
+}
+
+h1{
+  color: #d3d3d3;
+  font-size: 32px;
 }

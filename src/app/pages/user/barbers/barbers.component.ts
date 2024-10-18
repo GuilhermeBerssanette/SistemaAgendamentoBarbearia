@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Firestore, doc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { ImageService } from '../../../services/image.service';
 import { NgForOf, NgIf } from '@angular/common';
-import { HeaderComponent } from "../../../components/header/header.component";
+import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 
 @Component({
   selector: 'app-barber',
@@ -12,8 +12,8 @@ import { HeaderComponent } from "../../../components/header/header.component";
   imports: [
     NgIf,
     NgForOf,
-    HeaderComponent
-  ],
+    HeaderAdminComponent,
+],
   styleUrls: ['./barbers.component.scss']
 })
 export class BarbersComponent implements OnInit {
@@ -100,7 +100,7 @@ export class BarbersComponent implements OnInit {
     }
   }
 
-  showSection(section: string): void {
-    this.currentSection = section;
-  }
+    showSection(section: string) {
+      this.currentSection = section;
+    }
 }
