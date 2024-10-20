@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {Firestore, doc, setDoc, collection, getDoc} from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, collection} from '@angular/fire/firestore';
 import { Barbeiros } from '../../../../../interfaces/barbeiros';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -44,7 +44,6 @@ export class ModalRegisterBarbeiroComponent {
     });
   }
 
-
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
@@ -86,16 +85,9 @@ export class ModalRegisterBarbeiroComponent {
             profileImageUrl: this.downloadURL,
           };
 
-          // Salva os dados do barbeiro
           await setDoc(newBarberDocRef, barberData);
 
-          // Verifica e atualiza o registro da barbearia
           const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
-          const barbeariaDoc = await getDoc(barbeariaRef);
-
-          const barbeariaData = barbeariaDoc.exists() ? barbeariaDoc.data() : {};
-
-          // Atualiza apenas se o valor for verdadeiro (e não undefined)
           const updatedBarbeariaData = {
             ...(barberData.atendeAutista ? { atendeAutista: true } : {}),
             ...(barberData.atendeCrianca ? { atendeCrianca: true } : {}),
@@ -104,7 +96,6 @@ export class ModalRegisterBarbeiroComponent {
             ...(barberData.servicoEventos ? { servicoEventos: true } : {}),
           };
 
-          // Atualiza o documento da barbearia, mesclando as mudanças
           await setDoc(barbeariaRef, updatedBarbeariaData, { merge: true });
 
           alert('Barbeiro registrado com sucesso e barbearia atualizada!');
@@ -113,5 +104,4 @@ export class ModalRegisterBarbeiroComponent {
       );
     }
   }
-
 }
