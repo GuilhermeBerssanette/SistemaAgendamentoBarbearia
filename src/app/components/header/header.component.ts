@@ -2,21 +2,24 @@ import { Router, RouterLink } from '@angular/router';
 import { Component, HostListener } from '@angular/core';
 import { RegisterComponent } from '../../pages/user/register/register.component';
 import { Auth, signOut } from '@angular/fire/auth';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RegisterComponent, RouterLink],
+  imports: [RegisterComponent, RouterLink, MatIcon, ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
   dropdownOpen: boolean = false;
+  sidebarOpen = false;
+barbeiro: any;
 
   constructor(private auth: Auth, private router: Router) {}
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 
   goToEditProfile() {
