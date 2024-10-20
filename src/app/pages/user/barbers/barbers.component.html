@@ -1,7 +1,8 @@
-<app-header-admin></app-header-admin>
+<app-header></app-header>
 <div class="container-fluid">
   <div class="d-flex justify-content-center align-items-center" style="background-color: #05465F;">
-    <img src="assets/FtPerfil.svg" alt="" class=" img-fluid imgBarber mt-3">
+    <img [src]="barbeiro?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" class="rounded-circle img-fluid imgBarber mt-3">
+
   </div>
 
   <h1 class="text-center">{{ barbeiro?.nome }}</h1>
@@ -88,6 +89,28 @@
 
   <!-- Galeria de Fotos -->
   <ng-container *ngIf="currentSection === 'gallery'">
+      <div class="col-12 text-end">
+        <div class="d-flex justify-content-end gap-1 p-2 mr-2" style="max-width: 1312px;">
+          <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank" class="mr-4">
+            <img class="imgContent mt-2 mr-2" src="assets/whatsapp-logo.svg" alt="" height="50" width="50">
+          </a>
+          <div *ngIf="barbeiro?.instagram">
+            <a [href]="barbeiro?.instagram" target="_blank" class="pr-4">
+              <img class="imgContent mt-2 mr-2" src="assets/instagram-logo.svg" alt="" height="50" width="50">
+            </a>
+          </div>
+          <p *ngIf="barbeiro?.tiktok">
+            <a [href]="barbeiro?.tiktok" target="_blank" class="pr-4">
+              <img src="assets/tikTok.svg" alt="TikTok" class="imgContent" height="55" width="55">
+            </a>
+          </p>
+          <p *ngIf="barbeiro?.twitter">
+            <a [href]="barbeiro?.twitter" target="_blank" class="pr-4">
+              <img src="assets/twitter-x.svg" alt="Twitter" class="imgContent" height="55" width="55">
+            </a>
+          </p>
+        </div>
+      </div>
     <h1 class="text-center mb-2 mt-2">Galeria de Fotos</h1>
 
     <div *ngIf="galleryItems.length > 0; else noImages" class="row g-3 justify-content-center">
@@ -105,6 +128,31 @@
     <ng-template #noImages>
       <p class="text-center">Nenhuma imagem cadastrada ainda.</p>
     </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="currentSection === 'reviews'">
+    <div class="col-12 text-end">
+      <div class="d-flex justify-content-end gap-1 p-2 mr-2" style="max-width: 1312px;">
+        <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank" class="mr-4">
+          <img class="imgContent mt-2 mr-2" src="assets/whatsapp-logo.svg" alt="" height="50" width="50">
+        </a>
+        <div *ngIf="barbeiro?.instagram">
+          <a [href]="barbeiro?.instagram" target="_blank" class="pr-4">
+            <img class="imgContent mt-2 mr-2" src="assets/instagram-logo.svg" alt="" height="50" width="50">
+          </a>
+        </div>
+        <p *ngIf="barbeiro?.tiktok">
+          <a [href]="barbeiro?.tiktok" target="_blank" class="pr-4">
+            <img src="assets/tikTok.svg" alt="TikTok" class="imgContent" height="55" width="55">
+          </a>
+        </p>
+        <p *ngIf="barbeiro?.twitter">
+          <a [href]="barbeiro?.twitter" target="_blank" class="pr-4">
+            <img src="assets/twitter-x.svg" alt="Twitter" class="imgContent" height="55" width="55">
+          </a>
+        </p>
+      </div>
+    </div>
   </ng-container>
 
 </div>

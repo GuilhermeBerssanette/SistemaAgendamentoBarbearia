@@ -1,43 +1,75 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Auth, signOut } from "@angular/fire/auth";
+import { ActivatedRoute, Router } from "@angular/router";
+import { doc, Firestore, getDoc } from "@angular/fire/firestore";
 
 @Component({
   selector: 'app-header-admin',
-  standalone: true,
-  imports: [],
   templateUrl: './header-admin.component.html',
-  styleUrl: './header-admin.component.scss'
+  standalone: true,
+  styleUrls: ['./header-admin.component.scss']
 })
-export class HeaderAdminComponent {
+export class HeaderAdminComponent implements OnInit {
   dropdownOpen: boolean = false;
-  router: any;
+  profileImageUrl: string | null = null;
+
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private route: ActivatedRoute,
+    private firestore: Firestore
+  ) {}
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-   // Navegar para a página de editar perfil
-   goToEditProfile() {
-    this.dropdownOpen = false;  // Fechar o dropdown ao navegar
+  async ngOnInit(): Promise<void> {
+    const barbeariaId = this.route.snapshot.paramMap.get('id');
+    if (barbeariaId) {
+      await this.loadBarbershopProfile(barbeariaId);
+    }
+  }
+
+  async loadBarbershopProfile(barbeariaId: string): Promise<void> {
+    try {
+      const barbeariaDocRef = doc(this.firestore, `barbearia/${barbeariaId}`);
+      const barbeariaDoc = await getDoc(barbeariaDocRef);
+      if (barbeariaDoc.exists()) {
+        this.profileImageUrl = barbeariaDoc.data()['profileImageUrl'];
+      } else {
+        console.error('Barbearia não encontrada!');
+      }
+    } catch (error) {
+      console.error('Erro ao carregar imagem da barbearia:', error);
+    }
+  }
+
+  async logout() {
+    this.dropdownOpen = false;
+    try {
+      await signOut(this.auth);
+      console.log('Usuário deslogado');
+      await this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
+  }
+
+  goToEditProfile() {
+    this.dropdownOpen = false;
     this.router.navigate(['/edit-profile']).then(() => {
       console.log('Navigated to Edit Profile');
     });
   }
 
-  // Navegar para a página de barbearias favoritas
   goToFavorites() {
-    this.dropdownOpen = false;  // Fechar o dropdown ao navegar
+    this.dropdownOpen = false;
     this.router.navigate(['/favorites']).then(() => {
       console.log('Navigated to Favorites');
     });
   }
 
-  logout() {
-    this.dropdownOpen = false;  // Fechar o dropdown
-    // Implementar lógica de logout aqui
-    console.log('Usuário deslogado');
-  }
-
-  // Fechar o dropdown se clicar fora
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
