@@ -80,7 +80,7 @@ export class BarbershopComponent implements OnInit {
     this.dialog.open(ModalCommentComponent, {
       width: '1000px',
       height: '600px',
-      data: { barbeariaId: this.barbeariaId } // Passa o id da barbearia
+      data: { barbeariaId: this.barbeariaId }
     });
   }
 
