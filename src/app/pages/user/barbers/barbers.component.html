@@ -47,7 +47,7 @@
       <div class="container" style="max-width: 825px; margin: 0 auto;">
         <div class="row g-3 justify-content-center mb-4 px-0">
           <div *ngFor="let service of registeredServices" class="col-lg-12 col-md-6 mb-3">
-            <div class="card h-100">
+            <div class="card h-100" (click)="goToOrder(service)">
               <div class="card-body text-center p-3">
                 <h4 class="card-title">{{ service.id }}</h4>
                 <p class="card-text"><span>Valor:</span> R$ {{ service.price }}</p>
@@ -67,15 +67,15 @@
       <div class="container" style="max-width: 825px; margin: 0 auto;">
         <div class="row g-3 justify-content-center mb-4 px-0">
           <div *ngFor="let combo of registeredCombos" class="col-lg-12 col-md-6 mb-3">
-            <div class="card h-100">
+            <div class="card h-100" (click)="goToOrder(combo)">
               <div class="card-body text-center p-3">
-                <h4 class="card-title">Combo <br> {{ combo.id }}</h4>
-                <p class="card-text"><span>Valor:</span> R$ {{ combo.price }}</p>
-                <p class="card-text"><span>Duração:</span> {{ combo.duration }} minutos</p>
+                <h4 class="card-title">Combo</h4>
                 <p class="card-text"><span>Serviços incluídos:</span></p>
                 <ul class="list-unstyled">
                   <li class="liService" *ngFor="let service of combo.services">{{ service }}</li>
                 </ul>
+                <p class="card-text"><span>Valor:</span> R$ {{ combo.price }}</p>
+                <p class="card-text"><span>Duração:</span> {{ combo.duration }} minutos</p>
               </div>
             </div>
           </div>
