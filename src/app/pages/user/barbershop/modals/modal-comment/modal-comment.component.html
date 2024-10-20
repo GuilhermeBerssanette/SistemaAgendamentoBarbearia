@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h2 class="modal-title">Comentários</h2>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+  <div *ngFor="let comment of comments" class="comment-box mb-4">
+    <h5>{{ comment.userName }} <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small></h5>
+    <p>{{ comment.comment }}</p>
+    <hr>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <form [formGroup]="form" class="w-100 d-flex align-items-center">
+    <input type="text" formControlName="comment" class="form-control" placeholder="Escreva um comentário">
+    <button type="button" class="btn btn-primary ms-2" (click)="submitComment()" [disabled]="form.invalid">Enviar</button>
+  </form>
+</div>

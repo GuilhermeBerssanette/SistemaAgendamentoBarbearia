@@ -8,6 +8,7 @@ import { ModalInfoComponent } from "./modals/modal-info/modal-info.component";
 import { MatDialog } from "@angular/material/dialog";
 import {MatIcon} from "@angular/material/icon";
 import { HeaderComponent } from '../../../components/header/header.component';
+import {ModalCommentComponent} from "./modals/modal-comment/modal-comment.component";
 
 @Component({
   selector: 'app-barbershop',
@@ -74,4 +75,13 @@ export class BarbershopComponent implements OnInit {
       }
     });
   }
+
+  openModalComment(): void {
+    this.dialog.open(ModalCommentComponent, {
+      width: '1000px',
+      height: '600px',
+      data: { barbeariaId: this.barbeariaId } // Passa o id da barbearia
+    });
+  }
+
 }
