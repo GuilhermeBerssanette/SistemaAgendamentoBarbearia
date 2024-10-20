@@ -34,7 +34,7 @@ export class ModalCommentComponent implements OnInit {
     this.loadComments();
   }
 
-  loadComments(): void { // Não precisamos de async/await aqui
+  loadComments(): void {
     const commentsCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/comments`);
     collectionData(commentsCollectionRef, { idField: 'id' }).subscribe(data => {
       this.comments = data;
