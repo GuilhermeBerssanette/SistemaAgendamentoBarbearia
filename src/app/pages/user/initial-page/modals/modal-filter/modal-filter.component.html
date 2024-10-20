@@ -1,17 +1,54 @@
-  <nav class="navbar">
-    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
-        <span class="fs-16">Filtro</span>
-        <mat-icon class=" hover" (click)="closeModalFilter()">close</mat-icon>
-    </div>
-  </nav>
+<nav class="navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center p-3">
+    <span class="fs-16">Filtro</span>
+    <mat-icon class="hover" (click)="closeModalFilter()">close</mat-icon>
+  </div>
+</nav>
 
 <div class="w-100 linhaBranca"></div>
 
-    <div class="bgColor d-flex">
-      <!-- BERSSANETTE VOCÊ BOTA QLQR COISA DO FILTRO AQUI!!! DENTRO DESSA DIV-->
-
+<div class="bgColor p-3">
+  <form [formGroup]="filterForm" class="form">
+    <!-- Estado -->
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <select id="estado" class="form-select" formControlName="estado">
+        <option value="">Selecione um estado</option>
+        <option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</option>
+      </select>
     </div>
-    
-  <div class="areaBtn">
-    <button class="btn btnFilter hover">Aplicar Filtro</button>
-  </div>
+
+    <!-- Cidade -->
+    <div class="form-group">
+      <label for="cidade">Cidade</label>
+      <select id="cidade" class="form-select" formControlName="cidade" [disabled]="!cidadesList.length">
+        <option value="">Selecione uma cidade</option>
+        <option *ngFor="let cidade of cidadesList" [value]="cidade.nome">{{ cidade.nome }}</option>
+      </select>
+    </div>
+
+    <!-- Comodidades -->
+    <div class="form-group">
+      <label>Comodidades</label>
+      <ng-container *ngFor="let comodidade of comodidades; let i = index">
+        <div>
+          <input type="checkbox" [formControl]="getComodidadeControl(i)"> {{ comodidade }}
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Tipo de Atendimento -->
+    <div class="form-group">
+      <label>Tipo de Atendimento</label>
+      <ng-container *ngFor="let tipo of tiposAtendimento; let i = index">
+        <div>
+          <input type="checkbox" [formControl]="getTipoAtendimentoControl(i)"> {{ tipo }}
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</div>
+
+<div class="areaBtn">
+  <button class="btn btnFilter hover" (click)="aplicarFiltro()">Aplicar Filtro</button>
+</div>

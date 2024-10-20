@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Firestore, doc, setDoc, collection } from '@angular/fire/firestore';
+import {Firestore, doc, setDoc, collection, getDoc} from '@angular/fire/firestore';
 import { Barbeiros } from '../../../../../interfaces/barbeiros';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -51,10 +51,8 @@ export class ModalRegisterBarbeiroComponent {
 
   async addBarberToBarbearia() {
     if (this.form.valid && this.selectedFile) {
-
       const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
       const newBarberDocRef = doc(barbersCollectionRef);
-
 
       const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
       const fileRef = ref(this.storage, filePath);
@@ -88,11 +86,32 @@ export class ModalRegisterBarbeiroComponent {
             profileImageUrl: this.downloadURL,
           };
 
+          // Salva os dados do barbeiro
           await setDoc(newBarberDocRef, barberData);
-          alert('Barbeiro registrado com sucesso!');
+
+          // Verifica e atualiza o registro da barbearia
+          const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
+          const barbeariaDoc = await getDoc(barbeariaRef);
+
+          const barbeariaData = barbeariaDoc.exists() ? barbeariaDoc.data() : {};
+
+          // Atualiza apenas se o valor for verdadeiro (e não undefined)
+          const updatedBarbeariaData = {
+            ...(barberData.atendeAutista ? { atendeAutista: true } : {}),
+            ...(barberData.atendeCrianca ? { atendeCrianca: true } : {}),
+            ...(barberData.atendeDomicilio ? { atendeDomicilio: true } : {}),
+            ...(barberData.experienciaCrespo ? { experienciaCrespo: true } : {}),
+            ...(barberData.servicoEventos ? { servicoEventos: true } : {}),
+          };
+
+          // Atualiza o documento da barbearia, mesclando as mudanças
+          await setDoc(barbeariaRef, updatedBarbeariaData, { merge: true });
+
+          alert('Barbeiro registrado com sucesso e barbearia atualizada!');
           this.dialogRef.close();
         }
       );
     }
   }
+
 }
