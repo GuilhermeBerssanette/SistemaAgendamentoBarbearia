@@ -21,6 +21,4 @@ export const routes: Routes = [
   {path: 'barbearia/:id/barber/:barberId', component: BarbersComponent},
   {path: 'barbearia/:id/barber/:barberId/admin', component: BarberAdminComponent}
 
-
-
 ];

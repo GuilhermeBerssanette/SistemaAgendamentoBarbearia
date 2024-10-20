@@ -6,14 +6,22 @@
     </div>
 
     <br>
-    
+
     <button class="btn btnFilter ms-3 mt-0" type="button" (click)="openModalFilter()">
       Filtros
       <img src="/assets/FilterIcon.svg" class="filter-icon img-fluid" alt="Ícone de filtro" width="20" height="20">
     </button>
     <button class="btn btnFilter mt-0" type="button" (click)="clearSearch()">Limpar</button>
 
-    <div class="row g-3">
+    <!-- Filtros Selecionados -->
+    <div *ngIf="selectedFilters.length > 0" class="selected-filters mt-3">
+      <span *ngFor="let filter of selectedFilters" class="filter-chip">
+        {{ filter }}
+        <span class="filter-remove" (click)="removeFilter(filter)">x</span>
+      </span>
+    </div>
+
+    <div class="row g-3 mt-4">
       <div *ngFor="let barbearia of filteredBarbearias" class="col-md-6 mt-3">
         <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm" (click)="goToBarbearia(barbearia.id)">
           <img [src]="barbearia.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="rounded-circle me-3 img-fluid" width="50" height="50">

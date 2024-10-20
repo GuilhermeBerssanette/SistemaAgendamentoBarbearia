@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Firestore, doc, setDoc, collection } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, collection} from '@angular/fire/firestore';
 import { Barbeiros } from '../../../../../interfaces/barbeiros';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -44,17 +44,14 @@ export class ModalRegisterBarbeiroComponent {
     });
   }
 
-
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
 
   async addBarberToBarbearia() {
     if (this.form.valid && this.selectedFile) {
-
       const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
       const newBarberDocRef = doc(barbersCollectionRef);
-
 
       const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
       const fileRef = ref(this.storage, filePath);
@@ -89,7 +86,19 @@ export class ModalRegisterBarbeiroComponent {
           };
 
           await setDoc(newBarberDocRef, barberData);
-          alert('Barbeiro registrado com sucesso!');
+
+          const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
+          const updatedBarbeariaData = {
+            ...(barberData.atendeAutista ? { atendeAutista: true } : {}),
+            ...(barberData.atendeCrianca ? { atendeCrianca: true } : {}),
+            ...(barberData.atendeDomicilio ? { atendeDomicilio: true } : {}),
+            ...(barberData.experienciaCrespo ? { experienciaCrespo: true } : {}),
+            ...(barberData.servicoEventos ? { servicoEventos: true } : {}),
+          };
+
+          await setDoc(barbeariaRef, updatedBarbeariaData, { merge: true });
+
+          alert('Barbeiro registrado com sucesso e barbearia atualizada!');
           this.dialogRef.close();
         }
       );
