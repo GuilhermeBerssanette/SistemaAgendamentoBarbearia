@@ -1,40 +1,45 @@
-import { Component, inject, OnInit, HostListener } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
-import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
-import { BarbeariasService } from '../../../services/barbearias.service';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { ModalFilterComponent } from './modals/modal-filter/modal-filter.component';
 import { HeaderComponent } from '../../../components/header/header.component';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-initial-page',
+  templateUrl: './initial-page.component.html',
   standalone: true,
   imports: [
-    NgOptimizedImage,
-    NgForOf,
-    RouterLink,
-    NgIf,
     HeaderComponent,
+    NgForOf,
+    NgIf
   ],
-  templateUrl: './initial-page.component.html',
   styleUrls: ['./initial-page.component.scss']
 })
 export class InitialPageComponent implements OnInit {
 
-  http = inject(HttpClient);
+  firestore = inject(Firestore);
   router = inject(Router);
+  dialog = inject(MatDialog);
 
   barbearias: any[] = [];
   filteredBarbearias: any[] = [];
+  selectedFilters: string[] = [];
 
-  dropdownOpen = false;  // Controla a visibilidade do dropdown
+  comodidades: string[] = ['Sinuca', 'TV', 'Wi-Fi', 'Ar-Condicionado'];
+  tiposAtendimento: string[] = ['Atende Autista', 'Cabelo Crespo', 'Atende Domicílio', 'Atende Eventos'];
 
-  constructor(public dialog: MatDialog, private barbeariasService: BarbeariasService) {}
+  ngOnInit(): void {
+    this.loadBarbearias();
+  }
 
-  async ngOnInit() {
-    this.barbearias = await this.barbeariasService.getBarbearias();
-    this.filteredBarbearias = this.barbearias;
+  loadBarbearias() {
+    const barbeariaRef = collection(this.firestore, 'barbearia');
+    collectionData(barbeariaRef, { idField: 'id' }).subscribe(data => {
+      this.barbearias = data;
+      this.filteredBarbearias = this.barbearias;
+    });
   }
 
   onSearch(event: Event) {
@@ -45,59 +50,106 @@ export class InitialPageComponent implements OnInit {
     );
   }
 
-  removeAccents(str: string) {
+  removeAccents(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // Abre o modal de filtro
+  openModalFilter() {
+    const dialogRef = this.dialog.open(ModalFilterComponent, {
+      width: '700px',
+      height: '610px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.applyFilter(result);
+      }
+    });
+  }
+
+  applyFilter(filterData: any) {
+    const { estado, cidade, comodidades, tiposAtendimento } = filterData;
+
+    this.selectedFilters = [];
+
+    this.filteredBarbearias = this.barbearias.filter(barbearia => {
+      const matchEstado = estado ? barbearia.estado === this.getEstadoSigla(estado) : true;
+      if (estado) this.selectedFilters.push(estado);
+
+      const matchCidade = cidade ? barbearia.cidade === cidade : true;
+      if (cidade) this.selectedFilters.push(cidade);
+
+      const selectedComodidades = comodidades
+        .map((checked: boolean, index: number) => checked ? this.comodidades[index] : null)
+        .filter((item: string | null) => item);
+
+      const matchComodidades = selectedComodidades.length
+        ? selectedComodidades.every((comodidade: string) => barbearia.comodidades.includes(comodidade))
+        : true;
+
+      if (selectedComodidades.length > 0) this.selectedFilters.push(...selectedComodidades);
+
+      const matchTiposAtendimento = tiposAtendimento.every((tipo: string) => {
+        if (tipo === 'Atende Autista') return barbearia.atendeAutista === true;
+        if (tipo === 'Cabelo Crespo') return barbearia.experienciaCrespo === true;
+        if (tipo === 'Atende Domicílio') return barbearia.atendeDomicilio === true;
+        if (tipo === 'Atende Eventos') return barbearia.servicoEventos === true;
+        return false;
+      });
+
+      if (tiposAtendimento.length > 0) this.selectedFilters.push(...tiposAtendimento);
+
+      return matchEstado && matchCidade && matchComodidades && matchTiposAtendimento;
+    });
+  }
+
+  removeFilter(filter: string) {
+    this.selectedFilters = this.selectedFilters.filter(f => f !== filter);
+    this.applyFilter({});
+  }
+
+  getEstadoSigla(nomeEstado: string): string {
+    const estadosMap: { [key: string]: string } = {
+      'Acre': 'AC',
+      'Alagoas': 'AL',
+      'Amapá': 'AP',
+      'Amazonas': 'AM',
+      'Bahia': 'BA',
+      'Ceará': 'CE',
+      'Distrito Federal': 'DF',
+      'Espírito Santo': 'ES',
+      'Goiás': 'GO',
+      'Maranhão': 'MA',
+      'Mato Grosso': 'MT',
+      'Mato Grosso do Sul': 'MS',
+      'Minas Gerais': 'MG',
+      'Pará': 'PA',
+      'Paraíba': 'PB',
+      'Paraná': 'PR',
+      'Pernambuco': 'PE',
+      'Piauí': 'PI',
+      'Rio de Janeiro': 'RJ',
+      'Rio Grande do Norte': 'RN',
+      'Rio Grande do Sul': 'RS',
+      'Rondônia': 'RO',
+      'Roraima': 'RR',
+      'Santa Catarina': 'SC',
+      'São Paulo': 'SP',
+      'Sergipe': 'SE',
+      'Tocantins': 'TO'
+    };
+    return estadosMap[nomeEstado] || nomeEstado;
   }
 
   clearSearch() {
     this.filteredBarbearias = this.barbearias;
+    this.selectedFilters = [];
   }
 
   goToBarbearia(id: string) {
     this.router.navigate(['/barbearia', id]).then(() => {
       console.log(`Navigated to barbearia with ID: ${id}`);
     });
-  }
-
-  openModalFilter() {
-    this.dialog.open(ModalFilterComponent, {
-      width: '700px',
-      height: '610px'
-    });
-  }
-
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
-
-  // Navegar para a página de editar perfil
-  goToEditProfile() {
-    this.dropdownOpen = false;  // Fechar o dropdown ao navegar
-    this.router.navigate(['/edit-profile']).then(() => {
-      console.log('Navigated to Edit Profile');
-    });
-  }
-
-  // Navegar para a página de barbearias favoritas
-  goToFavorites() {
-    this.dropdownOpen = false;  // Fechar o dropdown ao navegar
-    this.router.navigate(['/favorites']).then(() => {
-      console.log('Navigated to Favorites');
-    });
-  }
-
-  logout() {
-    this.dropdownOpen = false;  // Fechar o dropdown
-    // Implementar lógica de logout aqui
-    console.log('Usuário deslogado');
-  }
-
-  // Fechar o dropdown se clicar fora
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.profile')) {
-      this.dropdownOpen = false;
-    }
   }
 }
