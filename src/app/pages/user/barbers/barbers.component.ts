@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { ImageService } from '../../../services/image.service';
 import { NgForOf, NgIf } from '@angular/common';
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
-import {HeaderComponent} from "../../../components/header/header.component";
+import { HeaderComponent } from "../../../components/header/header.component";
 
 @Component({
   selector: 'app-barber',
@@ -30,7 +30,8 @@ export class BarbersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private firestore: Firestore,
-    private ImageService: ImageService
+    private imageService: ImageService,
+    private router: Router // Adicione o router para redirecionar
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -61,7 +62,7 @@ export class BarbersComponent implements OnInit {
 
   async loadGalleryItems(): Promise<void> {
     try {
-      this.galleryItems = await this.ImageService.getGalleryItems(this.barberId);
+      this.galleryItems = await this.imageService.getGalleryItems(this.barberId);
     } catch (error) {
       console.error('Erro ao carregar a galeria de imagens:', error);
     }
@@ -102,7 +103,18 @@ export class BarbersComponent implements OnInit {
     }
   }
 
-    showSection(section: string) {
-      this.currentSection = section;
-    }
+  // Função para redirecionar para a página de ordens
+  goToOrder(serviceOrCombo: any) {
+    this.router.navigate(['/barbearia', this.barbeariaId, 'barber', this.barberId, 'orders'], {
+      queryParams: {
+        id: serviceOrCombo.id,
+        price: serviceOrCombo.price,
+        duration: serviceOrCombo.duration
+      }
+    });
+  }
+
+  showSection(section: string) {
+    this.currentSection = section;
+  }
 }
