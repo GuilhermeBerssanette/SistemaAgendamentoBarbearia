@@ -1,4 +1,6 @@
 import { Component, HostListener } from '@angular/core';
+import {Auth, signOut} from "@angular/fire/auth";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header-admin',
@@ -9,35 +11,41 @@ import { Component, HostListener } from '@angular/core';
 })
 export class HeaderAdminComponent {
   dropdownOpen: boolean = false;
-  router: any;
+
+
+  constructor(private auth: Auth, private router: Router) {}
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-   // Navegar para a página de editar perfil
    goToEditProfile() {
-    this.dropdownOpen = false;  // Fechar o dropdown ao navegar
+    this.dropdownOpen = false;
     this.router.navigate(['/edit-profile']).then(() => {
       console.log('Navigated to Edit Profile');
     });
   }
 
-  // Navegar para a página de barbearias favoritas
   goToFavorites() {
-    this.dropdownOpen = false;  // Fechar o dropdown ao navegar
+    this.dropdownOpen = false;
     this.router.navigate(['/favorites']).then(() => {
       console.log('Navigated to Favorites');
     });
   }
 
-  logout() {
-    this.dropdownOpen = false;  // Fechar o dropdown
-    // Implementar lógica de logout aqui
-    console.log('Usuário deslogado');
+  async logout() {
+    this.dropdownOpen = false;
+    try {
+      await signOut(this.auth);
+      console.log('Usuário deslogado');
+      await this.router.navigate(['/']);
+      console.log('Navegação para a página inicial concluída');
+    } catch (error) {
+      console.error('Erro ao fazer logout ou navegar:', error);
+    }
   }
 
-  // Fechar o dropdown se clicar fora
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;

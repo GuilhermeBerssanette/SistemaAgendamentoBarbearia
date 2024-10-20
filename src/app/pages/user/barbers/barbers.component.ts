@@ -4,6 +4,7 @@ import { Firestore, doc, getDoc, collection, getDocs } from '@angular/fire/fires
 import { ImageService } from '../../../services/image.service';
 import { NgForOf, NgIf } from '@angular/common';
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
+import {HeaderComponent} from "../../../components/header/header.component";
 
 @Component({
   selector: 'app-barber',
@@ -13,7 +14,8 @@ import { HeaderAdminComponent } from "../../../components/header-admin/header-ad
     NgIf,
     NgForOf,
     HeaderAdminComponent,
-],
+    HeaderComponent,
+  ],
   styleUrls: ['./barbers.component.scss']
 })
 export class BarbersComponent implements OnInit {
