@@ -25,19 +25,19 @@
 
 .profile {
   position: absolute;
-  border-radius: 50%; /* Torna a imagem circular */
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   top: -70px;
   left: 10px;
-  z-index: 10; /* Mantém o perfil visível sobre outros elementos */
+  z-index: 10;
   cursor: pointer;
 }
 
 .profile img {
   width: 100%;
   height: 100%;
-  border-radius: 50%; /* Torna a imagem circular */
+  border-radius: 50%;
 }
 
 .containerBtn {
@@ -57,9 +57,9 @@
 }
 
 .filter-icon {
-  width: 15px; /* Ajuste o tamanho conforme necessário */
-  height: 20px; /* Mantém a proporção da imagem */
-  margin-left: 0.1rem; /* Espaço entre o texto e o ícone */
+  width: 15px;
+  height: 20px;
+  margin-left: 0.1rem;
   margin-bottom: 0.2rem;
   text-align: center;
 }
@@ -71,7 +71,7 @@
   height: 4vh;
 }
 
-.inputSearch{
+.inputSearch {
   width: 97%;
   height: 30px;
   background: #D9D9D9 url("/assets/IconSearch.svg") no-repeat 10px;
@@ -86,7 +86,7 @@
   padding-bottom: 0;
 }
 
-.form-control:focus{
+.form-control:focus {
   border-color: inherit;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -97,21 +97,58 @@
   cursor: pointer;
 }
 
-/*.card:hover{
-  background-color: #bdbcbc;
-}*/
-
 .bgColor {
   background-color: #05465F;
 }
 
+/* Estilo dos filtros aplicados */
+.selected-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-chip {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.filter-chip:hover {
+  background-color: #e1e1e1;
+}
+
+.filter-remove {
+  margin-left: 8px;
+  cursor: pointer;
+  background-color: #d9534f;
+  color: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.filter-remove:hover {
+  background-color: #c9302c;
+}
 
 @media (min-width: 992px) {
   .profile {
-    top: -50px; /* Ajuste conforme necessário */
-    left: 10px; /* Ajuste conforme necessário */
+    top: -50px;
+    left: 10px;
   }
-  .bg-holder{
+  .bg-holder {
     padding-top: 42px;
   }
 }
