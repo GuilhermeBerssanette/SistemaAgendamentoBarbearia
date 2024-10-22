@@ -14,7 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 export class HeaderComponent {
   dropdownOpen: boolean = false;
   sidebarOpen = false;
-barbeiro: any;
+  barbeiro: any;
 
   constructor(private auth: Auth, private router: Router) {}
 
