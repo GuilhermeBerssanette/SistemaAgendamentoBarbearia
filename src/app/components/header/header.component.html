@@ -1,23 +1,53 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-light">
   <div class="container-fluid">
-    <!-- Componente de dropdown do perfil -->
-    <div class="profile position-relative" (click)="toggleDropdown()">
-      <img src="/assets/FtPerfil.svg" alt="Foto de perfil" width="160" height="160" class="img-fluid rounded-circle">
-      <div class="dropdown-menu" [class.show]="dropdownOpen">
-        <button class="dropdown-item" (click)="goToEditProfile()">Editar Perfil</button>
-        <button class="dropdown-item" (click)="goToFavorites()">Minhas Barbearias Favoritas</button>
-        <div class="dropdown-divider"></div>
-        <button class="dropdown-item" (click)="logout()">Sair</button>
-      </div>
+    <!-- Imagem de perfil -->
+    <div class="profile" (click)="toggleSidebar()">
+      <img src="/assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
     </div>
 
-    <!-- Logo -->
+    <!-- Logo centralizado -->
     <img src="/assets/Logo_barb.svg" class="img-fluid mx-auto d-block bg-holder" alt="Logo da barbearia" width="240" height="150" priority>
 
-    <!-- Link para cadastrar barbearia -->
+    <!-- Link para cadastrar barbearia no canto inferior direito -->
     <div class="position-absolute bottom-0 end-0 p-1">
       <a class="text-white hover" routerLink="/register-barbearia">Cadastrar barbearia</a>
     </div>
   </div>
 </nav>
+
+<!-- Linha branca logo abaixo da navbar -->
 <div class="w-100 linhaBranca"></div>
+
+<!-- Sidebar Lateral -->
+
+<div class="sidebar" [class.active]="sidebarOpen">
+  <div class="profileSide">
+    <img [src]="barbeiro?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
+  </div>
+  <button class="btn close-btn float-end" (click)="toggleSidebar()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="linhaBranca"></div>
+  <ul class="nav flex-column mt-4">
+    <li class="nav-item">
+      <a class="nav-link" (click)="goToEditProfile()">
+        <mat-icon>edit</mat-icon>Editar Perfil
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="goToFavorites()">
+        <mat-icon>favorite</mat-icon>Barbearias Favoritas
+      </a>
+    </li>
+    <li class="nav-item logout">
+      <a class="nav-link" (click)="logout()">
+        <mat-icon>logout</mat-icon>Sair
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- Sobreposição escura -->
+<div class="overlay" [class.show]="sidebarOpen" (click)="toggleSidebar()"></div>
+
+
