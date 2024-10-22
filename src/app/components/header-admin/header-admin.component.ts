@@ -1,59 +1,29 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Auth, signOut } from "@angular/fire/auth";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { doc, Firestore, getDoc } from "@angular/fire/firestore";
+import { RegisterComponent } from '../../pages/user/register/register.component';
+import { Auth, signOut } from '@angular/fire/auth';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header-admin',
   templateUrl: './header-admin.component.html',
   standalone: true,
+  imports: [RegisterComponent, RouterLink, MatIcon, ],
   styleUrls: ['./header-admin.component.scss']
 })
 export class HeaderAdminComponent implements OnInit {
   dropdownOpen: boolean = false;
-  profileImageUrl: string | null = null;
+  sidebarOpen = false;
+  barbeiro: any;
 
-  constructor(
-    private auth: Auth,
-    private router: Router,
-    private route: ActivatedRoute,
-    private firestore: Firestore
-  ) {}
-
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  constructor(private auth: Auth, private router: Router) {}
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
-  async ngOnInit(): Promise<void> {
-    const barbeariaId = this.route.snapshot.paramMap.get('id');
-    if (barbeariaId) {
-      await this.loadBarbershopProfile(barbeariaId);
-    }
-  }
-
-  async loadBarbershopProfile(barbeariaId: string): Promise<void> {
-    try {
-      const barbeariaDocRef = doc(this.firestore, `barbearia/${barbeariaId}`);
-      const barbeariaDoc = await getDoc(barbeariaDocRef);
-      if (barbeariaDoc.exists()) {
-        this.profileImageUrl = barbeariaDoc.data()['profileImageUrl'];
-      } else {
-        console.error('Barbearia não encontrada!');
-      }
-    } catch (error) {
-      console.error('Erro ao carregar imagem da barbearia:', error);
-    }
-  }
-
-  async logout() {
-    this.dropdownOpen = false;
-    try {
-      await signOut(this.auth);
-      console.log('Usuário deslogado');
-      await this.router.navigate(['/']);
-    } catch (error) {
-      console.error('Erro ao fazer logout:', error);
-    }
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 
   goToEditProfile() {
@@ -69,6 +39,19 @@ export class HeaderAdminComponent implements OnInit {
       console.log('Navigated to Favorites');
     });
   }
+
+  async logout() {
+    this.dropdownOpen = false;
+    try {
+      await signOut(this.auth);
+      console.log('Usuário deslogado');
+      await this.router.navigate(['/']);
+      console.log('Navegação para a página inicial concluída');
+    } catch (error) {
+      console.error('Erro ao fazer logout ou navegar:', error);
+    }
+  }
+
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
