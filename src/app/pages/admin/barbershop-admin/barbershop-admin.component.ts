@@ -69,7 +69,7 @@ export class BarbershopAdminComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       telefone: new FormControl('', [Validators.required]),
       rua: new FormControl('', [Validators.required]),
-      numero: new FormControl('', [Validators.required]),
+      numero: new FormControl(''),
       cnpj: new FormControl('', [Validators.required]),
       inscricaoEstadual: new FormControl('', [Validators.required]),
       instagram: new FormControl('', [this.instagramValidator()]),
