@@ -7,13 +7,13 @@ import { Barbeiros } from "../../../interfaces/barbeiros";
 import { ModalInfoComponent } from "./modals/modal-info/modal-info.component";
 import { MatDialog } from "@angular/material/dialog";
 import {MatIcon} from "@angular/material/icon";
-import { HeaderComponent } from '../../../components/header/header.component';
 import {ModalCommentComponent} from "./modals/modal-comment/modal-comment.component";
+import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 
 @Component({
   selector: 'app-barbershop',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgOptimizedImage, MatIcon, HeaderComponent],
+  imports: [CommonModule, RouterLink, NgOptimizedImage, MatIcon, HeaderAdminComponent],
   templateUrl: './barbershop.component.html',
   styleUrls: ['./barbershop.component.scss']
 })
