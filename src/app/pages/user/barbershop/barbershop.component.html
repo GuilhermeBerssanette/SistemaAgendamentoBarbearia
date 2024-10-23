@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header-admin></app-header-admin>
 <!-- Adicionando o banner com a imagem de fundo e a imagem circular sobreposta -->
 <div class="container-fluid banner">
   <div class="image-wrapper">
@@ -27,16 +27,16 @@
 <div class="container-fluid text-center bgColor min-vh-100">
   <div class="boxContent">
     <div class="nameBarber">
-      <h1 class="text-center">{{ barbearia?.nomeFantasia }}</h1>
+      <h1 class="text-center mt-3">{{ barbearia?.nomeFantasia }}</h1>
     </div>
 
     <div class="boxData">
-      <h3 class="fw-bold">Barbeiros:</h3>
+      <h3>Barbeiros:</h3>
       <div class="boxDataBarber" *ngFor="let barber of barbers">
         <button class="barberLink btn d-flex justify-content-between align-items-center w-100" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-          <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-1 ml-4">
+          <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-2 ml-4">
           <span class="flex-grow-1 text-center">{{ barber.nome }}</span>
-          <button class="modalLink btn" (click)="openModalInfos(barber, $event)">infos</button>
+          <button class="modalLink btn" (click)="openModalInfos(barber, $event)">info</button>
         </button>
       </div>
       <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
