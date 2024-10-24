@@ -1,6 +1,20 @@
-.header-info {
-  display: flex;
-  align-items: center;
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  height: 20%;
+}
+
+span{
+  font-size: 24px;
+  font-weight: 500;
+  left: 2px;
 }
 
 .profile-img {

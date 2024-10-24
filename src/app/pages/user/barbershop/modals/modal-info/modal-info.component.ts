@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Barbeiros } from "../../../../../interfaces/barbeiros";
 import { NgIf, NgForOf, CurrencyPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 interface Service {
   id: string;
@@ -16,7 +17,8 @@ interface Service {
   imports: [
     NgIf,
     NgForOf,
-    CurrencyPipe
+    CurrencyPipe,
+    MatIcon
   ],
   templateUrl: './modal-info.component.html',
   styleUrls: ['./modal-info.component.scss']
@@ -51,6 +53,10 @@ export class ModalInfoComponent implements OnInit {
   }
 
   close(): void {
+    this.dialogRef.close();
+  }
+
+  closeModalInfo(){
     this.dialogRef.close();
   }
 }

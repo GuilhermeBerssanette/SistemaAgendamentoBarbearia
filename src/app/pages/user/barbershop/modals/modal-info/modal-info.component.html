@@ -1,6 +1,9 @@
-<div class="header-info">
-  <img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">
-  <p><strong>{{ data.barber.nome }}</strong></p>
+<div class="navbar">
+  <div class="container-fluid d-flex justify-content-start p-3">
+    <img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">
+    <span>{{ data.barber.nome }}</span>
+    <mat-icon class="hover ms-auto" (click)="closeModalInfo()">close</mat-icon>
+  </div>
 </div>
 
 <hr>
