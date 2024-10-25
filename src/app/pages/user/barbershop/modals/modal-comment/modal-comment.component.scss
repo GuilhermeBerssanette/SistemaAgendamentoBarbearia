@@ -1,3 +1,21 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  height: 20%;
+}
+
+span{
+  font-size: 24px;
+  font-weight: 500;
+}
+
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -9,12 +27,14 @@
 .modal-body {
   max-height: 400px;
   overflow-y: auto;
+  background-color: #05465F;
 }
 
 .comment-box {
   background-color: #f8f9fa;
   padding: 10px;
   border-radius: 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
 }
 
 .modal-footer {
