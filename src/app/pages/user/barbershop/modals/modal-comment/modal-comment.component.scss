@@ -25,8 +25,6 @@ span{
 }
 
 .modal-body {
-  max-height: 400px;
-  overflow-y: auto;
   background-color: #05465F;
 }
 
@@ -42,4 +40,18 @@ span{
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
+  background-color: #05465F;
+  height: 10px;
+}
+
+input:focus{
+  box-shadow: 0 0 0 0;
+  outline: none;
+  border: 0 none;
+  border-color: #000000;
+}
+
+.btn{
+  border: 0 none;
+  outline: none;
 }
