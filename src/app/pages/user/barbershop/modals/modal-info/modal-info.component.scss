@@ -1,6 +1,19 @@
-.header-info {
-  display: flex;
-  align-items: center;
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  height: 20%;
+}
+
+span{
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .profile-img {
@@ -11,17 +24,13 @@
 }
 
 .services-section {
-  margin-top: 15px;
+  background-color: #05465F;
 }
 
 hr {
   border: 1px solid #000;
 }
 
-.contact-info {
-  margin-top: 15px;
-}
-
-button {
-  margin-top: 20px;
+button:focus{
+  border: #05465F;
 }
