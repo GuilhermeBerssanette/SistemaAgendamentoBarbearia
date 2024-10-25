@@ -176,10 +176,11 @@
   margin: 5px auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #05668D;
   padding-bottom: 5px;
   text-align: center;
-
+  color: #FFFFFF;
+  font-weight: 500;
   h1 {
     padding: 20px;
   }
@@ -191,13 +192,12 @@
     margin: 5px auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
     border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.6);
-    padding-bottom: 5px;
+    background-color: #05668D;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-
+    color: #FFFFFF;
   .nameBarber h1 {
     padding: 0;
   }
@@ -209,8 +209,16 @@
   margin: 10px auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: #FFFFFF;
   padding-bottom: 8px;
+  color: #000000;
+
+  img{
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    object-fit: fill;
+  }
 
   .barberLink {
     height: 60%;
@@ -232,10 +240,15 @@
 }
 
 .modalLink {
-  border-radius: 15px;
+  border-radius: 100%;
   display: flex;
   z-index: 1000;
-  margin-left: auto;            
+  margin-left: auto;
   border-radius: 10px;
   text-decoration: none;
+  background-color: #05465F;
+  color: #FFFFFF;
+  padding: 2px 15px;
+  margin-top: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.55);
 }
