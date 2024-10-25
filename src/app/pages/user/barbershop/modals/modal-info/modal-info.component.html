@@ -1,31 +1,38 @@
-<div class="header-info">
-  <img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">
-  <p><strong>{{ data.barber.nome }}</strong></p>
+<div class="navbar">
+  <div class="container-fluid d-flex justify-content-start p-3">
+    <img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">
+    <span>{{ data.barber.nome }}</span>
+    <mat-icon class="hover ms-auto" (click)="closeModalInfo()">close</mat-icon>
+  </div>
 </div>
 
 <hr>
 
 <div class="services-section">
-  <h3>Serviços</h3>
-  <div *ngFor="let service of services">
+  <h3 class="fw-bold fs-20 ps-2">Serviços</h3>
+  <div class="ps-4" *ngFor="let service of services">
     <p><strong>{{ service.id }}:</strong> {{ service.price | currency }} - {{ service.duration }} min</p>
   </div>
 </div>
 
 <hr>
 
-<h3>Perguntas Frequentes</h3>
-<p><strong>Atende Autista?</strong> {{ data.barber.atendeAutista ? 'Sim' : 'Não' }}</p>
-<p><strong>Atende Criança?</strong> {{ data.barber.atendeCrianca ? 'Sim' : 'Não' }}</p>
-<p><strong>Atende Domicílio?</strong> {{ data.barber.atendeDomicilio ? 'Sim' : 'Não' }}</p>
-<p><strong>Experiência com Cabelo Crespo?</strong> {{ data.barber.experienciaCrespo ? 'Sim' : 'Não' }}</p>
-<p><strong>Serviço para Eventos?</strong> {{ data.barber.servicoEventos ? 'Sim' : 'Não' }}</p>
+<div class="services-section">
+  <h3 class="fw-bold fs-20 ps-2">Perguntas Frequentes</h3>
+  <p class="ps-4"><strong>Atende Autista?</strong> {{ data.barber.atendeAutista ? 'Sim' : 'Não' }}</p>
+  <p class="ps-4"><strong>Atende Criança?</strong> {{ data.barber.atendeCrianca ? 'Sim' : 'Não' }}</p>
+  <p class="ps-4"><strong>Atende Domicílio?</strong> {{ data.barber.atendeDomicilio ? 'Sim' : 'Não' }}</p>
+  <p class="ps-4"><strong>Experiência com Cabelo Crespo?</strong> {{ data.barber.experienciaCrespo ? 'Sim' : 'Não' }}</p>
+  <p class="ps-4"><strong>Serviço para Eventos?</strong> {{ data.barber.servicoEventos ? 'Sim' : 'Não' }}</p>
+</div>
 
 <hr>
 
-<div class="contact-info">
-  <p><strong>WhatsApp:</strong> <a> {{ data.barber.whats }} </a></p>
-  <p><strong>Instagram:</strong> <a>{{ data.barber.instagram }} </a></p>
+<div class="services-section d-flex justify-content-center align-items-center pt-1">
+  <button class=" btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" height="50" width="50" alt=""></button>
+  <button class=" btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" height="50" width="50" alt=""></button>
+  <!--<p><strong>WhatsApp:</strong> <a> {{ data.barber.whats }} </a></p>
+  <p><strong>Instagram:</strong> <a>{{ data.barber.instagram }} </a></p>-->
 </div>
 
-<button (click)="close()">Fechar</button>
+<!--<button (click)="close()">Fechar</button>-->
