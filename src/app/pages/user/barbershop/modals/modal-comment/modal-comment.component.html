@@ -1,10 +1,12 @@
-<div class="modal-header">
-  <h2 class="modal-title">Comentários</h2>
-  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+<div class="navbar">
+  <div class="container-fluid d-flex justify-content-start p-3">
+    <span>Comentários</span>
+    <mat-icon class="hover ms-auto" (click)="closeModalComment()">close</mat-icon>
+  </div>
 </div>
 
 <div class="modal-body">
-  <div *ngFor="let comment of comments" class="comment-box mb-4">
+  <div *ngFor="let comment of comments" class="comment-box m-4">
     <h5>{{ comment.userName }} <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small></h5>
     <p>{{ comment.comment }}</p>
     <hr>
