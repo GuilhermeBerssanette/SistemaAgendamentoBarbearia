@@ -1,3 +1,4 @@
+import { MatIcon } from '@angular/material/icon';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -12,7 +13,8 @@ import {DatePipe, NgForOf} from "@angular/common";
   imports: [
     NgForOf,
     DatePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIcon,
   ],
   styleUrls: ['./modal-comment.component.scss']
 })
@@ -57,7 +59,7 @@ export class ModalCommentComponent implements OnInit {
     }
   }
 
-  closeModal(): void {
+  closeModalComment(): void {
     this.dialogRef.close();
   }
 }
