@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { doc, Firestore, getDoc } from "@angular/fire/firestore";
+import { Router, RouterLink } from "@angular/router";
 import { RegisterComponent } from '../../pages/user/register/register.component';
 import { Auth, signOut } from '@angular/fire/auth';
 import { MatIcon } from '@angular/material/icon';
