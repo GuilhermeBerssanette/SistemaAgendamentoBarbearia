@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Firestore, doc, updateDoc, getDoc, getDocs, collection } from '@angular/fire/firestore';
 import {NgForOf, NgIf} from "@angular/common";
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-edit-combo',
@@ -11,7 +12,8 @@ import {NgForOf, NgIf} from "@angular/common";
   imports: [
     ReactiveFormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatIcon
   ],
   styleUrls: ['./modal-edit-combo.component.scss']
 })
@@ -84,5 +86,9 @@ export class ModalEditComboComponent {
 
   close() {
     this.dialogRef.close(false);
+  }
+
+  closeModalComment(): void {
+    this.dialogRef.close();
   }
 }
