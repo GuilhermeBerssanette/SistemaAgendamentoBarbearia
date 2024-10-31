@@ -14,10 +14,9 @@
       <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
     </div>
 
-    <ng-container *ngIf="selectedSection === 'appointments'">
-      <h1>Atividades</h1>
-    </ng-container>
-
+      <ng-container *ngIf="selectedSection === 'appointments'">
+        <h1>Atividades</h1>
+      </ng-container>
 
       <ng-container *ngIf="selectedSection === 'gallery'" >
         <h1 class="title">Galeria de Fotos</h1>
@@ -50,144 +49,140 @@
       <h1>Avaliações</h1>
       </ng-container>
 
+      <ng-container *ngIf="selectedSection === 'services'">
+        <h3 class="title">Serviços: </h3>
 
-    <ng-container *ngIf="selectedSection === 'services'">
-      <h3 class="title">Serviços: </h3>
+            <button class="service-button " (click)="openModalRegisterService()">Cadastrar Serviço</button>
+            <button class="service-button" (click)="openModalRegisterCombo()">Cadastrar Combo</button>
 
-          <button class="service-button " (click)="openModalRegisterService()">Cadastrar Serviço</button>
-          <button class="service-button" (click)="openModalRegisterCombo()">Cadastrar Combo</button>
-
-          <div *ngIf="registeredServices && registeredServices.length > 0; else noServices" class="service-combo-container">
-            <div class="card-deck">
-              <div *ngFor="let service of registeredServices" class="card">
-                <div class="card-body">
-                  <h4 class="card-title">{{ service.id }}
-                    <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="openModalEditService(service)">
-                      <mat-icon >edit</mat-icon>
-                    </button>
-                    <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="deleteService(service.id)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </h4>
-                  <p class="card-text">Valor: R$ {{ service.price }}</p>
-                  <p class="card-text">Duração: {{ service.duration }} minutos</p>
+            <div *ngIf="registeredServices && registeredServices.length > 0; else noServices" class="service-combo-container">
+              <div class="card-deck">
+                <div *ngFor="let service of registeredServices" class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">{{ service.id }}
+                      <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="openModalEditService(service)">
+                        <mat-icon >edit</mat-icon>
+                      </button>
+                      <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="deleteService(service.id)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </h4>
+                    <p class="card-text">Valor: R$ {{ service.price }}</p>
+                    <p class="card-text">Duração: {{ service.duration }} minutos</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <ng-template #noServices>
-            <p>Nenhum serviço cadastrado ainda.</p>
-          </ng-template>
+            <ng-template #noServices>
+              <p>Nenhum serviço cadastrado ainda.</p>
+            </ng-template>
 
-          <h3 class="title">Combos:</h3>
-          <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos" class="service-combo-container">
-            <div class="card-deck">
-              <div *ngFor="let combo of registeredCombos" class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Combo: {{ combo.services.join(', ') }}
-                    <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="openModalEditCombo(combo)">
-                      <mat-icon class="float-end">edit</mat-icon>
-                    </button>
-                    <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="deleteCombo(combo.id)">
-                      <mat-icon class="float-end">delete</mat-icon>
-                    </button>
-                  </h4>
-                  <p class="card-text">Valor: R$ {{ combo.price }}</p>
-                  <p class="card-text">Duração: {{ combo.duration }} minutos</p>
+            <h3 class="title">Combos:</h3>
+            <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos" class="service-combo-container">
+              <div class="card-deck">
+                <div *ngFor="let combo of registeredCombos" class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Combo: {{ combo.services.join(', ') }}
+                      <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="openModalEditCombo(combo)">
+                        <mat-icon class="float-end">edit</mat-icon>
+                      </button>
+                      <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="deleteCombo(combo.id)">
+                        <mat-icon class="float-end">delete</mat-icon>
+                      </button>
+                    </h4>
+                    <p class="card-text">Valor: R$ {{ combo.price }}</p>
+                    <p class="card-text">Duração: {{ combo.duration }} minutos</p>
+                  </div>
                 </div>
               </div>
             </div>
+
+        <ng-template #noCombos>
+          <p>Nenhum combo cadastrado ainda.</p>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="selectedSection === 'editProfile'">
+        <h1 class="title">Editar perfil</h1>
+        <form class="" [formGroup]="form" (ngSubmit)="updateProfile()">
+
+          <div class=" m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Nome" formControlName="nome">
+            <div *ngIf="form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)">
+              <small class="text-danger" *ngIf="form.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
+            </div>
           </div>
 
-      <ng-template #noCombos>
-        <p>Nenhum combo cadastrado ainda.</p>
-      </ng-template>
-    </ng-container>
-
-
-    <ng-container *ngIf="selectedSection === 'editProfile'">
-      <h1>Editar perfil</h1>
-
-      <form [formGroup]="form" (ngSubmit)="updateProfile()">
-
-        <div>
-          <input type="text" placeholder="Nome" formControlName="nome">
-          <div *ngIf="form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)">
-            <small *ngIf="form.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Rg" formControlName="rg" mask="00.000.000-00">
+            <div *ngIf="form.get('rg')?.invalid && (form.get('rg')?.dirty || form.get('rg')?.touched)">
+              <small class="text-danger" *ngIf="form.get('rg')?.errors?.['required']">RG é obrigatório.</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="Rg" formControlName="rg" mask="00.000.000-00">
-          <div *ngIf="form.get('rg')?.invalid && (form.get('rg')?.dirty || form.get('rg')?.touched)">
-            <small *ngIf="form.get('rg')?.errors?.['required']">RG é obrigatório.</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Cpf" formControlName="cpf" mask="000.000.000-00">
+            <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
+              <small class="text-danger" *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="Cpf" formControlName="cpf" mask="000.000.000-00">
-          <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
-            <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="email" placeholder="Email" formControlName="email" />
+            <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
+              <small class="text-danger" *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
+              <small class="text-danger" *ngIf="form.get('email')?.errors?.['email']">Siga o padrão: username&#64;gmail.com</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="email" placeholder="Email" formControlName="email" />
-          <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
-            <small *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
-            <small *ngIf="form.get('email')?.errors?.['email']">Siga o padrão: username&#64;gmail.com</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000">
+            <div *ngIf="form.get('telefone')?.invalid && (form.get('telefone')?.dirty || form.get('telefone')?.touched)">
+              <small class="text-danger" *ngIf="form.get('telefone')?.errors?.['required']">Telefone é obrigatório.</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000">
-          <div *ngIf="form.get('telefone')?.invalid && (form.get('telefone')?.dirty || form.get('telefone')?.touched)">
-            <small *ngIf="form.get('telefone')?.errors?.['required']">Telefone é obrigatório.</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Whats" formControlName="whats" mask="(00)00000-0000">
+            <div *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
+              <small class="text-danger" *ngIf="form.get('whats')?.errors?.['required']">Whats é obrigatório.</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="Whats" formControlName="whats" mask="(00)00000-0000">
-          <div *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
-            <small *ngIf="form.get('whats')?.errors?.['required']">Whats é obrigatório.</small>
+          <!-- Validações de redes sociais -->
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Instagram" formControlName="instagram">
+            <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
+              <small class="text-danger" *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">URL do Instagram é inválida. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
+            </div>
           </div>
-        </div>
 
-        <!-- Validações de redes sociais -->
-        <div>
-          <input type="text" placeholder="Instagram" formControlName="instagram">
-          <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
-            <small *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">URL do Instagram é inválida. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Facebook" formControlName="facebook">
+            <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
+              <small class="text-danger" *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="Facebook" formControlName="facebook">
-          <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
-            <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="TikTok" formControlName="tiktok" />
+            <div *ngIf="form.get('tiktok')?.invalid && (form.get('tiktok')?.dirty || form.get('tiktok')?.touched)">
+              <small class="text-danger" *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok inválida. Deve seguir o formato https://www.tiktok.com/&#64;SeuUsername</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="TikTok" formControlName="tiktok" />
-          <div *ngIf="form.get('tiktok')?.invalid && (form.get('tiktok')?.dirty || form.get('tiktok')?.touched)">
-            <small *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok inválida. Deve seguir o formato https://www.tiktok.com/&#64;SeuUsername</small>
+          <div class="m-3">
+            <input class="form-control form-control-lg fs-6" type="text" placeholder="Twitter" formControlName="twitter">
+            <div *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
+              <small class="text-danger" *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <input type="text" placeholder="Twitter" formControlName="twitter">
-          <div *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
-            <small *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
-          </div>
-        </div>
+          <button class="btn btn-login btn-lg m-3" type="submit" [disabled]="form.invalid">Atualizar</button>
 
-        <button type="submit" [disabled]="form.invalid">Atualizar</button>
-
-      </form>
-
-    </ng-container>
+        </form>
+      </ng-container>
 
   </div>
 </div>
