@@ -130,5 +130,5 @@
   cursor: pointer;
 }
 
-.btn:focus{ outline: none; border-color: none;}
+.btn:focus, mat-icon:focus{ outline: none; border-color: transparent; border: transparent;}
 
