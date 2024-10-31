@@ -1,0 +1,54 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  height: 20%;
+}
+
+.title{
+  color: #FFFFFF;
+  font-size: 28px;
+  padding: 3px;
+}
+
+.subtitle{
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 3px;
+}
+
+span{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.modal-body {
+  background-color: #05465F;
+}
+
+input{
+  margin-left: 15px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  width: auto;
+}
+
+input:focus{
+  box-shadow: 0 0 0 0;
+  outline: none;
+  border: 0 none;
+}
+
+
+.btn{
+  padding: 10px;
+  margin: 5px;
+  margin-left: 15px;
+  background-color: #028090;
+}
