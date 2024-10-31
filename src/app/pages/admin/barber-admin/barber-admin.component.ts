@@ -49,7 +49,7 @@ export class BarberAdminComponent implements OnInit {
   registeredCombos: any[] = [];
   form: FormGroup;
   storage = getStorage();
-  selectedSection: string = 'services';
+  selectedSection: string = 'appointments';
 
   constructor(private dialog: MatDialog) {
     this.form = new FormGroup({

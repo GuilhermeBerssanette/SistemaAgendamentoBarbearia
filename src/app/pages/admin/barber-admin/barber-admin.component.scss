@@ -202,3 +202,30 @@
   border: none;
   background-color: #FFFFFF;
 }
+
+
+
+  .form-group {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  input.form-control.form-control-lg {
+    background-color: var(--input-color, transparent);
+    width: 100%;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .btn-login {
+    background-color: #00A896;
+    width: 92%; // Ajusta a largura do botão para 100% do contêiner
+  }
+
+  @media (min-width: 768px){
+    .btn-login{
+      width: 98%;
+    }
+  }
+
