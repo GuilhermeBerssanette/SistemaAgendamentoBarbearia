@@ -17,6 +17,7 @@ import {ModalRegisterComboComponent} from "./modals/modal-register-combo/modal-r
 import {ModalEditComboComponent} from "./modals/modal-edit-combo/modal-edit-combo.component";
 import { HeaderComponent } from '../../../components/header/header.component';
 import {HeaderBarbersAdminComponent} from "../../../components/header-barbers-admin/header-barbers-admin.component";
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-barber-admin',
@@ -29,7 +30,8 @@ import {HeaderBarbersAdminComponent} from "../../../components/header-barbers-ad
     MatButton,
     KeyValuePipe,
     HeaderComponent,
-    HeaderBarbersAdminComponent
+    HeaderBarbersAdminComponent,
+    MatIcon
   ],
   templateUrl: './barber-admin.component.html',
   styleUrls: ['./barber-admin.component.scss']
@@ -41,13 +43,13 @@ export class BarberAdminComponent implements OnInit {
   firestore = inject(Firestore);
   barbeiroId!: string;
   barbeiro?: Barbeiros;
-  currentSection: string = 'appointments';
   galleryItems: { imageUrl: string, comment: string, filePath: string }[] = [];
   barbeariaId!: string;
   registeredServices: any[] = [];
   registeredCombos: any[] = [];
   form: FormGroup;
   storage = getStorage();
+  selectedSection: string = 'appointments';
 
   constructor(private dialog: MatDialog) {
     this.form = new FormGroup({
@@ -314,8 +316,9 @@ export class BarberAdminComponent implements OnInit {
   }
 
 
-  showSection(section: string): void {
-    this.currentSection = section;
+  showSection(section: string) {
+    this.selectedSection = section;
+
   }
 
   isAdmin(): boolean {
