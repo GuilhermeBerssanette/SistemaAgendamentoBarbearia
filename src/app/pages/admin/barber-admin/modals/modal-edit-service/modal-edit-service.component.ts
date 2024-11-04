@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import {NgIf} from "@angular/common";
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-edit-service',
@@ -10,7 +11,8 @@ import {NgIf} from "@angular/common";
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    MatIcon
   ],
   styleUrls: ['./modal-edit-service.component.scss']
 })
