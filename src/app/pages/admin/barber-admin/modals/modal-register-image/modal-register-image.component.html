@@ -1,27 +1,48 @@
-<div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div>
-      <input type="file" (change)="onFileSelected($event)" />
-      <div *ngIf="form.get('image')?.invalid && form.get('image')?.touched">
-        Imagem é obrigatória.
+<div class="modal-body">
+  <div class="navbar">
+    <div class="container-fluid d-flex justify-content-start p-3">
+      <span>Cadastrar imagem</span>
+      <mat-icon class="hover ms-auto" (click)="onCancel()">close</mat-icon>
+    </div>
+  </div>
+
+  <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Contêiner de seleção e pré-visualização de imagem -->
+      <div class="containerInput">
+        <div class="image-preview-container" (click)="fileInput.click()">
+          <ng-container *ngIf="imagePreview; else placeholder">
+            <img [src]="imagePreview" alt="Pré-visualização da imagem" class="image-preview" />
+          </ng-container>
+          <!-- Exibir o quadrado com texto "Clique para adicionar" -->
+          <ng-template #placeholder>
+            <span class="placeholder-text">Clique para adicionar uma imagem</span>
+          </ng-template>
+        </div>
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          style="display: none;"
+        />
       </div>
-    </div>
 
-    <div>
-      <input type="text" formControlName="comment" placeholder="Comentário (máx 50 caracteres)" />
-      <div *ngIf="form.get('comment')?.invalid && form.get('comment')?.touched">
-        <small *ngIf="form.get('comment')?.errors?.['required']">Comentário é obrigatório.</small>
-        <small *ngIf="form.get('comment')?.errors?.['maxlength']">Comentário deve ter no máximo 50 caracteres.</small>
+      <div>
+        <input class="form-control container p-2" type="text" formControlName="comment" placeholder="Comentário (máx 50 caracteres)" />
+        <div *ngIf="form.get('comment')?.invalid && form.get('comment')?.touched">
+          <small class="container-fluid text-danger ms-2" *ngIf="form.get('comment')?.errors?.['required']">Comentário é obrigatório.</small>
+          <small *ngIf="form.get('comment')?.errors?.['maxlength']">Comentário deve ter no máximo 50 caracteres.</small>
+        </div>
       </div>
-    </div>
 
-    <div *ngIf="uploadProgress > 0">
-      <p>Progresso do upload: {{ uploadProgress }}%</p>
-    </div>
+      <div *ngIf="uploadProgress > 0">
+        <p>Progresso do upload: {{ uploadProgress }}%</p>
+      </div>
 
-    <div>
-      <button type="submit" [disabled]="form.invalid || !selectedFile">Cadastrar Imagem</button>
-      <button type="button" (click)="onCancel()">Cancelar</button>
-    </div>
-  </form>
+      <div class="button-group container-fluid d-flex justify-content-center mb-2">
+        <button class="btn col-8 btnOption me-1" type="submit" [disabled]="form.invalid || !selectedFile">Cadastrar Imagem</button>
+        <button class="btn col-4 btnOption" type="button" (click)="onCancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
 </div>
