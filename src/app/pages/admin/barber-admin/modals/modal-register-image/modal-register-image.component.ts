@@ -3,19 +3,23 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
 import { NgIf } from "@angular/common";
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-register-image',
   templateUrl: './modal-register-image.component.html',
+  styleUrl: './modal-register-image.component.scss',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     NgIf,
+    MatIcon
   ]
 })
 export class ModalRegisterImageComponent implements OnInit {
   form: FormGroup;
   selectedFile: File | null = null;
+  imagePreview: string | null = null; 
   uploadProgress: number = 0;
 
   constructor(
@@ -35,6 +39,12 @@ export class ModalRegisterImageComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
       this.form.get('image')?.setValue(this.selectedFile.name);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
