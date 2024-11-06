@@ -1,3 +1,4 @@
+import { MatIcon } from '@angular/material/icon';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,10 +8,12 @@ import { NgForOf, NgIf } from "@angular/common";
 @Component({
   selector: 'app-modal-register-combo',
   templateUrl: './modal-register-combo.component.html',
+  styleUrl: './modal-register-combo.component.scss',
   imports: [
     ReactiveFormsModule,
     NgForOf,
-    NgIf
+    NgIf,
+    MatIcon
   ],
   standalone: true
 })
