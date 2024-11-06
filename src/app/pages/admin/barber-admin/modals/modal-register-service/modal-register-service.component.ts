@@ -3,14 +3,17 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {Firestore, collection, getDocs, doc, setDoc} from '@angular/fire/firestore';
 import { NgForOf, NgIf } from "@angular/common";
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-register-service',
   templateUrl: './modal-register-service.component.html',
+  styleUrl: './modal-register-service.component.scss',
   imports: [
     ReactiveFormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatIcon
   ],
   standalone: true
 })
