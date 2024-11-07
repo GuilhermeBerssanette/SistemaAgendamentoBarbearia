@@ -9,6 +9,7 @@ import {ModalRegisterBarbeiroComponent} from "./pages/admin/barbershop-admin/mod
 import { BarbersComponent } from "./pages/user/barbers/barbers.component";
 import {BarberAdminComponent} from "./pages/admin/barber-admin/barber-admin.component";
 import {OrdersComponent} from "./pages/user/orders/orders.component";
+import {DashboardComponent} from "./components/dashboard/dashboard.component";
 
 
 export const routes: Routes = [
@@ -22,6 +23,8 @@ export const routes: Routes = [
   {path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent},
   {path: 'barbearia/:id/barber/:barberId', component: BarbersComponent},
   {path: 'barbearia/:id/barber/:barberId/orders', component: OrdersComponent},
-  {path: 'barbearia/:id/barber/:barberId/admin', component: BarberAdminComponent}
+  {path: 'barbearia/:id/barber/:barberId/admin', component: BarberAdminComponent},
+  {path: 'dashboard', component: DashboardComponent}
+
 
 ];

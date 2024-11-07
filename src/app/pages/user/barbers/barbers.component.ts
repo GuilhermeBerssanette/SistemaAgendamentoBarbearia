@@ -103,16 +103,25 @@ export class BarbersComponent implements OnInit {
     }
   }
 
-  // Função para redirecionar para a página de ordens
-  goToOrder(serviceOrCombo: any) {
-    this.router.navigate(['/barbearia', this.barbeariaId, 'barber', this.barberId, 'orders'], {
-      queryParams: {
-        id: serviceOrCombo.id,
-        price: serviceOrCombo.price,
-        duration: serviceOrCombo.duration
-      }
-    });
+
+  async goToOrder(serviceOrCombo: any) {
+    try {
+      await this.router.navigate(['/barbearia', this.barbeariaId, 'barber', this.barberId, 'orders'], {
+        queryParams: {
+          id: serviceOrCombo.id,
+          price: serviceOrCombo.price,
+          duration: serviceOrCombo.duration,
+          barberName: this.barbeiro?.nome,
+          serviceName: serviceOrCombo.id
+        }
+      });
+      console.log('Navegação bem-sucedida para a página de agendamento');
+    } catch (error) {
+      console.error('Erro ao navegar para a página de agendamento:', error);
+    }
   }
+
+
 
   showSection(section: string) {
     this.currentSection = section;
