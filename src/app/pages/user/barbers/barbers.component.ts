@@ -31,7 +31,7 @@ export class BarbersComponent implements OnInit {
     private route: ActivatedRoute,
     private firestore: Firestore,
     private imageService: ImageService,
-    private router: Router // Adicione o router para redirecionar
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {

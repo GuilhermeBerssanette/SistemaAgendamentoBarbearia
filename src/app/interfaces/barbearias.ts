@@ -38,5 +38,7 @@ export interface Barbearias {
   barbers?: Barbeiros[],
 
   profileImageUrl: string,
+
+  ownerId: string
 }
 
