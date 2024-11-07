@@ -6,6 +6,7 @@ export interface Barbeiros {
   telefone: string;
   whats: string;
   email: string;
+  password: string;
   instagram?: string;
   facebook?: string;
   tiktok?: string;

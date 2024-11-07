@@ -1,55 +1,52 @@
-<!-- REGISTER PAGE -->
-<!-- TELA LOGIN -->
-<div class="row min-vh-100 g-0 ">
-  <!-- IMG <XL DEVICES-->
-   <div class="col-lg-6 position-relative m-0 p-0 order-md-1">
-    <img class="bg-holder py-3 px-md-5" ngSrc="/assets/Logo_barb.svg" width="665" height="576" alt="Logo"/>
-   </div>
-  <!-- /IMG <XL DEVICES-->
+<div class="row min-vh-100 g-0">
+  <div class="col-lg-6 position-relative m-0 p-0 order-md-1">
+    <img class="bg-holder py-3 px-md-5" ngSrc="/assets/Logo_barb.svg" width="665" height="576" alt="Logo" />
+  </div>
 
-  <!-- LADO DIREITO -->
-
-    <div class="col-lg-6 col-md-12 order-md-2">
-
+  <div class="col-lg-6 col-md-12 order-md-2">
     <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
       <div class="col col-sm-6 col-lg-7 col-xl-6">
         <div class="containerLateral">
-         <div class="text-center">
-          <p class="fw-bold">Criar conta</p>
-         </div>
+          <div class="text-center">
+            <p class="fw-bold">Criar conta</p>
+          </div>
         </div>
 
-         <!-- FORM -->
-         <form [formGroup]="form"  (ngSubmit)="onSubmit()">
-          <div class=" mb-3">
-            <input class="form-control form-control-lg fs-6" type="text" placeholder="Digite seu Email" formControlName="email" required >
-            @if (form.controls.email.errors) {
-              <div class="invalid-feedback">
-                @if (form.controls.email.errors['required']) {
-                  <div>Email is required</div>
-                }
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <input
+              class="form-control form-control-lg fs-6"
+              type="text"
+              placeholder="Digite seu Email"
+              formControlName="email"
+              required
+            />
+            <div *ngIf="form.controls.email.errors">
+              <div class="invalid-feedback" *ngIf="form.controls.email.errors['required']">
+                O email é obrigatório
               </div>
-            }
+            </div>
           </div>
           <div class="mb-3">
-            <input class="form-control form-control-lg fs-6" type="password" placeholder="Digite sua senha" formControlName="email" required>
-            @if (form.controls.password.errors) {
-              <div class="invalid-feedback">
-                @if (form.controls.password.errors['required']) {
-                  <div>Email is required</div>
-                }
+            <input
+              class="form-control form-control-lg fs-6"
+              type="password"
+              placeholder="Digite sua senha"
+              formControlName="password"
+              required
+            />
+            <div *ngIf="form.controls.password.errors">
+              <div class="invalid-feedback" *ngIf="form.controls.password.errors['required']">
+                A senha é obrigatória
               </div>
-            }
+            </div>
           </div>
-           <button class="btn btn-login btn-lg w-100 mb-3">
-                Login
-           </button>
-         </form>
-         <!-- /FORM -->
-        <div class="text-center mt-1">
-          <small>Já possui conta? <a routerLink="" href="#" class="fw-bold">Faça login</a></small>
-         </div>
+          <button class="btn btn-login btn-lg w-100 mb-3">Registrar</button>
+        </form>
 
+        <div class="text-center mt-1">
+          <small>Já possui conta? <a routerLink="/login" class="fw-bold">Faça login</a></small>
+        </div>
       </div>
     </div>
   </div>

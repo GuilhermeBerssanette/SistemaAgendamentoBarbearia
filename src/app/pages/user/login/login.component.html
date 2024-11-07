@@ -1,81 +1,80 @@
+<div class="row min-vh-100 g-0">
+  <!-- Logo para dispositivos maiores -->
+  <div class="col-lg-6 position-relative m-0 p-0 order-md-1">
+    <img class="bg-holder py-3 px-md-5" src="/assets/Logo_barb.svg" width="665" height="576" alt="Logo" />
+  </div>
 
-<!-- TELA LOGIN -->
-  <div class="row min-vh-100 g-0 ">
-    <!-- IMG <XL DEVICES-->
-     <div class="col-lg-6 position-relative m-0 p-0 order-md-1">
-      <img class="bg-holder py-3 px-md-5" src="/assets/Logo_barb.svg" width="665" height="576" alt="Logo"/>
-     </div>
-    <!-- /IMG <XL DEVICES-->
-
-    <!-- LADO DIREITO -->
-
-      <div class="col-lg-6 col-md-12 order-md-2">
-      <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
-        <div class="col col-sm-6 col-lg-7 col-xl-6">
-          <div class="containerLateral">
-           <div class="text-center">
+  <!-- Formulário de Login -->
+  <div class="col-lg-6 col-md-12 order-md-2">
+    <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
+      <div class="col col-sm-6 col-lg-7 col-xl-6">
+        <div class="containerLateral">
+          <div class="text-center">
             <p class="fw-bold">Acesse sua conta</p>
-           </div>
+          </div>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <input
+              class="form-control form-control-lg fs-6"
+              type="text"
+              placeholder="Digite seu Email"
+              formControlName="email"
+              required
+            />
+            <div *ngIf="form.controls.email?.errors">
+              <div class="invalid-feedback" *ngIf="form.controls.email?.errors?.['required']">
+                O email é obrigatório
+              </div>
+              <div class="invalid-feedback" *ngIf="form.controls.email?.errors?.['email']">
+                Email inválido
+              </div>
+            </div>
           </div>
 
-           <!-- FORM -->
-           <form [formGroup]="form"  (ngSubmit)="onSubmit()">
-            <div class=" mb-3">
-              <input class="form-control form-control-lg fs-6" type="text" placeholder="Digite seu Email" formControlName="email" required >
-              @if (form.controls.email.errors) {
-                <div class="invalid-feedback">
-                  @if (form.controls.email.errors['required']) {
-                    <div>Email is required</div>
-                  }
-                </div>
-              }
+          <div class="mb-3">
+            <input
+              class="form-control form-control-lg fs-6"
+              type="password"
+              placeholder="Digite sua senha"
+              formControlName="password"
+              required
+            />
+            <div *ngIf="form.controls.password?.errors">
+              <div class="invalid-feedback" *ngIf="form.controls.password?.errors?.['required']">
+                A senha é obrigatória
+              </div>
+              <div class="invalid-feedback" *ngIf="form.controls.password?.errors?.['minlength']">
+                A senha deve ter pelo menos 4 caracteres
+              </div>
             </div>
-            <div class="mb-3">
-              <input class="form-control form-control-lg fs-6" type="password" placeholder="Digite sua senha" formControlName="email" required>
-              @if (form.controls.password.errors) {
-                <div class="invalid-feedback">
-                  @if (form.controls.password.errors['required']) {
-                    <div>Email is required</div>
-                  }
-                </div>
-              }
-            </div>
+          </div>
 
-            <!-- Lembrar de mim-->
+          <button class="btn btn-login btn-lg w-100 mb-3">
+            Login
+          </button>
+        </form>
 
-            <!-- /Lembrar de mim-->
-             <button class="btn btn-login btn-lg w-100 mb-3">
-                  Login
-             </button>
-           </form>
-           <!-- /FORM -->
-
-          <!-- Logar com o tio google-->
-          <button class="btn btn-lg btnGoogle justify-content-center align-items-center w-100">
+        <!-- Botão para login com Google -->
+        <button class="btn btn-lg btnGoogle justify-content-center align-items-center w-100" (click)="loginWithGoogle()">
           <div class="iconGoogle">
-            <img src="/assets/LogoGoogle.svg" style="height: 25px; width: 25px; margin-right: 0.2rem; background-color: #5F6368;" (click)="loginWithGoogle()" alt="">
-            <small (click)="loginWithGoogle()" style="background-color: #5F6368;">Continuar com o Google</small>
+            <img src="/assets/LogoGoogle.svg" style="height: 25px; width: 25px; margin-right: 0.2rem;" alt="" />
+            <small>Continuar com o Google</small>
           </div>
         </button>
 
         <div class="input-group mb-1 mt-2 d-flex justify-content-between">
-          <div class="form-check">
-
-          </div>
           <div>
             <small><a href="#">Recuperar senha</a></small>
           </div>
-         </div>
+        </div>
 
-
-          <!-- /Logar com o tio google-->
-
-
-          <div class="text-center mt-1">
-            <small>Não tem conta? <a routerLink="register" href="#" class="fw-bold">Criar conta</a></small>
-           </div>
-
+        <div class="text-center mt-1">
+          <small>Não tem conta? <a routerLink="/register" class="fw-bold">Criar conta</a></small>
         </div>
       </div>
     </div>
   </div>
+</div>
