@@ -1,0 +1,61 @@
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0;
+  height: 20%;
+}
+
+form, .areaModal{
+  background-color: #05465F;
+  min-height: 39vh;
+}
+
+.form-control, select, .error{
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 8px;
+}
+
+
+.button-group {
+  width: 100%;
+  padding-top: 3px;
+  margin-bottom: 0.3rem;
+  padding-bottom: 3px;
+}
+
+.btnOption {
+  background-color: #028090;
+  padding: 5px 10px;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+}
+
+
+input:focus, select:focus, button:focus{
+  box-shadow: 0 0 0 0;
+  outline: none;
+  border: 0 none;
+}
+
+span{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+label{
+  color: #FFFFFF;
+  font-size: 18px;
+  padding: 3px;
+}
+p {
+  padding: 3px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0);
+  background-color: #FFFFFF;
+  color: #000000;
+  margin-top:10px;
+  width: 94%;
+}
+
