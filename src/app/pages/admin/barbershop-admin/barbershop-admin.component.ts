@@ -115,7 +115,6 @@ export class BarbershopAdminComponent implements OnInit {
 
   async deleteBarbeiro(barbeiro: any): Promise<void> {
     try {
-      // Mover o barbeiro para a subcoleção "exclude"
       const excludeCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/exclude`);
       await addDoc(excludeCollectionRef, {
         nome: barbeiro.nome,
@@ -123,11 +122,9 @@ export class BarbershopAdminComponent implements OnInit {
         dataExclusao: Timestamp.now()
       });
 
-      // Excluir o barbeiro da coleção "barbers"
       const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${barbeiro.id}`);
       await deleteDoc(barbeiroDocRef);
 
-      // Atualizar a lista de barbeiros
       this.barbeiros = this.barbeiros.filter(b => b.id !== barbeiro.id);
 
       alert('Barbeiro excluído com sucesso!');

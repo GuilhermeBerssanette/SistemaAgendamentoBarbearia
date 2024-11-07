@@ -1,6 +1,5 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { doc, Firestore, getDoc } from "@angular/fire/firestore";
+import { Component, HostListener } from '@angular/core';
+import { Router, RouterLink } from "@angular/router";
 import { RegisterComponent } from '../../pages/user/register/register.component';
 import { Auth, signOut } from '@angular/fire/auth';
 import { MatIcon } from '@angular/material/icon';
@@ -12,15 +11,12 @@ import { MatIcon } from '@angular/material/icon';
   imports: [RegisterComponent, RouterLink, MatIcon, ],
   styleUrls: ['./header-admin.component.scss']
 })
-export class HeaderAdminComponent implements OnInit {
+export class HeaderAdminComponent {
   dropdownOpen: boolean = false;
   sidebarOpen = false;
   barbeiro: any;
 
   constructor(private auth: Auth, private router: Router) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;

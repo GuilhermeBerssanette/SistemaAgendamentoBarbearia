@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import {ApplicationConfig} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -11,8 +11,9 @@ import { getAuth, provideAuth } from "@angular/fire/auth";
 import { provideFirestore } from "@angular/fire/firestore";
 import { getFirestore } from "@angular/fire/firestore";
 import { provideEnvironmentNgxMask } from "ngx-mask";
-import { provideStorage } from "@angular/fire/storage"; // Certo
-import { getStorage } from "@angular/fire/storage"; // Certo
+import { provideStorage } from "@angular/fire/storage";
+import { getStorage } from "@angular/fire/storage";
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,3 +28,6 @@ export const appConfig: ApplicationConfig = {
     provideStorage(() => getStorage())
   ]
 };
+
+
+//sistema-agendamento-horarios@sistema-agendamento-barbearia.iam.gserviceaccount.com

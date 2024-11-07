@@ -4,3 +4,95 @@
   min-height: 100vh;
   background-color: #05465F;
 }
+
+$primary-color: #05465F;
+$secondary-color: #05668D;
+$accent-color: #028090;
+$error-color: #FF6B6B;
+$text-color: #333;
+$white-color: #FFFFFF;
+$border-color: #ddd;
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: $white-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  .title {
+    text-align: center;
+    color: $primary-color;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .subtitle {
+    color: $secondary-color;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  label {
+    font-size: 16px;
+    color: $text-color;
+  }
+
+  input[type="date"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid lighten($border-color, 20%);
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+    }
+  }
+}
+
+.available-times {
+  margin-top: 20px;
+
+  .time-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    .time-slot {
+      padding: 10px;
+      text-align: center;
+      background-color: $accent-color;
+      color: $white-color;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $secondary-color;
+      }
+    }
+  }
+}
+
+.no-times {
+  p {
+    text-align: center;
+    color: $error-color;
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
