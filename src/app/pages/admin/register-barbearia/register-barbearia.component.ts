@@ -1,17 +1,17 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-  ValidatorFn,
   AbstractControl,
-  ValidationErrors
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
 } from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {BarbeariasService} from "../../../services/barbearias.service";
 import {Router} from "@angular/router";
-import { Barbearias } from "../../../interfaces/barbearias";
+import {Barbearias} from "../../../interfaces/barbearias";
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -24,6 +24,7 @@ import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import {uploadBytesResumable} from "@angular/fire/storage";
+import {Auth} from "@angular/fire/auth";
 
 
 @Component({
@@ -59,6 +60,7 @@ export class RegisterBarbeariaComponent implements OnInit {
   isPJ = false;
   isPF = false;
 
+  auth = inject(Auth);
 
   selectedFile: File | null = null;
   downloadURL: string | null = null;
@@ -300,77 +302,49 @@ export class RegisterBarbeariaComponent implements OnInit {
   }
 
 
-  onSubmit(): void {
-    const rawForm = this.form.getRawValue()
+  async onSubmit(): Promise<void> {
+    const rawForm = this.form.getRawValue();
 
     if (!this.selectedFile) {
       console.error('Imagem de perfil não selecionada.');
       return;
     }
 
-    if (
-      rawForm.nomeFantasia === null ||
-      rawForm.razaoSocial === null ||
-      rawForm.responsavel === null ||
-
-      rawForm.rg === null ||
-      rawForm.cpf === null ||
-      rawForm.cnpj === null ||
-      rawForm.inscricaoEstadual === null ||
-
-      rawForm.estado === null ||
-      rawForm.cidade === null ||
-      rawForm.rua === null ||
-      rawForm.numero === null ||
-
-      rawForm.email === null ||
-      rawForm.celular === null ||
-      rawForm.whats === null ||
-      rawForm.telefone === null ||
-
-
-      rawForm.instagram === null ||
-      rawForm.facebook === null ||
-
-      rawForm.tiktok === null ||
-      rawForm.twitter === null ||
-
-      rawForm.comodidades === null ||
-
-      rawForm.profileImage === null
-
-    ) {
+    const userId = this.auth.currentUser?.uid;
+    if (!userId) {
+      console.error('Usuário não autenticado.');
       return;
     }
 
     const barbeariaData: Barbearias = {
-      nomeFantasia: rawForm.nomeFantasia,
-      razaoSocial: rawForm.razaoSocial,
-      responsavel: rawForm.responsavel,
+      nomeFantasia: rawForm.nomeFantasia || '',
+      razaoSocial: rawForm.razaoSocial || '',
+      responsavel: rawForm.responsavel || '',
 
-      rg: rawForm.rg,
-      cpf: rawForm.cpf,
-      cnpj: rawForm.cnpj,
-      inscricaoEstadual: rawForm.inscricaoEstadual,
+      rg: rawForm.rg || '',
+      cpf: rawForm.cpf || '',
+      cnpj: rawForm.cnpj || '',
+      inscricaoEstadual: rawForm.inscricaoEstadual || '',
 
-      estado: rawForm.estado,
-      cidade: rawForm.cidade,
-      rua: rawForm.rua,
-      numero: rawForm.numero,
+      estado: rawForm.estado || '',
+      cidade: rawForm.cidade || '',
+      rua: rawForm.rua || '',
+      numero: rawForm.numero || '',
 
-      email: rawForm.email,
-      celular: rawForm.celular,
-      whats: rawForm.whats,
-      telefone: rawForm.telefone,
+      email: rawForm.email || '',
+      celular: rawForm.celular || '',
+      whats: rawForm.whats || '',
+      telefone: rawForm.telefone || '',
 
-      instagram: rawForm.instagram,
-      facebook: rawForm.facebook,
-      tiktok: rawForm.tiktok,
-      twitter: rawForm.twitter,
+      instagram: rawForm.instagram || '',
+      facebook: rawForm.facebook || '',
+      tiktok: rawForm.tiktok || '',
+      twitter: rawForm.twitter || '',
 
-      comodidades: rawForm.comodidades,
+      comodidades: rawForm.comodidades || '',
 
-      profileImageUrl: rawForm.profileImage,
+      profileImageUrl: '',
+      ownerId: userId
     };
 
     const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
@@ -382,23 +356,20 @@ export class RegisterBarbeariaComponent implements OnInit {
       (error) => {
         console.error('Erro ao fazer upload da imagem:', error);
       },
-      () => {
+      async () => {
+        try {
+          barbeariaData.profileImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
 
-        getDownloadURL(uploadTask.snapshot.ref).then((url: string) => {
-          this.downloadURL = url;
-
-          barbeariaData.profileImageUrl = url;
-
-          this.barbeariasService.addBarbearia(barbeariaData).then(() => {
-            this.router.navigate(['']).then(() => {
-              console.log('Cadastro da barbearia concluído com sucesso.');
-            });
-          }).catch((error) => {
-            console.error('Erro ao cadastrar barbearia:', error);
+          const barbeariaRef = await this.barbeariasService.addBarbearia(barbeariaData);
+          this.router.navigate(['/barbearia', barbeariaRef.id, 'admin']).then(() => {
+            console.log('Cadastro da barbearia concluído com sucesso.');
           });
-        });
+        } catch (error) {
+          console.error('Erro ao cadastrar barbearia:', error);
+        }
       }
     );
+
   }
 }
 

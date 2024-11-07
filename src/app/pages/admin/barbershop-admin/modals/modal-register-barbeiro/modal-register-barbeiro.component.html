@@ -31,6 +31,14 @@
   </div>
 
   <div>
+    <input type="password" placeholder="Senha" formControlName="password">
+    <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)">
+      <small *ngIf="form.get('password')?.errors?.['required']">Senha é obrigatória.</small>
+      <small *ngIf="form.get('password')?.errors?.['length']">Minimo 6 digitos.</small>
+    </div>
+  </div>
+
+  <div>
     <input type="text" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000">
     <div *ngIf="form.get('telefone')?.invalid && (form.get('telefone')?.dirty || form.get('telefone')?.touched)">
       <small *ngIf="form.get('telefone')?.errors?.['required']">Telefone é obrigatório.</small>

@@ -1,9 +1,20 @@
-<div class="container-fluid">
-  <h1 class="text-center">Detalhes da Ordem</h1>
+<div class="container">
+  <h2 class="title">Agendamento de Serviço</h2>
+  <div class="date-picker">
+    <label for="date">Selecione a Data:</label>
+    <input type="date" id="date" [value]="todayString" [min]="todayString" (change)="onDateChange($event)">
+  </div>
 
-  <div class="card p-3 container">
-    <h4>ID do Serviço/Combo: {{ orderId }}</h4>
-    <p><strong>Valor:</strong> R$ {{ orderPrice }}</p>
-    <p><strong>Duração:</strong> {{ orderDuration }} minutos</p>
+  <div *ngIf="availableTimes.length > 0" class="available-times">
+    <h3 class="subtitle">Horários Disponíveis:</h3>
+    <ul class="time-list">
+      <li class="time-slot" *ngFor="let time of availableTimes" (click)="openModalConfirmationOrder(time)">
+        {{ time }}
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="availableTimes.length === 0 && selectedDate" class="no-times">
+    <p>Nenhum horário disponível para a data selecionada.</p>
   </div>
 </div>

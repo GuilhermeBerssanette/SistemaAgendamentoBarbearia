@@ -1,0 +1,9 @@
+<h2>Confirmar Agendamento</h2>
+<p>Horário Selecionado: {{ data.selectedTime }}</p>
+<p>Barbeiro: {{ data.barberName }}</p>
+<p>Serviço: {{ data.serviceName }}</p>
+<p>Preço: R$ {{ data.servicePrice }}</p>
+<div class="actions">
+  <button mat-button (click)="confirm()">Confirmar</button>
+  <button mat-button (click)="cancel()">Cancelar</button>
+</div>
