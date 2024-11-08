@@ -25,24 +25,20 @@
 </div>
 
 <div class="container-fluid text-center bgColor min-vh-100">
-  <div class="boxContent">
-    <div class="nameBarber">
-      <h1 class="text-center mt-3">{{ barbearia?.nomeFantasia }}</h1>
-    </div>
-
-    <div class="boxData">
-      <h3>Barbeiros:</h3>
-      <div class="boxDataBarber" *ngFor="let barber of barbers">
-        <button class="barberLink btn d-flex justify-content-between align-items-center w-100" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-          <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="50" height="50" class="img-fluid mt-2 ml-4">
-          <span class="flex-grow-1 text-center">{{ barber.nome }}</span>
-          <button class="modalLink btn" (click)="openModalInfos(barber, $event)">info</button>
-        </button>
+      <div class="barbers-container container-fluid">
+        <div class="barber-card" *ngFor="let barber of barbers">
+          <button class="btn" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
+            <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="200" height="200" class="imgBarber">
+          </button>
+          <div class="name-info-container">
+            <span>{{ barber.nome }}</span>
+            <button class="btn" (click)="openModalInfos(barber, $event)"><mat-icon>help</mat-icon></button>
+          </div>
+        </div>
       </div>
       <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
-    </div>
-  </div>
-  <div>
-      <button (click)="openModalComment()">comentarios</button>
-  </div>
+      
+      <div>
+          <button (click)="openModalComment()">comentarios</button>
+      </div>
 </div>
