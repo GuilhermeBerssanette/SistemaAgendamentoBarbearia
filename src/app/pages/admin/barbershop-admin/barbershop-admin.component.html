@@ -1,33 +1,44 @@
 <app-header-admin></app-header-admin>
-<div class="container mt-5">
+<div class="container-fluid">
+  <div class="container">
+    <div class="pt-3 title" >
+      <h1>Bem vindo à barbearia</h1>
+    </div>
 
   <div class="button-group">
-    <button (click)="showSection('finance')">Financeiro</button>
-    <button (click)="showSection('barbers')">Gerenciar Barbeiros</button>
-    <button (click)="showSection('report')">Relatório</button>
-    <button (click)="showSection('editProfile')">Editar Perfil</button>
+    <button class="btnContent" [class.active]="selectedSection === 'finance'" (click)="showSection('finance')">Financeiro</button>
+    <button class="btnContent" [class.active]="selectedSection === 'barbers'" (click)="showSection('barbers')">Gerenciar Barbeiros</button>
+    <button class="btnContent" [class.active]="selectedSection === 'report'" (click)="showSection('report')">Relatório</button>
+    <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
   </div>
 
   <!-- Seção Financeiro -->
-  <ng-container *ngIf="currentSection === 'finance'">
-    <h1>Seção Financeiro</h1>
+  <ng-container *ngIf="selectedSection === 'finance'">
+    <h1 class="title">Seção Financeiro</h1>
   </ng-container>
 
   <!-- Seção Gerenciar Barbeiros -->
-  <ng-container *ngIf="currentSection === 'barbers'">
-    <h1>Gerenciar Barbeiros</h1>
-    <button (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
+  <ng-container *ngIf="selectedSection === 'barbers'">
+    <h1 class="title">Gerenciar Barbeiros</h1>
+    <div class="m-3">
+      <button class="service-button" (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
+    </div>
 
-    <div *ngIf="barbeiros.length > 0; else noBarbers">
-      <ul>
-        <li *ngFor="let barbeiro of barbeiros">
-          <div>
-            <strong>Nome:</strong> {{ barbeiro.nome }}<br />
-            <strong>CPF:</strong> {{ barbeiro.cpf }}
+    <div *ngIf="barbeiros.length > 0; else noBarbers" class="service-combo-container">
+      <div class="card-deck m-2">
+        <div *ngFor="let barbeiro of barbeiros" class="card">
+          <div class="card-body">
+            <button class="float-end btnIcons" (click)="confirmDeleteBarbeiro(barbeiro)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="float-end btnIcons" (click)="confirmDeleteBarbeiro(barbeiro)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <p class="card-text"><strong>Nome:</strong> {{ barbeiro.nome }}</p>
+            <p class="card-text"><strong>CPF:</strong> {{ barbeiro.cpf }}</p>
           </div>
-          <button (click)="confirmDeleteBarbeiro(barbeiro)">Excluir</button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <ng-template #noBarbers>
@@ -35,14 +46,15 @@
     </ng-template>
   </ng-container>
 
+
   <!-- Seção Relatório -->
-  <ng-container *ngIf="currentSection === 'report'">
-    <h1>Relatório</h1>
+  <ng-container *ngIf="selectedSection === 'report'">
+    <h1 class="title">Relatório</h1>
   </ng-container>
 
   <!-- Seção Editar Perfil -->
-  <ng-container *ngIf="currentSection === 'editProfile'">
-    <h1>Editar Perfil</h1>
+  <ng-container *ngIf="selectedSection === 'editProfile'">
+    <h1 class="title">Editar Perfil</h1>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <div>
         <label>Nome Fantasia</label>
@@ -173,4 +185,5 @@
       <button type="submit" [disabled]="profileForm.invalid">Salvar Alterações</button>
     </form>
   </ng-container>
+  </div>
 </div>
