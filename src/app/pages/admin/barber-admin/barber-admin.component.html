@@ -52,11 +52,13 @@
       <ng-container *ngIf="selectedSection === 'services'">
         <h3 class="title">Serviços: </h3>
 
-            <button class="service-button " (click)="openModalRegisterService()">Cadastrar Serviço</button>
-            <button class="service-button" (click)="openModalRegisterCombo()">Cadastrar Combo</button>
+            <div class="m-3">
+              <button class="service-button " (click)="openModalRegisterService()">Cadastrar Serviço</button>
+              <button class="service-button " (click)="openModalRegisterCombo()">Cadastrar Combo</button>
+            </div>
 
             <div *ngIf="registeredServices && registeredServices.length > 0; else noServices" class="service-combo-container">
-              <div class="card-deck">
+              <div class="card-deck m-2">
                 <div *ngFor="let service of registeredServices" class="card">
                   <div class="card-body">
                     <h4 class="card-title">{{ service.id }}
@@ -80,10 +82,10 @@
 
             <h3 class="title">Combos:</h3>
             <div *ngIf="registeredCombos && registeredCombos.length > 0; else noCombos" class="service-combo-container">
-              <div class="card-deck">
+              <div class="card-deck m-2">
                 <div *ngFor="let combo of registeredCombos" class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Combo: {{ combo.services.join(', ') }}
+                    <h4 class="card-title"> {{ combo.services.join(', ') }}
                       <button class="float-end btnIcons" *ngIf="isAdmin()" mat-icon-button (click)="openModalEditCombo(combo)">
                         <mat-icon class="float-end">edit</mat-icon>
                       </button>
