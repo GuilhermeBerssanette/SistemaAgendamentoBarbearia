@@ -13,6 +13,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 import { Timestamp } from 'firebase/firestore';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -28,7 +29,8 @@ import { Timestamp } from 'firebase/firestore';
     NgForOf,
     MatFormFieldModule,
     MatSelectModule,
-    HeaderAdminComponent
+    HeaderAdminComponent,
+    MatIcon
   ],
   templateUrl: './barbershop-admin.component.html',
   styleUrls: ['./barbershop-admin.component.scss']
@@ -46,6 +48,8 @@ export class BarbershopAdminComponent implements OnInit {
   comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'Sinuca', 'TV'];
   barbeiros: any[] = [];
   storage = getStorage();
+  selectedSection: string = 'finance';
+  click: any;
 
   constructor(public dialog: MatDialog) {}
 
@@ -133,8 +137,8 @@ export class BarbershopAdminComponent implements OnInit {
     }
   }
 
-  showSection(section: string): void {
-    this.currentSection = section;
+  showSection(section: string) {
+    this.selectedSection = section;
   }
 
   onFileSelected(event: any): void {
