@@ -202,8 +202,8 @@ export class BarberAdminComponent implements OnInit {
   openModalRegisterImage() {
     const dialogRef = this.dialog.open(ModalRegisterImageComponent, {
       data: { barberId: this.barbeiroId },
-      width: '400px',
-      height: '300px',
+      width: '500px',
+      height: '400px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
