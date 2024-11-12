@@ -2,9 +2,11 @@ import { MatIcon } from '@angular/material/icon';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Timestamp } from '@firebase/firestore';
-import {DatePipe, NgForOf} from "@angular/common";
+import { DatePipe, NgForOf } from "@angular/common";
+import { Auth } from '@angular/fire/auth';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-modal-comment',
@@ -21,6 +23,7 @@ import {DatePipe, NgForOf} from "@angular/common";
 export class ModalCommentComponent implements OnInit {
   comments: any[] = [];
   form: FormGroup;
+  private auth = inject(Auth);
 
   constructor(
     private firestore: Firestore,
@@ -45,17 +48,22 @@ export class ModalCommentComponent implements OnInit {
 
   async submitComment() {
     if (this.form.valid) {
-      const newComment = {
-        userId: '12345',
-        userName: 'Usuário Teste',
-        comment: this.form.value.comment,
-        date: Timestamp.now(),
-      };
+      const user = this.auth.currentUser;
 
-      const commentsCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/comments`);
-      await addDoc(commentsCollectionRef, newComment);
-      this.form.reset();
+      if (user) {
+        const newComment = {
+          userId: user.uid,
+          userEmail: user.email,
+          comment: this.form.value.comment,
+          date: Timestamp.now(),
+        };
 
+        const commentsCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/comments`);
+        await addDoc(commentsCollectionRef, newComment);
+        this.form.reset();
+      } else {
+        console.error('Usuário não autenticado. Comentário não pode ser salvo.');
+      }
     }
   }
 
