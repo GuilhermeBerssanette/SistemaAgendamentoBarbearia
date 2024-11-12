@@ -1,0 +1,11 @@
+<h2>Barbearias Favoritas</h2>
+<p *ngIf="userEmail">Usuário: {{ userEmail }}</p>
+<div *ngIf="favoriteBarbearias.length > 0; else noFavorites">
+  <div *ngFor="let barbearia of favoriteBarbearias">
+    <a (click)="navigateToBarbearia(barbearia.id)" class="barbearia-link">{{ barbearia.nomeFantasia }}</a>
+    <p>{{ barbearia.endereco }}</p>
+  </div>
+</div>
+<ng-template #noFavorites>
+  <p>Nenhuma barbearia favorita encontrada.</p>
+</ng-template>
