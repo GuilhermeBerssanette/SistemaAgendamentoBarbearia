@@ -19,7 +19,7 @@ import { MatIcon } from '@angular/material/icon';
 export class ModalRegisterImageComponent implements OnInit {
   form: FormGroup;
   selectedFile: File | null = null;
-  imagePreview: string | null = null; 
+  imagePreview: string | null = null;
   uploadProgress: number = 0;
 
   constructor(
@@ -69,7 +69,7 @@ export class ModalRegisterImageComponent implements OnInit {
           console.error('Erro ao fazer upload da imagem:', error);
         },
         () => {
-          this.dialogRef.close(true);
+          this.dialogRef.close(false);
         }
       );
     }
