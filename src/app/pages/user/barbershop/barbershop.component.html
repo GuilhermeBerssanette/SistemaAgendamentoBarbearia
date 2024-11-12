@@ -5,16 +5,19 @@
     <input type="file" id="upload-banner" style="display: none;" />
     <label for="upload-banner" class="upload-label-banner">
       <mat-icon style="padding-top: 4px;">upload</mat-icon>Adicionar arquivo
-     </label>
+    </label>
 
     <div class="profile-image">
-        <img [ngSrc]="barbearia?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="100" height="100" class="img-fluid">
+      <img [ngSrc]="barbearia?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="100" height="100" class="img-fluid">
     </div>
   </div>
   <br>
   <br>
   <div class="barbearia-name">
     <p>{{ barbearia?.nomeFantasia }}</p>
+    <mat-icon [ngClass]="{'favorite': isFavorite, 'not-favorite': !isFavorite}" (click)="toggleFavorite()">
+      {{ isFavorite ? 'favorite' : 'favorite_border' }}
+    </mat-icon>
   </div>
   <button class="float-end btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" alt=""></button>
   <button class="float-end btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" alt=""></button>
@@ -25,20 +28,20 @@
 </div>
 
 <div class="container-fluid text-center bgColor min-vh-100">
-      <div class="barbers-container container-fluid">
-        <div class="barber-card" *ngFor="let barber of barbers">
-          <button class="btn" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
-            <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="200" height="200" class="imgBarber">
-          </button>
-          <div class="name-info-container">
-            <span>{{ barber.nome }}</span>
-            <button class="btn" (click)="openModalInfos(barber, $event)"><mat-icon>help</mat-icon></button>
-          </div>
-        </div>
+  <div class="barbers-container container-fluid">
+    <div class="barber-card" *ngFor="let barber of barbers">
+      <button class="btn" [routerLink]="['/barbearia', barbeariaId, 'barber', barber.id]">
+        <img [ngSrc]="barber.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="200" height="200" class="imgBarber">
+      </button>
+      <div class="name-info-container">
+        <span>{{ barber.nome }}</span>
+        <button class="btn" (click)="openModalInfos(barber, $event)"><mat-icon>help</mat-icon></button>
       </div>
-      <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
-      
-      <div>
-          <button (click)="openModalComment()">comentarios</button>
-      </div>
+    </div>
+  </div>
+  <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
+
+  <div>
+    <button (click)="openModalComment()">comentarios</button>
+  </div>
 </div>

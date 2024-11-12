@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { collection, doc, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDoc, getDocs, setDoc, deleteDoc } from '@angular/fire/firestore';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Barbearias } from "../../../interfaces/barbearias";
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import { ModalInfoComponent } from "./modals/modal-info/modal-info.component";
 import { MatDialog } from "@angular/material/dialog";
-import {MatIcon} from "@angular/material/icon";
-import {ModalCommentComponent} from "./modals/modal-comment/modal-comment.component";
+import { MatIcon } from "@angular/material/icon";
+import { ModalCommentComponent } from "./modals/modal-comment/modal-comment.component";
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
+import { Auth } from "@angular/fire/auth";
 
 @Component({
   selector: 'app-barbershop',
@@ -21,17 +22,30 @@ export class BarbershopComponent implements OnInit {
   barbearia?: Barbearias;
   barbeariaId?: string;
   barbers: Barbeiros[] = [];
+  isFavorite = false;
+  user: any;
 
-  constructor(private route: ActivatedRoute, private firestore: Firestore, public dialog: MatDialog) {}
+  constructor(
+    private route: ActivatedRoute,
+    private firestore: Firestore,
+    public dialog: MatDialog,
+    private auth: Auth
+  ) {}
 
   async ngOnInit() {
     this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
+    this.auth.onAuthStateChanged(async user => {
+      this.user = user;
+      if (user) {
+        await this.checkIfFavorite();
+      }
+    });
 
     if (this.barbeariaId) {
       const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
       const barbeariaDoc = await getDoc(barbeariaDocRef);
       if (barbeariaDoc.exists()) {
-        this.barbearia = {id: barbeariaDoc.id, ...barbeariaDoc.data()} as unknown as Barbearias;
+        this.barbearia = { id: barbeariaDoc.id, ...barbeariaDoc.data() } as unknown as Barbearias;
       }
 
       const barbersCollection = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
@@ -56,7 +70,7 @@ export class BarbershopComponent implements OnInit {
 
       try {
         const newWindow = window.open(url, '_blank');
-        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
           alert('Endereço não encontrado. Verifique as informações fornecidas.');
         }
       } catch (error) {
@@ -84,4 +98,24 @@ export class BarbershopComponent implements OnInit {
     });
   }
 
+  async checkIfFavorite() {
+    if (!this.user || !this.barbeariaId) return;
+
+    const favoriteDocRef = doc(this.firestore, `users/${this.user.uid}/favorites/${this.barbeariaId}`);
+    const docSnap = await getDoc(favoriteDocRef);
+    this.isFavorite = docSnap.exists();
+  }
+
+  async toggleFavorite() {
+    if (!this.user || !this.barbeariaId) return;
+
+    const favoriteDocRef = doc(this.firestore, `users/${this.user.uid}/favorites/${this.barbeariaId}`);
+    if (this.isFavorite) {
+      await deleteDoc(favoriteDocRef);
+      this.isFavorite = false;
+    } else {
+      await setDoc(favoriteDocRef, { barbeariaId: this.barbeariaId, dateAdded: new Date() });
+      this.isFavorite = true;
+    }
+  }
 }
