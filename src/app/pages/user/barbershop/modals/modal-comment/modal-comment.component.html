@@ -1,26 +1,25 @@
 <div class="modal-body">
-<div class="navbar">
-  <div class="container-fluid d-flex justify-content-start p-3">
-    <span>Comentários</span>
-    <mat-icon class="hover ms-auto" (click)="closeModalComment()">close</mat-icon>
+  <div class="navbar">
+    <div class="container-fluid d-flex justify-content-start p-3">
+      <span>Comentários</span>
+      <mat-icon class="hover ms-auto" (click)="closeModalComment()">close</mat-icon>
+    </div>
   </div>
-</div>
 
-<hr style="border: 1px solid white; width: 100%; ">
+  <hr style="border: 1px solid white; width: 100%; ">
 
-<div class="modal-body">
-  <div *ngFor="let comment of comments" class="comment-box m-4">
-    <h5>{{ comment.userName }} <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small></h5>
-    <p>{{ comment.comment }}</p>
-    <hr>
+  <div class="modal-body">
+    <div *ngFor="let comment of comments" class="comment-box m-4">
+      <h5>{{ comment.userEmail }} <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small></h5>
+      <p>{{ comment.comment }}</p>
+      <hr>
+    </div>
   </div>
-</div>
 
-<div class="modal-footer">
-  <form [formGroup]="form" class="w-100 d-flex align-items-center m-4">
-    <input type="text" formControlName="comment" class="form-control" placeholder="Escreva um comentário">
-    <button type="button" class="btn mt-1 ms-1" (click)="submitComment()" [disabled]="form.invalid"><mat-icon>send</mat-icon></button>
-
-  </form>
-</div>
+  <div class="modal-footer">
+    <form [formGroup]="form" class="w-100 d-flex align-items-center m-4">
+      <input type="text" formControlName="comment" class="form-control" placeholder="Escreva um comentário">
+      <button type="button" class="btn mt-1 ms-1" (click)="submitComment()" [disabled]="form.invalid"><mat-icon>send</mat-icon></button>
+    </form>
+  </div>
 </div>
