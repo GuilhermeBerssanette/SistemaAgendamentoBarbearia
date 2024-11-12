@@ -50,6 +50,21 @@ export class BarbershopAdminComponent implements OnInit {
   storage = getStorage();
   selectedSection: string = 'finance';
   click: any;
+  imagePreview: string | ArrayBuffer | null = null;
+
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
 
   constructor(public dialog: MatDialog) {}
 
@@ -139,10 +154,6 @@ export class BarbershopAdminComponent implements OnInit {
 
   showSection(section: string) {
     this.selectedSection = section;
-  }
-
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
   }
 
   async onSubmit(): Promise<void> {
