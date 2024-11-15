@@ -37,8 +37,8 @@
 }
 
 .btnContent.active {
-  background-color: #a9a9a9; /* Cor de fundo mais escura para o botão ativo */
-  color: #fff; /* Cor do texto para contraste */
+  background-color: #a9a9a9;
+  color: #fff;
 }
 
 ::-webkit-scrollbar { overflow-y:hidden; }
@@ -89,8 +89,8 @@
     justify-content: center;
 
     .gallery-item {
-      flex: 1 1 170px;  // Flexibilidade e largura mínima de 200px
-      max-width: 250px; // Define um limite de largura
+      flex: 1 1 170px;
+      max-width: 250px;
       position: relative;
       overflow: hidden;
       border-radius: 8px;
@@ -166,12 +166,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    padding-left: 3px;
-    padding-right: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
 
     .card {
       flex: 1 1 250px; // Largura mínima de 250px, cresce conforme o espaço
-      max-width: 385px; // Largura máxima para evitar que fique muito grande
+      max-width: 350px; // Largura máxima para evitar que fique muito grande
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
@@ -182,11 +183,11 @@
 
       .card-body {
         padding: 20px;
+        left: 30px;
 
         .card-title {
           display: absolute;
           justify-content: space-between;
-          align-items: center;
           margin-bottom: 10px;
         }
 
@@ -198,12 +199,18 @@
   }
 }
 
+
+@media (max-width: 768px){
+  .card-body {
+    //padding-left: 880px;
+  }
+}
+
+
 .btnIcons{
   border: none;
   background-color: #FFFFFF;
 }
-
-
 
   .form-group {
     margin-bottom: 20px;

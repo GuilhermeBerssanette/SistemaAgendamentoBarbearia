@@ -13,6 +13,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 import { Timestamp } from 'firebase/firestore';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -28,7 +29,8 @@ import { Timestamp } from 'firebase/firestore';
     NgForOf,
     MatFormFieldModule,
     MatSelectModule,
-    HeaderAdminComponent
+    HeaderAdminComponent,
+    MatIcon
   ],
   templateUrl: './barbershop-admin.component.html',
   styleUrls: ['./barbershop-admin.component.scss']
@@ -46,6 +48,23 @@ export class BarbershopAdminComponent implements OnInit {
   comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'Sinuca', 'TV'];
   barbeiros: any[] = [];
   storage = getStorage();
+  selectedSection: string = 'finance';
+  click: any;
+  imagePreview: string | ArrayBuffer | null = null;
+
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
 
   constructor(public dialog: MatDialog) {}
 
@@ -133,12 +152,8 @@ export class BarbershopAdminComponent implements OnInit {
     }
   }
 
-  showSection(section: string): void {
-    this.currentSection = section;
-  }
-
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+  showSection(section: string) {
+    this.selectedSection = section;
   }
 
   async onSubmit(): Promise<void> {

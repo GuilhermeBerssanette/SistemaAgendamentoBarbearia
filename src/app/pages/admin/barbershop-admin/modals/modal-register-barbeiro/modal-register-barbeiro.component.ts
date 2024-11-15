@@ -1,3 +1,4 @@
+import { MatIcon } from '@angular/material/icon';
 import {Component, inject, Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Firestore, doc, setDoc, collection } from '@angular/fire/firestore';
@@ -12,7 +13,7 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
   selector: 'app-modal-register-barbeiro',
   templateUrl: './modal-register-barbeiro.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, NgxMaskDirective, NgIf],
+  imports: [ReactiveFormsModule, NgxMaskDirective, NgIf, MatIcon],
   styleUrls: ['./modal-register-barbeiro.component.scss']
 })
 export class ModalRegisterBarbeiroComponent {
@@ -21,6 +22,18 @@ export class ModalRegisterBarbeiroComponent {
   downloadURL: string | null = null;
   storage = getStorage();
   private auth = inject(Auth);
+  imagePreview: string | ArrayBuffer | null = null;
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { barbeariaId: string },
@@ -47,9 +60,9 @@ export class ModalRegisterBarbeiroComponent {
     });
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
+ // onFileSelected(event: any): void {
+      //this.selectedFile = event.target.files[0];
+//}
 
   async addBarberToBarbearia() {
     if (this.form.valid && this.selectedFile) {
@@ -117,5 +130,9 @@ export class ModalRegisterBarbeiroComponent {
         console.error('Erro ao criar conta de barbeiro:', error);
       }
     }
+  }
+
+  onCancel(){
+    this.dialogRef.close();
   }
 }

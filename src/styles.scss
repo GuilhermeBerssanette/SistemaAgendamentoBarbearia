@@ -19,3 +19,25 @@ body > app-root > app-register-barbearia > div > div.col-lg-6.col-md-12.order-md
   background-color: var(--primary-color) !important;
 
 }
+
+body > app-root > app-barbershop-admin > div > div > form > div.comodidades-container > mat-form-field {
+
+  color: #05465F !important;
+  width: 100%; /* Garante que o mat-form-field ocupe toda a largura */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body > app-root > app-barbershop-admin > div > div > form > div.comodidades-container > mat-form-field > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled.mdc-text-field--no-label {
+  background-color: #028090 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+body > app-root > app-barbershop-admin > div > div > form > div.comodidades-container > mat-form-field > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled.mdc-text-field--no-label > div.mat-mdc-form-field-flex {
+
+  color: #05465F !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
