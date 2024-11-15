@@ -1,117 +1,139 @@
-<h2>Cadastro de Barbeiro</h2>
-
-<form [formGroup]="form" (ngSubmit)="addBarberToBarbearia()">
-  <div>
-    <input type="text" placeholder="Nome" formControlName="nome">
-    <div *ngIf="form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)">
-      <small *ngIf="form.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
+<div class="areaModal">
+  <div class="navbar">
+    <div class="d-flex justify-content-start container-fluid p-3">
+      <span class="title">Cadastro de Barbeiro</span>
+      <mat-icon class="hover ms-auto" (click)="onCancel()">close</mat-icon>
     </div>
   </div>
 
-  <div>
-    <input type="text" placeholder="RG" formControlName="rg" mask="00.000.000-00">
-    <div *ngIf="form.get('rg')?.invalid && (form.get('rg')?.dirty || form.get('rg')?.touched)">
-      <small *ngIf="form.get('rg')?.errors?.['required']">RG é obrigatório.</small>
-    </div>
-  </div>
 
-  <div>
-    <input type="text" placeholder="CPF" formControlName="cpf" mask="000.000.000-00">
-    <div *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
-      <small *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
-    </div>
-  </div>
-
-  <div>
-    <input type="email" placeholder="Email" formControlName="email">
-    <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
-      <small *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
-      <small *ngIf="form.get('email')?.errors?.['email']">Siga o padrão: username&#64;gmail.com</small>
-    </div>
-  </div>
-
-  <div>
-    <input type="password" placeholder="Senha" formControlName="password">
-    <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)">
-      <small *ngIf="form.get('password')?.errors?.['required']">Senha é obrigatória.</small>
-      <small *ngIf="form.get('password')?.errors?.['length']">Minimo 6 digitos.</small>
-    </div>
-  </div>
-
-  <div>
-    <input type="text" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000">
-    <div *ngIf="form.get('telefone')?.invalid && (form.get('telefone')?.dirty || form.get('telefone')?.touched)">
-      <small *ngIf="form.get('telefone')?.errors?.['required']">Telefone é obrigatório.</small>
-    </div>
-  </div>
-
-  <div>
-    <input type="text" placeholder="WhatsApp" formControlName="whats" mask="(00)00000-0000">
-    <div *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
-      <small *ngIf="form.get('whats')?.errors?.['required']">WhatsApp é obrigatório.</small>
-    </div>
-  </div>
+<form [formGroup]="form" (ngSubmit)="addBarberToBarbearia()" class="service-form">
 
   <!-- Campo de Upload da Foto de Perfil -->
-  <div>
-    <label>Foto de Perfil:</label>
-    <input type="file" (change)="onFileSelected($event)">
+
+  <div class="containerInput mt-2">
+    <div class="image-preview-container" (click)="fileInput.click()">
+      <ng-container *ngIf="imagePreview; else placeholder">
+        <img [src]="imagePreview" alt="Pré-visualização da imagem" class="image-preview" />
+      </ng-container>
+      <ng-template #placeholder>
+        <span class="placeholder-text">Clique para adicionar uma imagem</span>
+      </ng-template>
+    </div>
+    <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
+  </div>
+
+  <div class="form-group mb-3">
+    <input type="text" placeholder="Nome" formControlName="nome" class="form-control">
+    <div class="text-danger error" *ngIf="form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)">
+      <small class="ms-3" *ngIf="form.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="RG" formControlName="rg" mask="00.000.000-00">
+    <div class="text-danger error" *ngIf="form.get('rg')?.invalid && (form.get('rg')?.dirty || form.get('rg')?.touched)">
+      <small class="ms-3" *ngIf="form.get('rg')?.errors?.['required']">RG é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="CPF" formControlName="cpf" mask="000.000.000-00">
+    <div class="text-danger error" *ngIf="form.get('cpf')?.invalid && (form.get('cpf')?.dirty || form.get('cpf')?.touched)">
+      <small class="ms-3" *ngIf="form.get('cpf')?.errors?.['required']">CPF é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <input class="form-control" type="email" placeholder="Email" formControlName="email">
+    <div class="text-danger error" *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
+      <small class="ms-3" *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</small>
+      <small class="ms-3" *ngIf="form.get('email')?.errors?.['email']">Siga o padrão: username&#64;gmail.com</small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <input class="form-control" type="password" placeholder="Senha" formControlName="password">
+    <div class="text-danger error" *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)">
+      <small class="ms-3" *ngIf="form.get('password')?.errors?.['required']">Senha é obrigatória.</small>
+      <small class="ms-3" *ngIf="form.get('password')?.errors?.['length']">Minimo 6 digitos.</small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000">
+    <div class="text-danger error" *ngIf="form.get('telefone')?.invalid && (form.get('telefone')?.dirty || form.get('telefone')?.touched)">
+      <small class="ms-3" *ngIf="form.get('telefone')?.errors?.['required']">Telefone é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="WhatsApp" formControlName="whats" mask="(00)00000-0000">
+    <div class="text-danger error" *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
+      <small class="ms-3" *ngIf="form.get('whats')?.errors?.['required']">WhatsApp é obrigatório.</small>
+    </div>
   </div>
 
   <!-- Validações de redes sociais -->
-  <div>
-    <input type="text" placeholder="Instagram" formControlName="instagram">
-    <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
-      <small *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">URL do Instagram é inválida. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="Instagram" formControlName="instagram">
+    <div class="text-danger error" *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
+      <small class="ms-3" *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">URL do Instagram é inválida. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
     </div>
   </div>
 
-  <div>
-    <input type="text" placeholder="Facebook" formControlName="facebook">
-    <div *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
-      <small *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook é inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="Facebook" formControlName="facebook">
+    <div class="text-danger error" *ngIf="form.get('facebook')?.invalid && (form.get('facebook')?.dirty || form.get('facebook')?.touched)">
+      <small class="ms-3" *ngIf="form.get('facebook')?.errors?.['invalidFacebookUrl']">URL do Facebook é inválida. Deve seguir o formato https://www.facebook.com/SeuUsername/</small>
     </div>
   </div>
 
-  <div>
-    <input type="text" placeholder="TikTok" formControlName="tiktok">
-    <div *ngIf="form.get('tiktok')?.invalid && (form.get('tiktok')?.dirty || form.get('tiktok')?.touched)">
-      <small *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok é inválida. Deve seguir o formato https://www.tiktok.com/&#64;SeuUsername</small>
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="TikTok" formControlName="tiktok">
+    <div class="text-danger" *ngIf="form.get('tiktok')?.invalid && (form.get('tiktok')?.dirty || form.get('tiktok')?.touched)">
+      <small class="ms-3" *ngIf="form.get('tiktok')?.errors?.['invalidTiktokUrl']">URL do TikTok é inválida. Deve seguir o formato https://www.tiktok.com/&#64;SeuUsername</small>
     </div>
   </div>
 
-  <div>
-    <input type="text" placeholder="Twitter" formControlName="twitter">
-    <div *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
-      <small *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter é inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
+  <div class="form-group mb-3">
+    <input class="form-control" type="text" placeholder="Twitter" formControlName="twitter">
+    <div class="text-danger" *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
+      <small class="ms-3" *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter é inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
     </div>
   </div>
 
   <!-- Perguntas Sim/Não -->
-  <div>
+  <div class="checkbox-container">
+    <input class="ms-3" type="checkbox" formControlName="atendeAutista">
     <label>Atende Autista?</label>
-    <input type="checkbox" formControlName="atendeAutista">
   </div>
 
-  <div>
+  <div class="checkbox-container">
+    <input class="ms-3" type="checkbox" formControlName="atendeCrianca">
     <label>Atende Criança?</label>
-    <input type="checkbox" formControlName="atendeCrianca">
   </div>
 
-  <div>
+  <div class="checkbox-container">
+    <input class="ms-3" type="checkbox" formControlName="atendeDomicilio">
     <label>Oferece serviços em domicílio?</label>
-    <input type="checkbox" formControlName="atendeDomicilio">
   </div>
 
-  <div>
+  <div class="checkbox-container">
+    <input class="ms-3" type="checkbox" formControlName="experienciaCrespo">
     <label>Tem experiência com cabelo crespo?</label>
-    <input type="checkbox" formControlName="experienciaCrespo">
   </div>
 
-  <div>
+  <div class="checkbox-container">
+    <input class="ms-3" type="checkbox" formControlName="servicoEventos" >
     <label>Oferece serviços para eventos (casamentos, formaturas)?</label>
-    <input type="checkbox" formControlName="servicoEventos">
   </div>
 
-  <button type="submit" [disabled]="form.invalid">Registrar</button>
+  <!--<button type="submit" [disabled]="form.invalid">Registrar</button>-->
+  <div class="button-group container-fluid d-flex justify-content-center mb-2">
+    <button class="btn col-8 btnOption me-1" type="submit" [disabled]="form.invalid">Registrar</button>
+    <button class="btn col-4 btnOption" type="button" (click)="onCancel()">Cancelar</button>
+  </div>
 </form>
+
+</div>

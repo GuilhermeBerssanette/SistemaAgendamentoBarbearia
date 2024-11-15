@@ -1,52 +1,64 @@
 <app-header-admin></app-header-admin>
-<div class="container mt-5">
+<div class="container-fluid">
+  <div class="container">
+    <div class="pt-3 title" >
+      <h1>Bem vindo à barbearia</h1>
+    </div>
 
   <div class="button-group">
-    <button (click)="showSection('finance')">Financeiro</button>
-    <button (click)="showSection('barbers')">Gerenciar Barbeiros</button>
-    <button (click)="showSection('report')">Relatório</button>
-    <button (click)="showSection('editProfile')">Editar Perfil</button>
+    <button class="btnContent" [class.active]="selectedSection === 'finance'" (click)="showSection('finance')">Financeiro</button>
+    <button class="btnContent" [class.active]="selectedSection === 'barbers'" (click)="showSection('barbers')">Gerenciar Barbeiros</button>
+    <button class="btnContent" [class.active]="selectedSection === 'report'" (click)="showSection('report')">Relatório</button>
+    <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
   </div>
 
   <!-- Seção Financeiro -->
-  <ng-container *ngIf="currentSection === 'finance'">
-    <h1>Seção Financeiro</h1>
+  <ng-container *ngIf="selectedSection === 'finance'">
+    <h1 class="title">Seção Financeiro</h1>
   </ng-container>
 
   <!-- Seção Gerenciar Barbeiros -->
-  <ng-container *ngIf="currentSection === 'barbers'">
-    <h1>Gerenciar Barbeiros</h1>
-    <button (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
+  <ng-container *ngIf="selectedSection === 'barbers'">
+    <h1 class="title">Gerenciar Barbeiros</h1>
+    <div class="m-3">
+      <button class="service-button" (click)="openModalRegisterBarber()">Cadastrar Barbeiro</button>
+    </div>
 
-    <div *ngIf="barbeiros.length > 0; else noBarbers">
-      <ul>
-        <li *ngFor="let barbeiro of barbeiros">
-          <div>
-            <strong>Nome:</strong> {{ barbeiro.nome }}<br />
-            <strong>CPF:</strong> {{ barbeiro.cpf }}
+    <div *ngIf="barbeiros.length > 0; else noBarbers" class="service-combo-container">
+      <div class="card-deck m-2">
+        <div *ngFor="let barbeiro of barbeiros" class="card">
+          <div class="card-body">
+            <button class="float-end btnIcons" (click)="confirmDeleteBarbeiro(barbeiro)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="float-end btnIcons" >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <p class="card-text"><strong>Nome:</strong> {{ barbeiro.nome }}</p>
+            <p class="card-text"><strong>CPF:</strong> {{ barbeiro.cpf }}</p>
           </div>
-          <button (click)="confirmDeleteBarbeiro(barbeiro)">Excluir</button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <ng-template #noBarbers>
-      <p>Nenhum barbeiro cadastrado ainda.</p>
+      <p class="text-danger">Nenhum barbeiro cadastrado ainda.</p>
     </ng-template>
   </ng-container>
 
+
   <!-- Seção Relatório -->
-  <ng-container *ngIf="currentSection === 'report'">
-    <h1>Relatório</h1>
+  <ng-container *ngIf="selectedSection === 'report'">
+    <h1 class="title">Relatório</h1>
   </ng-container>
 
   <!-- Seção Editar Perfil -->
-  <ng-container *ngIf="currentSection === 'editProfile'">
-    <h1>Editar Perfil</h1>
+  <ng-container *ngIf="selectedSection === 'editProfile'">
+    <h1 class="title">Editar Perfil</h1>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <div>
         <label>Nome Fantasia</label>
-        <input formControlName="nomeFantasia" placeholder="Nome Fantasia" />
+        <input class="form-control form-control-lg fs-6" formControlName="nomeFantasia" placeholder="Nome Fantasia" />
         <div *ngIf="profileForm.get('nomeFantasia')?.invalid && profileForm.get('nomeFantasia')?.touched">
           <small class="text-danger">Nome Fantasia é obrigatório.</small>
         </div>
@@ -54,7 +66,7 @@
 
       <div>
         <label>Razão Social</label>
-        <input formControlName="razaoSocial" placeholder="Razão Social" />
+        <input class="form-control form-control-lg fs-6" formControlName="razaoSocial" placeholder="Razão Social" />
         <div *ngIf="profileForm.get('razaoSocial')?.invalid && profileForm.get('razaoSocial')?.touched">
           <small class="text-danger">Razão Social é obrigatória.</small>
         </div>
@@ -62,7 +74,7 @@
 
       <div>
         <label>Celular</label>
-        <input formControlName="celular" placeholder="Celular" />
+        <input class="form-control form-control-lg fs-6" formControlName="celular" placeholder="Celular" />
         <div *ngIf="profileForm.get('celular')?.invalid && profileForm.get('celular')?.touched">
           <small class="text-danger">Celular é obrigatório.</small>
         </div>
@@ -70,7 +82,7 @@
 
       <div>
         <label>WhatsApp</label>
-        <input formControlName="whats" placeholder="WhatsApp" />
+        <input class="form-control form-control-lg fs-6" formControlName="whats" placeholder="WhatsApp" />
         <div *ngIf="profileForm.get('whats')?.invalid && profileForm.get('whats')?.touched">
           <small class="text-danger">WhatsApp é obrigatório.</small>
         </div>
@@ -78,7 +90,7 @@
 
       <div>
         <label>Email</label>
-        <input formControlName="email" placeholder="Email" />
+        <input class="form-control form-control-lg fs-6" formControlName="email" placeholder="Email" />
         <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
           <small class="text-danger">
             <span *ngIf="profileForm.get('email')?.errors?.['required']">Email é obrigatório.</span>
@@ -89,7 +101,7 @@
 
       <div>
         <label>Telefone</label>
-        <input formControlName="telefone" placeholder="Telefone" />
+        <input class="form-control form-control-lg fs-6" formControlName="telefone" placeholder="Telefone" />
         <div *ngIf="profileForm.get('telefone')?.invalid && profileForm.get('telefone')?.touched">
           <small class="text-danger">Telefone é obrigatório.</small>
         </div>
@@ -97,7 +109,7 @@
 
       <div>
         <label>Rua</label>
-        <input formControlName="rua" placeholder="Rua" />
+        <input class="form-control form-control-lg fs-6" formControlName="rua" placeholder="Rua" />
         <div *ngIf="profileForm.get('rua')?.invalid && profileForm.get('rua')?.touched">
           <small class="text-danger">Rua é obrigatória.</small>
         </div>
@@ -105,7 +117,7 @@
 
       <div>
         <label>Número</label>
-        <input formControlName="numero" placeholder="Número" />
+        <input class="form-control form-control-lg fs-6" formControlName="numero" placeholder="Número" />
         <div *ngIf="profileForm.get('numero')?.invalid && profileForm.get('numero')?.touched">
           <small class="text-danger">Número é obrigatório.</small>
         </div>
@@ -114,7 +126,7 @@
       <!-- Redes Sociais -->
       <div>
         <label>Instagram</label>
-        <input formControlName="instagram" placeholder="Instagram" />
+        <input class="form-control form-control-lg fs-6" formControlName="instagram" placeholder="Instagram" />
         <div *ngIf="profileForm.get('instagram')?.invalid && profileForm.get('instagram')?.touched">
           <small class="text-danger">
             <span *ngIf="profileForm.get('instagram')?.errors?.['invalidInstagramUrl']">Instagram inválido.</span>
@@ -124,7 +136,7 @@
 
       <div>
         <label>Facebook</label>
-        <input formControlName="facebook" placeholder="Facebook" />
+        <input class="form-control form-control-lg fs-6" formControlName="facebook" placeholder="Facebook" />
         <div *ngIf="profileForm.get('facebook')?.invalid && profileForm.get('facebook')?.touched">
           <small class="text-danger">
             <span *ngIf="profileForm.get('facebook')?.errors?.['invalidFacebookUrl']">Facebook inválido.</span>
@@ -134,7 +146,7 @@
 
       <div>
         <label>Twitter</label>
-        <input formControlName="twitter" placeholder="Twitter" />
+        <input class="form-control form-control-lg fs-6" formControlName="twitter" placeholder="Twitter" />
         <div *ngIf="profileForm.get('twitter')?.invalid && profileForm.get('twitter')?.touched">
           <small class="text-danger">
             <span *ngIf="profileForm.get('twitter')?.errors?.['invalidTwitterUrl']">Twitter inválido.</span>
@@ -144,7 +156,7 @@
 
       <div>
         <label>TikTok</label>
-        <input formControlName="tiktok" placeholder="TikTok" />
+        <input class="form-control form-control-lg fs-6" formControlName="tiktok" placeholder="TikTok" />
         <div *ngIf="profileForm.get('tiktok')?.invalid && profileForm.get('tiktok')?.touched">
           <small class="text-danger">
             <span *ngIf="profileForm.get('tiktok')?.errors?.['invalidTiktokUrl']">TikTok inválido.</span>
@@ -153,9 +165,9 @@
       </div>
 
       <!-- Comodidades -->
-      <div>
+      <div class="comodidades-container">
         <label>Comodidades</label>
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-select formControlName="comodidades" multiple>
             <mat-option *ngFor="let comodidade of comodidadesList" [value]="comodidade">{{ comodidade }}</mat-option>
           </mat-select>
@@ -165,12 +177,25 @@
         </div>
       </div>
 
-      <div>
-        <label>Foto de Perfil</label>
-        <input type="file" (change)="onFileSelected($event)" />
+      <div class="containerInput mt-2">
+        <div class="image-preview-container" (click)="fileInput.click()">
+          <ng-container *ngIf="imagePreview; else placeholder">
+            <img [src]="imagePreview" alt="Pré-visualização da imagem" class="image-preview" />
+          </ng-container>
+          <ng-template #placeholder>
+            <span class="placeholder-text">Clique para adicionar uma imagem</span>
+          </ng-template>
+        </div>
+        <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
       </div>
 
-      <button type="submit" [disabled]="profileForm.invalid">Salvar Alterações</button>
+
+      <div class="button-group w-100 d-flex justify-content-center mb-2 mt-1 pb-3">
+        <button type="submit" class="btnOption btn" [disabled]="profileForm.invalid">Salvar Alterações</button>
+      </div>
+
+
     </form>
   </ng-container>
+  </div>
 </div>

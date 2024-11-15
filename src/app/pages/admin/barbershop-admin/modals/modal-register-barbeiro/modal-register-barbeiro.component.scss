@@ -1,0 +1,92 @@
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0;
+  height: 20%;
+}
+
+form, .areaModal{
+  background-color: #05465F;
+  min-height: 34vh;
+}
+
+
+.form-control, select {
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 8px;
+}
+
+input:focus, select:focus, button:focus{
+  box-shadow: 0 0 0 0;
+  outline: none;
+  border: 0 none;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 8px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.checkbox-container label {
+  white-space: break-spaces;
+}
+
+.button-group {
+  width: 100%;
+  padding-top: 3px;
+  margin-bottom: 0.3rem;
+  padding-bottom: 3px;
+}
+
+.btnOption {
+  background-color: #028090;
+  padding: 5px 10px;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+}
+
+.containerInput {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.image-preview-container {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  cursor: pointer;
+  position: relative;
+  margin: 0 auto;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.placeholder-text {
+  color: #888;
+  text-align: center;
+}
+
+.title{
+  font-size: 20px;
+  font-weight: 500;
+}
