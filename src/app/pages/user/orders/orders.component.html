@@ -1,20 +1,27 @@
-<div class="container">
-  <h2 class="title">Agendamento de Serviço</h2>
-  <div class="date-picker">
-    <label for="date">Selecione a Data:</label>
-    <input type="date" id="date" [value]="todayString" [min]="todayString" (change)="onDateChange($event)">
-  </div>
+<div class="orders-container">
+  <h2>Agendar Serviço</h2>
 
-  <div *ngIf="availableTimes.length > 0" class="available-times">
-    <h3 class="subtitle">Horários Disponíveis:</h3>
-    <ul class="time-list">
-      <li class="time-slot" *ngFor="let time of availableTimes" (click)="openModalConfirmationOrder(time)">
-        {{ time }}
-      </li>
-    </ul>
-  </div>
+  <!-- Data -->
+  <label for="date">Selecione a data:</label>
+  <input
+    type="date"
+    id="date"
+    [value]="todayString"
+    (change)="onDateChange($event)"
+    min="{{ todayString }}"
+  />
 
-  <div *ngIf="availableTimes.length === 0 && selectedDate" class="no-times">
-    <p>Nenhum horário disponível para a data selecionada.</p>
+  <!-- Horários Disponíveis -->
+  <h3 *ngIf="availableSlots.length > 0">Horários Disponíveis:</h3>
+  <p *ngIf="availableSlots.length === 0">Nenhum horário disponível.</p>
+
+  <div *ngIf="availableSlots.length > 0" class="slots-container">
+    <button
+      *ngFor="let slot of availableSlots"
+      (click)="openConfirmationModal(slot)"
+      class="slot-button"
+    >
+      {{ slot }}
+    </button>
   </div>
 </div>

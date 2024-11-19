@@ -1,115 +1,144 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { GoogleCalendarService } from '../../../services/google-calendar.service';
+import { ModalConfirmationOrderComponent } from './modals/modal-confirmation-order/modal-confirmation-order.component';
+import { NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from "@angular/material/dialog";
-import { ModalConfirmationOrderComponent } from "./modals/modal-confirmation-order/modal-confirmation-order.component";
-import {NgForOf, NgIf} from "@angular/common";
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
+  styleUrls: ['./orders.component.scss'],
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf
-  ],
-  styleUrls: ['./orders.component.scss']
+  imports: [NgIf, NgForOf],
 })
 export class OrdersComponent implements OnInit {
+  availableSlots: string[] = [];
+  selectedServiceDuration = 30;
   selectedDate: Date | null = null;
-  availableTimes: string[] = [];
-  serviceDuration!: number;
   todayString: string = '';
-  barberName!: string;
   serviceName!: string;
+  barberName!: string;
   servicePrice!: number;
+  barbeariaId!: string;
+  barberId!: string;
 
   constructor(
+    private calendarService: GoogleCalendarService,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    private firestore: Firestore
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
+    this.barberId = this.route.snapshot.paramMap.get('barberId')!;
+
+    const queryParams = this.route.snapshot.queryParams;
+    this.serviceName = queryParams['serviceName'];
+    this.servicePrice = parseFloat(queryParams['price']);
+    this.selectedServiceDuration = parseInt(queryParams['duration'], 10);
+    this.barberName = queryParams['barberName'];
+
+    if (!this.barbeariaId || !this.barberId) {
+      console.error('IDs da barbearia ou do barbeiro não encontrados!');
+      return;
+    }
+
     const today = new Date();
     this.todayString = today.toISOString().split('T')[0];
     this.selectedDate = today;
-    this.route.queryParams.subscribe(params => {
-      this.serviceName = params['serviceName'];
-      this.barberName = params['barberName'];
-      this.serviceDuration = +params['duration'];
-      this.servicePrice = +params['price'];
-      this.generateAvailableTimes();
-    });
+
+    await this.calendarService.initGoogleAPI();
+    await this.calendarService.ensureClientAuthenticated();
+
+    await this.updateAvailableSlots(today);
   }
 
-  onDateChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const dateString = input.value;
-    this.selectedDate = dateString ? new Date(dateString) : null;
-    if (this.selectedDate) {
-      this.generateAvailableTimes();
-    }
+  async updateAvailableSlots(date: Date) {
+    const bookedSlots = await this.getBookedSlots(date);
+    this.generateAvailableSlots(date, bookedSlots);
   }
 
-  generateAvailableTimes() {
-    const startHour = 9;
-    const endHour = 18;
-    this.availableTimes = [];
+  generateAvailableSlots(date: Date, bookedSlots: string[]) {
+    this.availableSlots = [];
+    const startTime = new Date(date);
+    startTime.setHours(9, 0, 0);
 
-    if (!this.selectedDate) return;
+    const endTime = new Date(date);
+    endTime.setHours(17, 0, 0);
 
-    const today = new Date();
-    const isToday = this.selectedDate.toDateString() === today.toDateString();
+    const now = new Date();
 
-    let startTime = new Date(this.selectedDate);
+    let currentTime = startTime;
+    while (currentTime < endTime) {
+      const timeString = currentTime.toTimeString().slice(0, 5);
 
-    if (isToday) {
-      startTime = new Date();
-      startTime.setSeconds(0, 0);
-      if (startTime.getMinutes() % 5 !== 0) {
-        startTime.setMinutes(startTime.getMinutes() + (5 - startTime.getMinutes() % 5));
+      if (date.toDateString() === now.toDateString()) {
+        if (currentTime < now || bookedSlots.includes(timeString)) {
+          currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
+          continue;
+        }
+      } else if (bookedSlots.includes(timeString)) {
+        currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
+        continue;
       }
+
+      this.availableSlots.push(timeString);
+
+      currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
+    }
+
+    console.log(`Horários disponíveis para ${date.toDateString()}:`, this.availableSlots);
+  }
+
+  async getBookedSlots(date: Date): Promise<string[]> {
+    const bookedSlots: string[] = [];
+    const dateString = date.toISOString().split('T')[0];
+
+    const appointmentsCollectionRef = collection(
+      this.firestore,
+      `barbearia/${this.barbeariaId}/barbers/${this.barberId}/appointments`
+    );
+    const appointmentsSnapshot = await getDocs(appointmentsCollectionRef);
+
+    appointmentsSnapshot.forEach(doc => {
+      const appointment = doc.data();
+      const appointmentDate = new Date(appointment['start']);
+      const appointmentDateString = appointmentDate.toISOString().split('T')[0];
+
+      if (appointmentDateString === dateString) {
+        const timeString = appointmentDate.toTimeString().slice(0, 5);
+        bookedSlots.push(timeString);
+      }
+    });
+
+    return bookedSlots;
+  }
+
+  async onDateChange(event: any) {
+    const selectedDate = new Date(event.target.value);
+    if (selectedDate >= new Date(this.todayString)) {
+      this.selectedDate = selectedDate;
+      await this.updateAvailableSlots(selectedDate);
     } else {
-      startTime.setHours(startHour, 0, 0, 0);
-    }
-
-    const endTime = new Date(this.selectedDate);
-    endTime.setHours(endHour, 0, 0, 0);
-
-    while (startTime < endTime) {
-      const endOfService = new Date(startTime);
-      endOfService.setMinutes(startTime.getMinutes() + this.serviceDuration);
-
-      if (endOfService <= endTime) {
-        this.availableTimes.push(startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-      }
-
-      startTime.setMinutes(startTime.getMinutes() + this.serviceDuration);
-      if (!isToday || startTime > today) {
-        startTime.setMinutes(Math.ceil(startTime.getMinutes() / 5) * 5);
-      }
+      alert('Não é possível selecionar uma data anterior a hoje!');
     }
   }
 
-  openModalConfirmationOrder(time: string) {
-    const dialogRef = this.dialog.open(ModalConfirmationOrderComponent, {
-      width: '400px',
+  openConfirmationModal(slot: string) {
+    this.dialog.open(ModalConfirmationOrderComponent, {
       data: {
-        selectedTime: time,
-        barberName: this.barberName,
+        date: this.selectedDate,
+        time: slot,
         serviceName: this.serviceName,
-        servicePrice: this.servicePrice
-      }
+        barberName: this.barberName,
+        servicePrice: this.servicePrice,
+        duration: this.selectedServiceDuration,
+        barbeariaId: this.barbeariaId,
+        barberId: this.barberId,
+      },
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.confirmAppointment(time);
-      }
-    });
-  }
-
-  confirmAppointment(time: string) {
-    this.availableTimes = this.availableTimes.filter(t => t !== time);
-    alert(`Agendamento confirmado para ${time} com ${this.barberName} (${this.serviceName})`);
   }
 }

@@ -1,9 +1,13 @@
-<h2>Confirmar Agendamento</h2>
-<p>Horário Selecionado: {{ data.selectedTime }}</p>
-<p>Barbeiro: {{ data.barberName }}</p>
-<p>Serviço: {{ data.serviceName }}</p>
-<p>Preço: R$ {{ data.servicePrice }}</p>
-<div class="actions">
-  <button mat-button (click)="confirm()">Confirmar</button>
-  <button mat-button (click)="cancel()">Cancelar</button>
+<div class="modal-container">
+  <h2>Confirmação do Agendamento</h2>
+  <p>Data: {{ data.date | date: 'shortDate' }}</p>
+  <p>Horário: {{ data.time }}</p>
+  <p>Serviço: {{ data.serviceName }}</p>
+  <p>Barbeiro: {{ data.barberName }}</p>
+  <p>Preço: R$ {{ data.servicePrice }}</p>
+
+  <label for="userName">Seu Nome:</label>
+  <input id="userName" [(ngModel)]="userName" placeholder="Digite seu nome" />
+
+  <button (click)="confirmOrder()">Confirmar</button>
 </div>
