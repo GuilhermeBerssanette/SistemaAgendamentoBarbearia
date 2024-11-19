@@ -104,7 +104,7 @@ export class BarbersComponent implements OnInit {
   }
 
 
-  async goToOrder(serviceOrCombo: any) {
+  async goToOrder(serviceOrCombo: any, type: 'service' | 'combo') {
     try {
       await this.router.navigate(['/barbearia', this.barbeariaId, 'barber', this.barberId, 'orders'], {
         queryParams: {
@@ -112,14 +112,16 @@ export class BarbersComponent implements OnInit {
           price: serviceOrCombo.price,
           duration: serviceOrCombo.duration,
           barberName: this.barbeiro?.nome,
-          serviceName: serviceOrCombo.id
-        }
+          serviceName: serviceOrCombo.id,
+          type: type,
+        },
       });
       console.log('Navegação bem-sucedida para a página de agendamento');
     } catch (error) {
       console.error('Erro ao navegar para a página de agendamento:', error);
     }
   }
+
 
 
 
