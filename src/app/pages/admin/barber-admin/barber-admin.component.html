@@ -14,11 +14,41 @@
       <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
     </div>
 
-      <ng-container *ngIf="selectedSection === 'appointments'">
-        <h1>Atividades</h1>
-      </ng-container>
+    <ng-container *ngIf="selectedSection === 'appointments'">
+      <h3>Agendamentos</h3>
+      <div *ngIf="appointments.length > 0; else noAppointments">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Serviço ou Combo</th>
+            <th>Tipo</th>
+            <th>Data e Hora</th>
+            <th>Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let appointment of appointments">
+            <td>{{ appointment.client }}</td>
+            <td>{{ appointment.serviceOrCombo }}</td>
+            <td>{{ appointment.type === 'combo' ? 'Combo' : 'Serviço' }}</td>
+            <td>{{ appointment.start | date: 'dd-MM-yyyy HH:mm' }}</td>
+            <td>
+              <button class="btn btn-danger" (click)="cancelAppointment(appointment)">
+                Cancelar
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noAppointments>
+        <p>Nenhum agendamento encontrado.</p>
+      </ng-template>
+    </ng-container>
 
-      <ng-container *ngIf="selectedSection === 'gallery'" >
+
+    <ng-container *ngIf="selectedSection === 'gallery'" >
         <h1 class="title">Galeria de Fotos</h1>
         <div class="gallery-container">
           <div class="gallery-header">
