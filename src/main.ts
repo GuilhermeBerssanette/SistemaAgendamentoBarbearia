@@ -8,6 +8,6 @@ bootstrapApplication(AppComponent, appConfig)
     const splashScreen = document.getElementById('splash-screen');
     if (splashScreen) {
       splashScreen.style.opacity = '0';
-      setTimeout(() => splashScreen.remove(), 9999999);
+      setTimeout(() => splashScreen.remove(), 1000);
     }
   });
