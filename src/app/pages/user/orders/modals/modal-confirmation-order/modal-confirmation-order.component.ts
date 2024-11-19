@@ -37,7 +37,7 @@ export class ModalConfirmationOrderComponent {
       const event = {
         summary: `Agendamento: Barbearia`,
         location: 'Barbearia',
-        description: `Serviço: ${this.data.serviceName} com ${this.data.barberName} para ${this.userName}`,
+        description: `Serviço: ${this.data.serviceName}`,
         start: {
           dateTime: `${localDate.toISOString().split('T')[0]}T${this.data.time}:00`,
           timeZone: 'America/Sao_Paulo',
