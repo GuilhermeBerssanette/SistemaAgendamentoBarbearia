@@ -76,6 +76,24 @@ export class GoogleCalendarService {
     }
   }
 
+  private async getBarbershopAddress(barbeariaId: string): Promise<string | null> {
+    const barbeariaDocRef = doc(this.firestore, `barbearia/${barbeariaId}`);
+    const barbeariaDoc = await getDoc(barbeariaDocRef);
+
+    if (barbeariaDoc.exists()) {
+      const barbeariaData = barbeariaDoc.data();
+      if (barbeariaData?.['estado'] && barbeariaData?.['cidade'] && barbeariaData?.['rua']) {
+        const { estado, cidade, rua, numero } = barbeariaData;
+        const address = numero
+          ? `${rua}, ${numero}, ${cidade}, ${estado}`
+          : `${rua}, ${cidade}, ${estado}`;
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+      }
+    }
+    return null;
+  }
+
+
   private async requestBarberToken(barbeariaId: string, barbeiroId: string): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       this.tokenClient.callback = async (response: any) => {
@@ -118,6 +136,12 @@ export class GoogleCalendarService {
 
     if (!this.clientAccessToken) {
       throw new Error('Token de acesso do cliente está undefined ou inválido. Verifique o processo de autenticação.');
+    }
+
+    const mapsLink = await this.getBarbershopAddress(barbeariaId);
+
+    if (mapsLink) {
+      event.location = mapsLink;
     }
 
     try {
@@ -164,7 +188,7 @@ export class GoogleCalendarService {
 
 
   async createEventForBarber(event: any, barberId: string, barbeariaId: string): Promise<any> {
-    await this.ensureBarberAuthenticated(barbeariaId, barberId); // Garantir autenticação
+    await this.ensureBarberAuthenticated(barbeariaId, barberId);
 
     const barberDocRef = doc(this.firestore, `barbearia/${barbeariaId}/barbers/${barberId}`);
     const barberDoc = await getDoc(barberDocRef);
