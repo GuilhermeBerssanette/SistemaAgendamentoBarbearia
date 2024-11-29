@@ -204,3 +204,24 @@ span{
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.55);
 }
+
+button, .btn, .barber-card{
+  outline-style: none !important;
+  border: none !important;
+
+    &:focus, :hover{
+      outline-style: none !important;
+      border: none !important;
+  }
+}
+
+mat-icon{
+  padding-top: 2px;
+  outline: none;
+  box-sizing: border-box;
+  :focus{
+    outline-style: none !important;
+    border: none !important;
+    box-sizing: border-box;
+  }
+}
