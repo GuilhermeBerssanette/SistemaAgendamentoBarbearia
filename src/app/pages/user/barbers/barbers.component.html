@@ -48,7 +48,7 @@
         <div class="row g-3 justify-content-center mb-4 px-0">
           <div *ngFor="let service of registeredServices" class="col-lg-12 col-md-6 mb-3">
             <div class="card h-100" (click)="goToOrder(service, 'service')">
-              <div class="card-body text-center p-3">
+              <div class="card-body hover text-center p-3">
                 <h4 class="card-title">{{ service.id }}</h4>
                 <p class="card-text"><span>Valor:</span> R$ {{ service.price }}</p>
                 <p class="card-text"><span>Duração:</span> {{ service.duration }} minutos</p>
@@ -68,7 +68,7 @@
         <div class="row g-3 justify-content-center mb-4 px-0">
           <div *ngFor="let combo of registeredCombos" class="col-lg-12 col-md-6 mb-3">
             <div class="card h-100" (click)="goToOrder(combo, 'combo')">
-              <div class="card-body text-center p-3">
+              <div class="card-body hover text-center p-3">
                 <h4 class="card-title">Combo</h4>
                 <p class="card-text"><span>Serviços incluídos:</span></p>
                 <ul class="list-unstyled">
@@ -83,13 +83,13 @@
       </div>
     </div>
     <ng-template #noCombos>
-      <p class="text-center">Nenhum combo cadastrado.</p>
+      <p class="text-center text-danger">Nenhum combo cadastrado.</p>
     </ng-template>
   </ng-container>
 
   <!-- Galeria de Fotos -->
   <ng-container *ngIf="currentSection === 'gallery'">
-      <div class="col-12 text-end">
+      <div class="col-12 text-end hover">
         <div class="d-flex justify-content-end gap-1 p-2 mr-2" style="max-width: 1312px;">
           <a [href]="'https://wa.me/' + barbeiro?.whats" target="_blank" class="mr-4">
             <img class="imgContent mt-2 mr-2" src="assets/whatsapp-logo.svg" alt="" height="50" width="50">
@@ -113,7 +113,7 @@
       </div>
     <h1 class="text-center mb-2 mt-2">Galeria de Fotos</h1>
 
-    <div *ngIf="galleryItems.length > 0; else noImages" class="row g-3 justify-content-center">
+    <div *ngIf="galleryItems.length > 0; else noImages" class="row g-3 justify-content-center hover">
       <div *ngFor="let item of galleryItems" class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-column align-items-center mb-2 mb-md-3 mb-lg-2">
         <ng-container *ngIf="item.imageUrl">
           <div class="card" style="width: auto;">
@@ -126,7 +126,7 @@
       </div>
     </div>
     <ng-template #noImages>
-      <p class="text-center">Nenhuma imagem cadastrada ainda.</p>
+      <p class="text-center text-danger">Nenhuma imagem cadastrada ainda.</p>
     </ng-template>
   </ng-container>
 

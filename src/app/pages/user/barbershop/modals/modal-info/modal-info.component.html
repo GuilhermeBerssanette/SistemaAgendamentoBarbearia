@@ -1,8 +1,8 @@
 <div class="navbar">
   <div class="container-fluid d-flex justify-content-start p-3">
-    <img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">
-    <span>{{ data.barber.nome }}</span>
-    <mat-icon class="hover ms-auto" (click)="closeModalInfo()">close</mat-icon>
+    <!--<img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">-->
+    <span class="name-barber">{{ data.barber.nome }}</span>
+    <mat-icon class="hover close-icon" (click)="closeModalInfo()">close</mat-icon>
   </div>
 </div>
 
