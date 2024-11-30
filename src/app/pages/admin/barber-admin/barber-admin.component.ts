@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
-import { KeyValuePipe, NgForOf, NgIf } from "@angular/common";
+import {DatePipe, KeyValuePipe, NgForOf, NgIf} from "@angular/common";
 import {Firestore, doc, getDoc, updateDoc, getDocs, collection, deleteDoc} from '@angular/fire/firestore';
 import { Barbeiros } from "../../../interfaces/barbeiros";
 import { MatDialog } from "@angular/material/dialog";
@@ -9,7 +9,7 @@ import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, Reacti
 import { NgxMaskDirective } from "ngx-mask";
 import { ModalRegisterImageComponent } from "./modals/modal-register-image/modal-register-image.component";
 import { ModalRegisterServiceComponent } from "./modals/modal-register-service/modal-register-service.component";
-import { MatButton } from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import { ModalEditServiceComponent } from "./modals/modal-edit-service/modal-edit-service.component";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { deleteObject, getMetadata, listAll } from "@angular/fire/storage";
@@ -18,6 +18,7 @@ import {ModalEditComboComponent} from "./modals/modal-edit-combo/modal-edit-comb
 import { HeaderComponent } from '../../../components/header/header.component';
 import {HeaderBarbersAdminComponent} from "../../../components/header-barbers-admin/header-barbers-admin.component";
 import { MatIcon } from '@angular/material/icon';
+import {GoogleCalendarService} from "../../../services/google-calendar.service";
 
 @Component({
   selector: 'app-barber-admin',
@@ -31,7 +32,9 @@ import { MatIcon } from '@angular/material/icon';
     KeyValuePipe,
     HeaderComponent,
     HeaderBarbersAdminComponent,
-    MatIcon
+    MatIcon,
+    MatIconButton,
+    DatePipe
   ],
   templateUrl: './barber-admin.component.html',
   styleUrls: ['./barber-admin.component.scss']
@@ -50,6 +53,8 @@ export class BarberAdminComponent implements OnInit {
   form: FormGroup;
   storage = getStorage();
   selectedSection: string = 'appointments';
+  appointments: any[] = [];
+  calendarService = inject(GoogleCalendarService);
 
   constructor(private dialog: MatDialog) {
     this.form = new FormGroup({
@@ -75,12 +80,71 @@ export class BarberAdminComponent implements OnInit {
       return;
     }
 
-    await this.getBarbeiroData();
-    await this.getGalleryItems();
-    await this.loadRegisteredServices();
-    await this.loadRegisteredCombos();
-    this.populateForm();
+    try {
+      await this.calendarService.initGoogleAPI();
+      await this.calendarService.ensureBarberAuthenticated(this.barbeariaId, this.barbeiroId);
+      await this.getBarbeiroData();
+      await this.getGalleryItems();
+      await this.loadRegisteredServices();
+      await this.loadRegisteredCombos();
+      await this.getAppointments();
+      this.populateForm();
+    } catch (error) {
+      console.error('Erro ao inicializar o componente:', error);
+    }
   }
+
+
+
+  async getAppointments() {
+    const appointmentsCollectionRef = collection(
+      this.firestore,
+      `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/appointments`
+    );
+    const appointmentsSnapshot = await getDocs(appointmentsCollectionRef);
+
+    this.appointments = appointmentsSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        client: data['client'],
+        start: data['start'],
+        end: data['end'],
+        googleEventId: data['googleEventId'],
+        serviceOrCombo: data['serviceOrCombo'],
+        type: data['type'],
+      };
+    });
+
+    console.log('Agendamentos carregados:', this.appointments);
+  }
+
+
+
+  async cancelAppointment(appointment: any) {
+    const confirmCancel = confirm(`Tem certeza que deseja cancelar o agendamento de ${appointment.client}?`);
+    if (confirmCancel) {
+      try {
+        const appointmentDocRef = doc(
+          this.firestore,
+          `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/appointments/${appointment.id}`
+        );
+        await deleteDoc(appointmentDocRef);
+
+        if (appointment.googleEventId) {
+          await this.calendarService.deleteEvent(appointment.googleEventId);
+        }
+
+        await this.getAppointments();
+        alert('Agendamento cancelado com sucesso.');
+      } catch (error) {
+        console.error('Erro ao cancelar o agendamento:', error);
+        alert('Erro ao cancelar o agendamento. Verifique os logs.');
+      }
+    }
+  }
+
+
 
   async getBarbeiroData() {
     const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}`);
@@ -318,7 +382,6 @@ export class BarberAdminComponent implements OnInit {
 
   showSection(section: string) {
     this.selectedSection = section;
-
   }
 
   isAdmin(): boolean {
