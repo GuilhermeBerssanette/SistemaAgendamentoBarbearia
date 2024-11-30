@@ -14,14 +14,14 @@
     <button class="btn btnFilter mt-0" type="button" (click)="clearSearch()">Limpar</button>
 
     <!-- Filtros Selecionados -->
-    <div *ngIf="selectedFilters.length > 0" class="selected-filters mt-3">
-      <span *ngFor="let filter of selectedFilters" class="filter-chip">
+    <div *ngIf="selectedFilters.length > 0" class="selected-filters mt-2">
+      <span *ngFor="let filter of selectedFilters" class="filter-chip ms-3">
         {{ filter }}
         <span class="filter-remove" (click)="removeFilter(filter)">x</span>
       </span>
     </div>
 
-    <div class="row g-3 mt-4">
+    <div class="row g-3">
       <div *ngFor="let barbearia of filteredBarbearias" class="col-md-6 mt-3">
         <div class="card pb-2 p-3 ms-3 me-3 d-flex flex-row align-items-center shadow-sm" (click)="goToBarbearia(barbearia.id)">
           <img [src]="barbearia.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="imgPerfil me-3 img-fluid" width="50" height="50">
