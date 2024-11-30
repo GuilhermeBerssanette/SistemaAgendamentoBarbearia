@@ -14,11 +14,11 @@
   <br>
   <br>
   <div class="barbearia-name">
-    <p style="display: inline-block;">{{ barbearia?.nomeFantasia }}
+     <p style="display: inline-block;">{{ barbearia?.nomeFantasia }}
       <mat-icon [ngClass]="{'favorite': isFavorite, 'not-favorite': !isFavorite}" (click)="toggleFavorite()">
-        {{ isFavorite ? 'favorite' : 'favorite_border' }}
-      </mat-icon>
-  </p>
+      {{ isFavorite ? 'favorite' : 'favorite_border' }}
+    </mat-icon>
+    </p>
   </div>
   <button class="float-end btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" alt=""></button>
   <button class="float-end btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" alt=""></button>

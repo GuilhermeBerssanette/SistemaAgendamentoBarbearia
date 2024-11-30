@@ -26,6 +26,7 @@ span{
 
 .modal-body {
   background-color: #05465F;
+  padding-bottom: 60px;
 }
 
 .comment-box {
@@ -44,11 +45,21 @@ span{
   height: 10px;
 }
 
-input:focus{
-  box-shadow: 0 0 0 0;
+input, mat-icon{
+  margin-bottom: 20px;
+}
+
+input,
+textarea,
+.form-control {
+  border: 0;
   outline: none;
-  border: 0 none;
-  border-color: #000000;
+
+  &:focus {
+    box-shadow: none;
+    outline: none;
+    border: 0;
+  }
 }
 
 .btn{

@@ -1,5 +1,5 @@
 import { MatIcon } from '@angular/material/icon';
-import {Component, inject, Inject} from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Firestore, doc, setDoc, collection } from '@angular/fire/firestore';
 import { Barbeiros } from '../../../../../interfaces/barbeiros';
@@ -24,17 +24,6 @@ export class ModalRegisterBarbeiroComponent {
   private auth = inject(Auth);
   imagePreview: string | ArrayBuffer | null = null;
 
-  onFileSelected(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { barbeariaId: string },
     private firestore: Firestore,
@@ -47,7 +36,7 @@ export class ModalRegisterBarbeiroComponent {
       telefone: new FormControl('', [Validators.required]),
       whats: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]), // Campo de senha
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       instagram: new FormControl(''),
       facebook: new FormControl(''),
       tiktok: new FormControl(''),
@@ -60,79 +49,106 @@ export class ModalRegisterBarbeiroComponent {
     });
   }
 
- // onFileSelected(event: any): void {
-      //this.selectedFile = event.target.files[0];
-//}
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   async addBarberToBarbearia() {
-    if (this.form.valid && this.selectedFile) {
-      const email = this.form.value.email;
-      const password = this.form.value.password;
+    if (!this.form.valid) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-        const barberId = userCredential.user.uid;
+    if (!this.selectedFile) {
+      alert('Por favor, selecione uma imagem para o perfil.');
+      return;
+    }
 
-        const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
-        const fileRef = ref(this.storage, filePath);
-        const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
+    const email = this.form.value.email;
+    const password = this.form.value.password;
 
-        uploadTask.on('state_changed',
-          () => {},
-          (error) => {
-            console.error('Erro ao fazer upload da imagem:', error);
-          },
-          async () => {
-            this.downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+    try {
+      // Criação do usuário no Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      const barberId = userCredential.user.uid;
 
-            const barberData: Barbeiros = {
-              id: barberId,
-              nome: this.form.value.nome,
-              rg: this.form.value.rg,
-              cpf: this.form.value.cpf,
-              telefone: this.form.value.telefone,
-              whats: this.form.value.whats,
-              email: this.form.value.email,
-              password: this.form.value.password,
-              instagram: this.form.value.instagram || '',
-              facebook: this.form.value.facebook || '',
-              tiktok: this.form.value.tiktok || '',
-              twitter: this.form.value.twitter || '',
-              atendeAutista: this.form.value.atendeAutista,
-              atendeCrianca: this.form.value.atendeCrianca,
-              atendeDomicilio: this.form.value.atendeDomicilio,
-              experienciaCrespo: this.form.value.experienciaCrespo,
-              servicoEventos: this.form.value.servicoEventos,
-              profileImageUrl: this.downloadURL,
-            };
+      // Upload da imagem para o Firebase Storage
+      const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
+      const fileRef = ref(this.storage, filePath);
+      const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
 
-            const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
-            const newBarberDocRef = doc(barbersCollectionRef, barberId);
+      uploadTask.on('state_changed',
+        () => { }, // Progresso do upload
+        (error) => {
+          console.error('Erro ao fazer upload da imagem:', error);
+        },
+        async () => {
+          this.downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-            await setDoc(newBarberDocRef, barberData);
+          // Dados do barbeiro
+          const barberData: Barbeiros = {
+            id: barberId,
+            nome: this.form.value.nome,
+            rg: this.form.value.rg,
+            cpf: this.form.value.cpf,
+            telefone: this.form.value.telefone,
+            whats: this.form.value.whats,
+            email: this.form.value.email,
+            password: this.form.value.password,
+            instagram: this.form.value.instagram || '',
+            facebook: this.form.value.facebook || '',
+            tiktok: this.form.value.tiktok || '',
+            twitter: this.form.value.twitter || '',
+            atendeAutista: this.form.value.atendeAutista,
+            atendeCrianca: this.form.value.atendeCrianca,
+            atendeDomicilio: this.form.value.atendeDomicilio,
+            experienciaCrespo: this.form.value.experienciaCrespo,
+            servicoEventos: this.form.value.servicoEventos,
+            profileImageUrl: this.downloadURL,
+          };
 
-            const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
-            const updatedBarbeariaData = {
-              ...(barberData.atendeAutista ? { atendeAutista: true } : {}),
-              ...(barberData.atendeCrianca ? { atendeCrianca: true } : {}),
-              ...(barberData.atendeDomicilio ? { atendeDomicilio: true } : {}),
-              ...(barberData.experienciaCrespo ? { experienciaCrespo: true } : {}),
-              ...(barberData.servicoEventos ? { servicoEventos: true } : {}),
-            };
+          // Salvando os dados do barbeiro no Firestore
+          const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
+          const newBarberDocRef = doc(barbersCollectionRef, barberId);
+          await setDoc(newBarberDocRef, barberData);
 
-            await setDoc(barbeariaRef, updatedBarbeariaData, { merge: true });
+          // Atualizando dados gerais da barbearia
+          const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
+          const updatedBarbeariaData = {
+            ...(barberData.atendeAutista ? { atendeAutista: true } : {}),
+            ...(barberData.atendeCrianca ? { atendeCrianca: true } : {}),
+            ...(barberData.atendeDomicilio ? { atendeDomicilio: true } : {}),
+            ...(barberData.experienciaCrespo ? { experienciaCrespo: true } : {}),
+            ...(barberData.servicoEventos ? { servicoEventos: true } : {}),
+          };
 
-            alert('Barbeiro registrado com sucesso e conta de acesso criada!');
-            this.dialogRef.close();
-          }
-        );
-      } catch (error) {
-        console.error('Erro ao criar conta de barbeiro:', error);
+          await setDoc(barbeariaRef, updatedBarbeariaData, { merge: true });
+
+          alert('Barbeiro registrado com sucesso e conta de acesso criada!');
+          this.dialogRef.close();
+        }
+      );
+    } catch (error: any) {
+      console.error('Erro ao criar conta de barbeiro:', error);
+      if (error.code === 'auth/email-already-in-use') {
+        alert('Este e-mail já está registrado.');
+      } else if (error.code === 'auth/invalid-email') {
+        alert('O formato do e-mail é inválido.');
+      } else {
+        alert('Erro ao registrar o barbeiro. Verifique os dados e tente novamente.');
       }
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.dialogRef.close();
   }
 }
