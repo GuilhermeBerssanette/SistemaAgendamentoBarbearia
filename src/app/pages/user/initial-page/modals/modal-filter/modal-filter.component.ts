@@ -35,7 +35,8 @@ export class ModalFilterComponent implements OnInit {
       estado: [''],
       cidade: [{ value: '', disabled: true }],
       comodidades: this.fb.array(this.comodidades.map(() => new FormControl(false))),
-      tiposAtendimento: this.fb.array(this.tiposAtendimento.map(() => new FormControl(false)))
+      tiposAtendimento: this.fb.array(this.tiposAtendimento.map(() => new FormControl(false))),
+      valorMaximo: [''] // Novo campo para valor máximo
     });
 
     this.loadEstados();
@@ -89,7 +90,8 @@ export class ModalFilterComponent implements OnInit {
       estado: filtro.estado,
       cidade: filtro.cidade,
       comodidades: selectedComodidades,
-      tiposAtendimento: selectedTiposAtendimento
+      tiposAtendimento: selectedTiposAtendimento,
+      valorMaximo: filtro.valorMaximo // Adicionando valor máximo
     };
 
     this.dialogRef.close(filtrosSelecionados);

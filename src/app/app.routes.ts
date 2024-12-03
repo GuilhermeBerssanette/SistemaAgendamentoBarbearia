@@ -24,6 +24,6 @@ export const routes: Routes = [
   { path: 'barbearia/:id/barber/:barberId', component: BarbersComponent, canActivate: [canActivateAuthGuard] },
   { path: 'barbearia/:id/barber/:barberId/orders', component: OrdersComponent, canActivate: [canActivateAuthGuard] },
   { path: 'barbearia/:id/barber/:barberId/admin', component: BarberAdminComponent, canActivate: [canActivateAuthGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [canActivateAuthGuard] },
+  { path: 'dashboard', component: DashboardComponent },
   { path: '**', redirectTo: 'login' }
 ];

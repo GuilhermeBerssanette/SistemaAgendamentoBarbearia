@@ -6,18 +6,15 @@
     </div>
 
   <div class="button-group">
-    <button class="btnContent" [class.active]="selectedSection === 'finance'" (click)="showSection('finance')">Financeiro</button>
+    <button class="btnContent" [class.active]="selectedSection === 'dashboard'" (click)="showSection('dashboard')">Dashboard</button>
     <button class="btnContent" [class.active]="selectedSection === 'barbers'" (click)="showSection('barbers')">Gerenciar Barbeiros</button>
-    <button class="btnContent" [class.active]="selectedSection === 'report'" (click)="showSection('report')">Relatório</button>
     <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
   </div>
 
-  <!-- Seção Financeiro -->
-  <ng-container *ngIf="selectedSection === 'finance'">
-    <h1 class="title">Seção Financeiro</h1>
-  </ng-container>
+    <ng-container *ngIf="selectedSection === 'dashboard'">
+      <app-dashboard [barbeariaId]="barbeariaId"></app-dashboard>
+    </ng-container>
 
-  <!-- Seção Gerenciar Barbeiros -->
   <ng-container *ngIf="selectedSection === 'barbers'">
     <h1 class="title">Gerenciar Barbeiros</h1>
     <div class="m-3">
@@ -29,9 +26,6 @@
         <div *ngFor="let barbeiro of barbeiros" class="card">
           <div class="card-body">
             <button class="float-end btnIcons" (click)="confirmDeleteBarbeiro(barbeiro)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button class="float-end btnIcons" >
               <mat-icon>delete</mat-icon>
             </button>
             <p class="card-text"><strong>Nome:</strong> {{ barbeiro.nome }}</p>
@@ -47,12 +41,6 @@
   </ng-container>
 
 
-  <!-- Seção Relatório -->
-  <ng-container *ngIf="selectedSection === 'report'">
-    <h1 class="title">Relatório</h1>
-  </ng-container>
-
-  <!-- Seção Editar Perfil -->
   <ng-container *ngIf="selectedSection === 'editProfile'">
     <h1 class="title">Editar Perfil</h1>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -197,5 +185,6 @@
 
     </form>
   </ng-container>
+
   </div>
 </div>

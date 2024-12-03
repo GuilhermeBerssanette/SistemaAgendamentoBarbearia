@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, getDocs } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ModalFilterComponent } from './modals/modal-filter/modal-filter.component';
 import { HeaderComponent } from '../../../components/header/header.component';
@@ -18,7 +18,6 @@ import { NgForOf, NgIf } from '@angular/common';
   styleUrls: ['./initial-page.component.scss']
 })
 export class InitialPageComponent implements OnInit {
-
   firestore = inject(Firestore);
   router = inject(Router);
   dialog = inject(MatDialog);
@@ -26,9 +25,8 @@ export class InitialPageComponent implements OnInit {
   barbearias: any[] = [];
   filteredBarbearias: any[] = [];
   selectedFilters: string[] = [];
-
   comodidades: string[] = ['Sinuca', 'TV', 'Wi-Fi', 'Ar-Condicionado'];
-  tiposAtendimento: string[] = ['Atende Autista', 'Cabelo Crespo', 'Atende Domicílio', 'Atende Eventos'];
+  tiposAtendimento: string[] = ['Atende Domicílio', 'Atende Autista', 'Cabelo Crespo', 'Atende Eventos'];
 
   ngOnInit(): void {
     this.loadBarbearias();
@@ -54,11 +52,12 @@ export class InitialPageComponent implements OnInit {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
-  // Abre o modal de filtro
   openModalFilter() {
     const dialogRef = this.dialog.open(ModalFilterComponent, {
       width: '700px',
-      height: '610px'
+      height: '710px',
+      disableClose: true,
+      data: { comodidades: this.comodidades, tiposAtendimento: this.tiposAtendimento }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -68,45 +67,111 @@ export class InitialPageComponent implements OnInit {
     });
   }
 
-  applyFilter(filterData: any) {
+  async applyFilter(filterData: any) {
     const { estado, cidade, comodidades, tiposAtendimento } = filterData;
 
-    this.selectedFilters = [];
+    let barbeariasFiltradas: any[] = [...this.barbearias];
+    this.selectedFilters = []; // Reset filters
 
-    this.filteredBarbearias = this.barbearias.filter(barbearia => {
-      const matchEstado = estado ? barbearia.estado === this.getEstadoSigla(estado) : true;
-      if (estado) this.selectedFilters.push(estado);
+    if (estado) {
+      const estadoSigla = this.getEstadoSigla(estado);
+      barbeariasFiltradas = barbeariasFiltradas.filter(barbearia => barbearia.estado === estadoSigla);
+      this.addFilterOnce(estado);
+    }
 
-      const matchCidade = cidade ? barbearia.cidade === cidade : true;
-      if (cidade) this.selectedFilters.push(cidade);
+    if (cidade) {
+      barbeariasFiltradas = barbeariasFiltradas.filter(barbearia => barbearia.cidade.toLowerCase() === cidade.toLowerCase());
+      this.addFilterOnce(cidade);
+    }
 
+    if (comodidades.length > 0) {
       const selectedComodidades = comodidades
-        .map((checked: boolean, index: number) => checked ? this.comodidades[index] : null)
-        .filter((item: string | null) => item);
+        .map((checked: boolean, index: number): string | null => (checked ? this.comodidades[index] : null))
+        .filter((item: string | null): item is string => item !== null);
 
-      const matchComodidades = selectedComodidades.length
-        ? selectedComodidades.every((comodidade: string) => barbearia.comodidades.includes(comodidade))
-        : true;
+      barbeariasFiltradas = barbeariasFiltradas.filter(barbearia =>
+        selectedComodidades.every((comodidade: string) => barbearia.comodidades.includes(comodidade))
+      );
 
-      if (selectedComodidades.length > 0) this.selectedFilters.push(...selectedComodidades);
+      selectedComodidades.forEach((c: string) => this.addFilterOnce(c));
+    }
 
-      const matchTiposAtendimento = tiposAtendimento.every((tipo: string) => {
-        if (tipo === 'Atende Autista') return barbearia.atendeAutista === true;
-        if (tipo === 'Cabelo Crespo') return barbearia.experienciaCrespo === true;
-        if (tipo === 'Atende Domicílio') return barbearia.atendeDomicilio === true;
-        if (tipo === 'Atende Eventos') return barbearia.servicoEventos === true;
-        return false;
-      });
+    if (tiposAtendimento.length > 0) {
+      barbeariasFiltradas = await this.filterByTiposAtendimento(barbeariasFiltradas, tiposAtendimento);
+      tiposAtendimento.forEach((t: string) => this.addFilterOnce(t));
+    }
 
-      if (tiposAtendimento.length > 0) this.selectedFilters.push(...tiposAtendimento);
+    this.filteredBarbearias = barbeariasFiltradas;
+  }
 
-      return matchEstado && matchCidade && matchComodidades && matchTiposAtendimento;
-    });
+  async filterByTiposAtendimento(barbearias: any[], tiposAtendimento: string[]): Promise<any[]> {
+    const barbeariasFiltradas: any[] = [];
+
+    for (const barbearia of barbearias) {
+      const barberCollectionRef = collection(this.firestore, `barbearia/${barbearia.id}/barbers`);
+      const barbersSnapshot = await getDocs(barberCollectionRef);
+
+      for (const barberDoc of barbersSnapshot.docs) {
+        const barberData = barberDoc.data();
+
+        const matchAtendimento = tiposAtendimento.every((tipo: string): boolean => {
+          if (tipo === 'Atende Domicílio') return barberData['atendeDomicilio'];
+          if (tipo === 'Atende Autista') return barberData['atendeAutista'];
+          if (tipo === 'Cabelo Crespo') return barberData['experienciaCrespo'];
+          if (tipo === 'Atende Eventos') return barberData['servicoEventos'];
+          return false;
+        });
+
+        if (matchAtendimento) {
+          barbeariasFiltradas.push(barbearia);
+          break;
+        }
+      }
+    }
+
+    return barbeariasFiltradas;
+  }
+
+  addFilterOnce(filter: string) {
+    if (!this.selectedFilters.includes(filter)) {
+      this.selectedFilters.push(filter);
+    }
   }
 
   removeFilter(filter: string) {
     this.selectedFilters = this.selectedFilters.filter(f => f !== filter);
-    this.applyFilter({});
+
+    const remainingFilters = {
+      estado: '',
+      cidade: '',
+      comodidades: [] as string[],
+      tiposAtendimento: [] as string[]
+    };
+
+    this.selectedFilters.forEach((f: string) => {
+      if (this.comodidades.includes(f)) {
+        (remainingFilters.comodidades as string[]).push(f);
+      }
+      if (this.tiposAtendimento.includes(f)) {
+        (remainingFilters.tiposAtendimento as string[]).push(f);
+      }
+    });
+
+    this.applyFilter(remainingFilters).catch(error =>
+      console.error('Error removing filter:', error)
+    );
+  }
+
+
+  clearSearch() {
+    this.filteredBarbearias = this.barbearias;
+    this.selectedFilters = [];
+  }
+
+  goToBarbearia(id: string) {
+    this.router.navigate(['/barbearia', id]).then(() => {
+      console.log(`Navigated to barbearia with ID: ${id}`);
+    });
   }
 
   getEstadoSigla(nomeEstado: string): string {
@@ -140,16 +205,5 @@ export class InitialPageComponent implements OnInit {
       'Tocantins': 'TO'
     };
     return estadosMap[nomeEstado] || nomeEstado;
-  }
-
-  clearSearch() {
-    this.filteredBarbearias = this.barbearias;
-    this.selectedFilters = [];
-  }
-
-  goToBarbearia(id: string) {
-    this.router.navigate(['/barbearia', id]).then(() => {
-      console.log(`Navigated to barbearia with ID: ${id}`);
-    });
   }
 }
