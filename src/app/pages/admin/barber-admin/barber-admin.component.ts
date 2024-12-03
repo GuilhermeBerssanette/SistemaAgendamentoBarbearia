@@ -19,6 +19,7 @@ import { HeaderComponent } from '../../../components/header/header.component';
 import {HeaderBarbersAdminComponent} from "../../../components/header-barbers-admin/header-barbers-admin.component";
 import { MatIcon } from '@angular/material/icon';
 import {GoogleCalendarService} from "../../../services/google-calendar.service";
+import {DashboardComponent} from "../../../components/dashboard/dashboard.component";
 
 @Component({
   selector: 'app-barber-admin',
@@ -34,7 +35,8 @@ import {GoogleCalendarService} from "../../../services/google-calendar.service";
     HeaderBarbersAdminComponent,
     MatIcon,
     MatIconButton,
-    DatePipe
+    DatePipe,
+    DashboardComponent
   ],
   templateUrl: './barber-admin.component.html',
   styleUrls: ['./barber-admin.component.scss']
@@ -82,7 +84,7 @@ export class BarberAdminComponent implements OnInit {
 
     try {
       await this.calendarService.initGoogleAPI();
-      await this.calendarService.ensureBarberAuthenticated(this.barbeariaId, this.barbeiroId);
+      await this.calendarService.ensureAuthenticated('barber', this.barbeiroId, this.barbeariaId);
       await this.getBarbeiroData();
       await this.getGalleryItems();
       await this.loadRegisteredServices();
@@ -132,7 +134,12 @@ export class BarberAdminComponent implements OnInit {
         await deleteDoc(appointmentDocRef);
 
         if (appointment.googleEventId) {
-          await this.calendarService.deleteEvent(appointment.googleEventId);
+          await this.calendarService.deleteEvent(
+            appointment.googleEventId,
+            'barber',
+            this.barbeiroId,
+            this.barbeariaId
+          );
         }
 
         await this.getAppointments();
@@ -143,6 +150,7 @@ export class BarberAdminComponent implements OnInit {
       }
     }
   }
+
 
 
 

@@ -25,6 +25,7 @@ import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import {uploadBytesResumable} from "@angular/fire/storage";
 import {Auth} from "@angular/fire/auth";
+import {doc, setDoc} from "@angular/fire/firestore";
 
 
 @Component({
@@ -66,33 +67,33 @@ export class RegisterBarbeariaComponent implements OnInit {
   downloadURL: string | null = null;
 
   iePatterns: { [key: string]: { pattern: RegExp, format: string } } = {
-    'AC': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
-    'DF': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
-    'MG': { pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx' },
-    'AL': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'AP': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'AM': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'CE': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'MA': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'PA': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'PB': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'RR': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'SC': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'SE': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'TO': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'ES': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'GO': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'PE': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'PI': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'RN': { pattern: /^\d{9}$/, format: 'xxx.xxx.xxx' },
-    'BA': { pattern: /^\d{8}$/, format: 'xxxxxxx' },
-    'PR': { pattern: /^\d{8}$/, format: 'xxxxxxx' },
-    'RJ': { pattern: /^\d{8}$/, format: 'xxxxxxx' },
-    'MS': { pattern: /^\d{10}$/, format: 'xxxxxxxxxx' },
-    'RS': { pattern: /^\d{10}$/, format: 'xxxxxxxxxx' },
-    'MT': { pattern: /^\d{11}$/, format: 'xxxxxxxxxxx' },
-    'SP': { pattern: /^\d{12}$/, format: 'xxxxxxxxxxxx' },
-    'RO': { pattern: /^\d{14}$/, format: 'xxxxxxxxxxxxxx' }
+    'AC': {pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx'},
+    'DF': {pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx'},
+    'MG': {pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx'},
+    'AL': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'AP': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'AM': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'CE': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'MA': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'PA': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'PB': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'RR': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'SC': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'SE': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'TO': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'ES': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'GO': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'PE': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'PI': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'RN': {pattern: /^\d{9}$/, format: 'xxx.xxx.xxx'},
+    'BA': {pattern: /^\d{8}$/, format: 'xxxxxxx'},
+    'PR': {pattern: /^\d{8}$/, format: 'xxxxxxx'},
+    'RJ': {pattern: /^\d{8}$/, format: 'xxxxxxx'},
+    'MS': {pattern: /^\d{10}$/, format: 'xxxxxxxxxx'},
+    'RS': {pattern: /^\d{10}$/, format: 'xxxxxxxxxx'},
+    'MT': {pattern: /^\d{11}$/, format: 'xxxxxxxxxxx'},
+    'SP': {pattern: /^\d{12}$/, format: 'xxxxxxxxxxxx'},
+    'RO': {pattern: /^\d{14}$/, format: 'xxxxxxxxxxxxxx'}
   };
 
   createIeValidator(regex: RegExp): ValidatorFn {
@@ -104,7 +105,7 @@ export class RegisterBarbeariaComponent implements OnInit {
       }
 
       if (!regex.test(ie)) {
-        return { invalidIeFormat: true };
+        return {invalidIeFormat: true};
       }
 
       return null;
@@ -115,7 +116,7 @@ export class RegisterBarbeariaComponent implements OnInit {
     const estado = this.form.controls['estado'].value;
 
     if (typeof estado === 'string' && estado in this.iePatterns) {
-      const { pattern } = this.iePatterns[estado];
+      const {pattern} = this.iePatterns[estado];
       const ieValidator = this.createIeValidator(pattern);
       this.form.controls['inscricaoEstadual'].setValidators([Validators.required, ieValidator]);
     } else {
@@ -136,7 +137,7 @@ export class RegisterBarbeariaComponent implements OnInit {
       const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
 
       if (!instagramRegex.test(instagramUrl)) {
-        return { invalidInstagramUrl: true };
+        return {invalidInstagramUrl: true};
       }
 
       return null;
@@ -153,7 +154,7 @@ export class RegisterBarbeariaComponent implements OnInit {
       const facebookRegex = /^https:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9.]+\/?$/;
 
       if (!facebookRegex.test(facebookUrl)) {
-        return { invalidFacebookUrl: true };
+        return {invalidFacebookUrl: true};
       }
       return null;
     };
@@ -170,7 +171,7 @@ export class RegisterBarbeariaComponent implements OnInit {
       const tiktokRegex = /^https:\/\/(www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)$/;
 
       if (!tiktokRegex.test(tiktokUrl)) {
-        return { invalidTiktokUrl: true };
+        return {invalidTiktokUrl: true};
       }
 
       return null;
@@ -188,7 +189,7 @@ export class RegisterBarbeariaComponent implements OnInit {
       const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
 
       if (!twitterRegex.test(twitterUrl)) {
-        return { invalidTwitterUrl: true };
+        return {invalidTwitterUrl: true};
       }
 
       return null;
@@ -287,7 +288,7 @@ export class RegisterBarbeariaComponent implements OnInit {
     celular: new FormControl('', [Validators.required]),
     whats: new FormControl('', [Validators.required]),
     telefone: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required ,Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     tiktok: new FormControl('', [this.tiktokValidator()]),
     twitter: new FormControl('', [this.twitterValidator()]),
     instagram: new FormControl('', [this.instagramValidator()]),
@@ -302,7 +303,9 @@ export class RegisterBarbeariaComponent implements OnInit {
   }
 
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
+
+
     const rawForm = this.form.getRawValue();
 
     if (!this.selectedFile) {
@@ -352,7 +355,8 @@ export class RegisterBarbeariaComponent implements OnInit {
     const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
 
     uploadTask.on('state_changed',
-      () => { },
+      () => {
+      },
       (error) => {
         console.error('Erro ao fazer upload da imagem:', error);
       },
@@ -361,15 +365,32 @@ export class RegisterBarbeariaComponent implements OnInit {
           barbeariaData.profileImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
 
           const barbeariaRef = await this.barbeariasService.addBarbearia(barbeariaData);
-          this.router.navigate(['/barbearia', barbeariaRef.id, 'admin']).then(() => {
-            console.log('Cadastro da barbearia concluído com sucesso.');
-          });
+
+          const userDocRef = doc(this.barbeariasService.firestore, 'users', userId);
+          await setDoc(userDocRef, {userType: 'admin'}, {merge: true});
+
+          await this.router.navigate(['/barbearia', barbeariaRef.id, 'admin']);
+          console.log('Cadastro da barbearia concluído com sucesso.');
         } catch (error) {
           console.error('Erro ao cadastrar barbearia:', error);
         }
       }
     );
+  }
 
+  isFormValidForSelectedTipoPessoa(): boolean {
+    if (this.isPJ) {
+      const cnpjValid = this.form.get('cnpj')?.valid ?? false;
+      const inscricaoEstadualValid = this.form.get('inscricaoEstadual')?.valid ?? false;
+      return cnpjValid && inscricaoEstadualValid;
+    }
+
+    if (this.isPF) {
+      const cpfValid = this.form.get('cpf')?.valid ?? false;
+      const rgValid = this.form.get('rg')?.valid ?? false;
+      return cpfValid && rgValid;
+    }
+
+    return false;
   }
 }
-
