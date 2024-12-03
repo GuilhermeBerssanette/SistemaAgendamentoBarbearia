@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   standalone: true,
 })
 export class ModalConfirmationOrderComponent {
-  userName: string = '';
+  userName: string = ''; // Adicionando a propriedade userName
   isProcessing: boolean = false;
 
   constructor(
@@ -21,10 +21,8 @@ export class ModalConfirmationOrderComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-
   async confirmOrder() {
     if (this.isProcessing) {
-      console.log('Já está processando o agendamento. Aguarde...');
       return;
     }
 
@@ -35,46 +33,25 @@ export class ModalConfirmationOrderComponent {
       localDate.setHours(0, 0, 0, 0);
 
       const event = {
-        summary: `Agendamento: Barbearia`,
+        summary: `Agendamento: ${this.data.serviceName}`,
         location: 'Barbearia',
-        description: `Serviço: ${this.data.serviceName}`,
+        description: `Cliente: ${this.userName}`, // Incluindo o nome do usuário
         start: {
           dateTime: `${localDate.toISOString().split('T')[0]}T${this.data.time}:00`,
           timeZone: 'America/Sao_Paulo',
         },
         end: {
-          dateTime: `${localDate.toISOString().split('T')[0]}T${this.addDurationToTime(
-            this.data.time,
-            this.data.duration
-          )}:00`,
+          dateTime: `${localDate.toISOString().split('T')[0]}T${this.addDurationToTime(this.data.time, this.data.duration)}`,
           timeZone: 'America/Sao_Paulo',
         },
       };
 
-      const clientEvent = await this.calendarService.createEvent(
-        event,
-        this.data.barbeariaId,
-        this.data.barberId,
-        this.userName,
-        this.data.serviceName,
-        this.data.type === 'combo'
-      );
-
-      console.log('Evento criado no Google Calendar do cliente:', clientEvent);
-
-      const barberEvent = await this.calendarService.createEventForBarber(
-        event,
-        this.data.barberId,
-        this.data.barbeariaId
-      );
-
-      console.log('Evento criado no Google Calendar do barbeiro:', barberEvent);
-
+      await this.calendarService.createEventForBarber(event, this.data.barbeariaId, this.data.barberId);
       alert('Agendamento confirmado com sucesso!');
       this.dialogRef.close();
     } catch (error) {
       console.error('Erro ao criar evento:', error);
-      alert('Erro ao confirmar o agendamento. Verifique os logs.');
+      alert('Erro ao confirmar o agendamento.');
     } finally {
       this.isProcessing = false;
     }

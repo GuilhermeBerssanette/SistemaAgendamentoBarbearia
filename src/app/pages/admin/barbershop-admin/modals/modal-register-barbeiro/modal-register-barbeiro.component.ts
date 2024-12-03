@@ -76,24 +76,21 @@ export class ModalRegisterBarbeiroComponent {
     const password = this.form.value.password;
 
     try {
-      // Criação do usuário no Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       const barberId = userCredential.user.uid;
 
-      // Upload da imagem para o Firebase Storage
       const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
       const fileRef = ref(this.storage, filePath);
       const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
 
       uploadTask.on('state_changed',
-        () => { }, // Progresso do upload
+        () => { },
         (error) => {
           console.error('Erro ao fazer upload da imagem:', error);
         },
         async () => {
           this.downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-          // Dados do barbeiro
           const barberData: Barbeiros = {
             id: barberId,
             nome: this.form.value.nome,
@@ -115,12 +112,16 @@ export class ModalRegisterBarbeiroComponent {
             profileImageUrl: this.downloadURL,
           };
 
-          // Salvando os dados do barbeiro no Firestore
           const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
           const newBarberDocRef = doc(barbersCollectionRef, barberId);
           await setDoc(newBarberDocRef, barberData);
 
-          // Atualizando dados gerais da barbearia
+          const userDocRef = doc(this.firestore, 'users', barberId);
+          await setDoc(userDocRef, {
+            email: this.form.value.email,
+            userType: 'barber',
+          });
+
           const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
           const updatedBarbeariaData = {
             ...(barberData.atendeAutista ? { atendeAutista: true } : {}),

@@ -7,22 +7,13 @@ import { Barbeiros } from "../interfaces/barbeiros";
   providedIn: 'root'
 })
 export class BarbeariasService {
-  constructor(private firestore: Firestore) {}
+  constructor(public firestore: Firestore) {}
 
   addBarbearia(barbearias: Barbearias) {
     const barbearia = collection(this.firestore, 'barbearia');
     return addDoc(barbearia, barbearias);
   }
 
-  async getBarbearias() {
-    const barbeariaCollection = collection(this.firestore, 'barbearia');
-    const barbeariaSnapshot = await getDocs(barbeariaCollection);
-
-    return barbeariaSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-  }
 
   async addBarberToBarbearia(barbeariaId: string, barberData: Barbeiros) {
     const barberId = doc(collection(this.firestore, `barbearia/${barbeariaId}/barbers`)).id;

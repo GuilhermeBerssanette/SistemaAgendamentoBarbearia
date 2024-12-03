@@ -49,7 +49,6 @@ export class ModalRegisterComboComponent implements OnInit {
   }
 
   initializeFormControls(): void {
-    // Cria um FormControl para cada serviço registrado
     this.registeredServices.forEach(service => {
       this.form.addControl(service.id, new FormControl(false));
     });
@@ -64,7 +63,7 @@ export class ModalRegisterComboComponent implements OnInit {
     let duration = 0;
     this.registeredServices.forEach(service => {
       if (this.form.get(service.id)?.value) {
-        duration += Number(service.duration); // Ensure duration is treated as a number
+        duration += Number(service.duration);
       }
     });
     this.totalDuration = duration;

@@ -14,6 +14,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 import { Timestamp } from 'firebase/firestore';
 import { MatIcon } from '@angular/material/icon';
+import {DashboardComponent} from "../../../components/dashboard/dashboard.component";
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -30,7 +31,8 @@ import { MatIcon } from '@angular/material/icon';
     MatFormFieldModule,
     MatSelectModule,
     HeaderAdminComponent,
-    MatIcon
+    MatIcon,
+    DashboardComponent
   ],
   templateUrl: './barbershop-admin.component.html',
   styleUrls: ['./barbershop-admin.component.scss']
@@ -41,14 +43,14 @@ export class BarbershopAdminComponent implements OnInit {
   route = inject(ActivatedRoute);
   firestore = inject(Firestore);
 
-  currentSection: string = 'finance';
+
   barbeariaId!: string;
   profileForm!: FormGroup;
   selectedFile: File | null = null;
   comodidadesList: string[] = ['Ar-Condicionado', 'Wi-fi', 'Sinuca', 'TV'];
   barbeiros: any[] = [];
   storage = getStorage();
-  selectedSection: string = 'finance';
+  selectedSection: string = 'dashboard';
   click: any;
   imagePreview: string | ArrayBuffer | null = null;
 
