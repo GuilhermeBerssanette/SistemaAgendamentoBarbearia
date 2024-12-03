@@ -10,12 +10,12 @@ export class AuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
 
-  register(email: string, password: string, userType: string = 'client'): Observable<void> {
+  register(email: string, password: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then(async (response) => {
       await updateProfile(response.user, { displayName: email });
       await setDoc(doc(this.firestore, 'users', response.user.uid), {
         email: email,
-        userType: userType
+        userType: 'client'
       });
     });
 

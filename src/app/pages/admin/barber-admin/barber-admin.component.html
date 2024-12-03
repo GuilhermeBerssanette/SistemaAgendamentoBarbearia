@@ -7,9 +7,8 @@
 
     <div class="button-group">
       <button class="btnContent" [class.active]="selectedSection === 'appointments'" (click)="showSection('appointments')">Agendamentos</button>
+      <button class="btnContent" [class.active]="selectedSection === 'dashboard'" (click)="showSection('dashboard')">Dashboard</button>
       <button class="btnContent" [class.active]="selectedSection === 'gallery'" (click)="showSection('gallery')">Galeria de Fotos</button>
-      <button class="btnContent" [class.active]="selectedSection === 'finance'" (click)="showSection('finance')">Finanças</button>
-      <button class="btnContent" [class.active]="selectedSection === 'reviews'" (click)="showSection('reviews')">Avaliações</button>
       <button class="btnContent" [class.active]="selectedSection === 'services'" (click)="showSection('services')">Gerenciar Serviços</button>
       <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
     </div>
@@ -48,6 +47,10 @@
     </ng-container>
 
 
+    <ng-container *ngIf="selectedSection === 'dashboard'">
+      <app-dashboard [barbeiroId]="barbeariaId"></app-dashboard>
+    </ng-container>
+
     <ng-container *ngIf="selectedSection === 'gallery'" >
         <h1 class="title">Galeria de Fotos</h1>
         <div class="gallery-container">
@@ -73,10 +76,6 @@
 
       <ng-container *ngIf="selectedSection === 'finance'">
       <h1>Finanças</h1>
-      </ng-container>
-
-      <ng-container *ngIf="selectedSection === 'reviews'">
-      <h1>Avaliações</h1>
       </ng-container>
 
       <ng-container *ngIf="selectedSection === 'services'">

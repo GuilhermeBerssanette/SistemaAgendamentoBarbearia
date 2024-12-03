@@ -232,7 +232,12 @@
             <div class="row">
               <div class="col-12 col-md-12 mb-4">
 
-                <button class="btn w-100 btnCadastro" type="submit" >Cadastrar</button>
+                <button
+                  class="btn w-100 btnCadastro"
+                  type="submit"
+                  [disabled]="!form.valid || !isFormValidForSelectedTipoPessoa()">Cadastrar</button>
+
+
 
               </div>
             </div>

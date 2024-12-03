@@ -5,6 +5,7 @@ import { ModalConfirmationOrderComponent } from './modals/modal-confirmation-ord
 import { NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-orders',
@@ -23,12 +24,14 @@ export class OrdersComponent implements OnInit {
   servicePrice!: number;
   barbeariaId!: string;
   barberId!: string;
+  currentUserId!: string;
 
   constructor(
     private calendarService: GoogleCalendarService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private auth: Auth
   ) {}
 
   async ngOnInit() {
@@ -46,51 +49,29 @@ export class OrdersComponent implements OnInit {
       return;
     }
 
+    const user = this.auth.currentUser;
+    if (!user) {
+      console.error('Usuário não autenticado!');
+      return;
+    }
+    this.currentUserId = user.uid;
+
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     this.todayString = today.toISOString().split('T')[0];
-    this.selectedDate = today;
+    this.selectedDate = new Date(today);
 
     await this.calendarService.initGoogleAPI();
-    await this.calendarService.ensureClientAuthenticated();
+    await this.calendarService.ensureAuthenticated('client', this.currentUserId);
 
-    await this.updateAvailableSlots(today);
+    await this.updateAvailableSlots(this.selectedDate);
   }
 
   async updateAvailableSlots(date: Date) {
-    const bookedSlots = await this.getBookedSlots(date);
-    this.generateAvailableSlots(date, bookedSlots);
-  }
-
-  generateAvailableSlots(date: Date, bookedSlots: string[]) {
-    this.availableSlots = [];
-    const startTime = new Date(date);
-    startTime.setHours(9, 0, 0);
-
-    const endTime = new Date(date);
-    endTime.setHours(17, 0, 0);
-
-    const now = new Date();
-
-    let currentTime = startTime;
-    while (currentTime < endTime) {
-      const timeString = currentTime.toTimeString().slice(0, 5);
-
-      if (date.toDateString() === now.toDateString()) {
-        if (currentTime < now || bookedSlots.includes(timeString)) {
-          currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
-          continue;
-        }
-      } else if (bookedSlots.includes(timeString)) {
-        currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
-        continue;
-      }
-
-      this.availableSlots.push(timeString);
-
-      currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
-    }
-
-    console.log(`Horários disponíveis para ${date.toDateString()}:`, this.availableSlots);
+    const cleanDate = new Date(date);
+    cleanDate.setHours(0, 0, 0, 0);
+    const bookedSlots = await this.getBookedSlots(cleanDate);
+    this.generateAvailableSlots(cleanDate, bookedSlots);
   }
 
   async getBookedSlots(date: Date): Promise<string[]> {
@@ -101,15 +82,17 @@ export class OrdersComponent implements OnInit {
       this.firestore,
       `barbearia/${this.barbeariaId}/barbers/${this.barberId}/appointments`
     );
+
     const appointmentsSnapshot = await getDocs(appointmentsCollectionRef);
 
     appointmentsSnapshot.forEach(doc => {
       const appointment = doc.data();
-      const appointmentDate = new Date(appointment['start']);
-      const appointmentDateString = appointmentDate.toISOString().split('T')[0];
+      const appointmentStart = new Date(appointment['start']);
+      const appointmentDate = new Date(appointmentStart);
+      appointmentDate.setHours(0, 0, 0, 0);
 
-      if (appointmentDateString === dateString) {
-        const timeString = appointmentDate.toTimeString().slice(0, 5);
+      if (appointmentDate.toISOString().split('T')[0] === dateString) {
+        const timeString = appointmentStart.toTimeString().slice(0, 5);
         bookedSlots.push(timeString);
       }
     });
@@ -117,8 +100,43 @@ export class OrdersComponent implements OnInit {
     return bookedSlots;
   }
 
+  generateAvailableSlots(date: Date, bookedSlots: string[]) {
+    this.availableSlots = [];
+    const startTime = new Date(date);
+    startTime.setHours(9, 0, 0, 0);
+
+    const endTime = new Date(date);
+    endTime.setHours(17, 0, 0, 0);
+
+    const now = new Date();
+    now.setHours(now.getHours(), now.getMinutes(), 0, 0);
+
+    let currentTime = new Date(startTime);
+
+    while (currentTime < endTime) {
+      const timeString = currentTime.toTimeString().slice(0, 5);
+
+      if (date.getTime() === now.setHours(0, 0, 0, 0)) {
+        if (currentTime < now || bookedSlots.includes(timeString)) {
+          currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
+          continue;
+        }
+      } else if (bookedSlots.includes(timeString)) {
+        currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
+        continue;
+      }
+
+      this.availableSlots.push(timeString);
+      currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
+    }
+
+    console.log(`Horários disponíveis para ${date.toDateString()}:`, this.availableSlots);
+  }
+
   async onDateChange(event: any) {
     const selectedDate = new Date(event.target.value);
+    selectedDate.setHours(0, 0, 0, 0);
+
     if (selectedDate >= new Date(this.todayString)) {
       this.selectedDate = selectedDate;
       await this.updateAvailableSlots(selectedDate);
