@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, getDoc, collection, getDocs } from '@angular/fire/firestore';
 import { ImageService } from '../../../services/image.service';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 import { HeaderComponent } from "../../../components/header/header.component";
 
@@ -15,6 +15,7 @@ import { HeaderComponent } from "../../../components/header/header.component";
     NgForOf,
     HeaderAdminComponent,
     HeaderComponent,
+    NgClass
   ],
   styleUrls: ['./barbers.component.scss']
 })
@@ -26,6 +27,7 @@ export class BarbersComponent implements OnInit {
   barberId!: string;
   barbeariaId!: string;
   currentSection: string = 'info';
+  selectedSection: string = 'info';
 
   constructor(
     private route: ActivatedRoute,
@@ -122,10 +124,7 @@ export class BarbersComponent implements OnInit {
     }
   }
 
-
-
-
-  showSection(section: string) {
-    this.currentSection = section;
+  showSection(section: string): void {
+    this.selectedSection = section;
   }
 }
