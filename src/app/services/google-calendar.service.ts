@@ -29,6 +29,8 @@ export class GoogleCalendarService {
         if (refresh_token) {
           console.log('Refresh token recebido:', refresh_token);
           await this.storeToken('client', 'userId-placeholder', undefined, access_token, refresh_token);
+        } else {
+          console.warn('Nenhum refresh token foi retornado pela API.');
         }
 
         this.accessToken = access_token;
@@ -58,7 +60,11 @@ export class GoogleCalendarService {
 
     const tokenDocRef = doc(this.firestore, tokenPath);
 
-    await setDoc(tokenDocRef, { accessToken, refreshToken }, { merge: true });
+    const tokenData: any = {};
+    if (accessToken) tokenData.accessToken = accessToken;
+    if (refreshToken) tokenData.refreshToken = refreshToken;
+
+    await setDoc(tokenDocRef, tokenData, { merge: true });
     console.log(`Tokens armazenados em ${tokenPath}`);
   }
 
@@ -83,34 +89,39 @@ export class GoogleCalendarService {
     if (tokenDoc.exists()) {
       const { refreshToken } = tokenDoc.data();
       if (refreshToken) {
+        console.log('Token de atualização encontrado no Firestore.');
         this.accessToken = await this.refreshAccessToken(refreshToken);
       } else {
         console.warn('Nenhum refresh_token encontrado no Firestore.');
-        await this.requestToken(userType, userId, barbeariaId);
+        await this.requestToken(userType, userId, barbeariaId, true); // Força o prompt novamente
       }
     } else {
       console.warn('Nenhum token encontrado no Firestore.');
-      await this.requestToken(userType, userId, barbeariaId);
+      await this.requestToken(userType, userId, barbeariaId, true); // Força o prompt novamente
     }
   }
 
   private async requestToken(
     userType: 'client' | 'barber',
     id: string,
-    barbeariaId?: string
+    barbeariaId?: string,
+    forcePrompt: boolean = false
   ): Promise<void> {
     this.tokenClient.callback = async (response: any) => {
       const { access_token, refresh_token } = response;
 
       if (refresh_token) {
+        console.log('Salvando refresh token no Firestore.');
         await this.storeToken(userType, id, barbeariaId, access_token, refresh_token);
+      } else {
+        console.warn('Nenhum refresh token foi retornado pela API.');
       }
 
       this.accessToken = access_token;
     };
 
     this.tokenClient.requestAccessToken({
-      prompt: 'consent',
+      prompt: forcePrompt ? 'consent' : 'none',
       access_type: 'offline',
     });
   }
@@ -135,6 +146,7 @@ export class GoogleCalendarService {
 
       const data = await response.json();
       this.accessToken = data.access_token;
+      console.log('Novo token de acesso gerado via refresh token:', data.access_token);
       return data.access_token;
     } catch (error) {
       console.error('Erro ao renovar token de acesso:', error);
