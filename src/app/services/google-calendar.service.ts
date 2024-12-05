@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
-import {CLOUD_CONFIG} from "../app.config";
+import { CLOUD_CONFIG } from "../app.config";
 
 declare const google: any;
 
@@ -141,7 +141,6 @@ export class GoogleCalendarService {
       throw new Error('Erro ao realizar a renovação do token. Verifique os logs.');
     }
   }
-
 
   async createEventForBarber(event: any, barbeariaId: string, barberId: string): Promise<any> {
     await this.ensureAuthenticated('barber', barberId, barbeariaId);

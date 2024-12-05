@@ -37,28 +37,22 @@ export class HeaderBarbersAdminComponent implements OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-  goToEditProfile() {
-    this.dropdownOpen = false;
-    this.router.navigate(['/edit-profile']).then(() => {
-      console.log('Navigated to Edit Profile');
-    });
-  }
-
-  goToFavorites() {
-    this.dropdownOpen = false;
-    this.router.navigate(['/favorites']).then(() => {
-      console.log('Navigated to Favorites');
-    });
-  }
-
   async logout() {
     this.dropdownOpen = false;
+
+    if (!confirm('Tem certeza de que deseja sair?')) {
+      console.log('Logout cancelado pelo usuário.');
+      return;
+    }
+
     try {
       await signOut(this.auth);
-      console.log('Usuário deslogado');
+      console.log('Usuário deslogado com sucesso.');
       await this.router.navigate(['/']);
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
+      alert('Erro ao sair. Tente novamente.');
+      await this.router.navigate(['/']);
     }
   }
 
