@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import {CLOUD_CONFIG} from "../app.config";
 
 declare const google: any;
 
@@ -7,9 +8,7 @@ declare const google: any;
   providedIn: 'root',
 })
 export class GoogleCalendarService {
-  private clientId = '228837673406-hi9740ollb29cclqatptb2ni4mrg9cv3.apps.googleusercontent.com';
-  private clientSecret = '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';
-  private scopes = 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events';
+  private cloudConfig = inject(CLOUD_CONFIG);
   private tokenClient: any;
   private accessToken: string | null = null;
 
@@ -17,8 +16,8 @@ export class GoogleCalendarService {
 
   async initGoogleAPI(): Promise<void> {
     this.tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: this.clientId,
-      scope: this.scopes,
+      client_id: this.cloudConfig.clientId,
+      scope: this.cloudConfig.scopes,
       callback: async (response: any) => {
         const { access_token, refresh_token, error } = response;
 
@@ -122,8 +121,8 @@ export class GoogleCalendarService {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
-          client_id: this.clientId,
-          client_secret: this.clientSecret,
+          client_id: this.cloudConfig.clientId,
+          client_secret: this.cloudConfig.clientSecret,
           refresh_token: refreshToken,
           grant_type: 'refresh_token',
         }),
@@ -143,15 +142,6 @@ export class GoogleCalendarService {
     }
   }
 
-  async createEvent(event: any, userId: string): Promise<any> {
-    await this.ensureAuthenticated('client', userId);
-
-    if (!this.accessToken) {
-      throw new Error('Token de acesso inválido.');
-    }
-
-    return this.executeGoogleCalendarRequest('POST', 'primary/events', event);
-  }
 
   async createEventForBarber(event: any, barbeariaId: string, barberId: string): Promise<any> {
     await this.ensureAuthenticated('barber', barberId, barbeariaId);
