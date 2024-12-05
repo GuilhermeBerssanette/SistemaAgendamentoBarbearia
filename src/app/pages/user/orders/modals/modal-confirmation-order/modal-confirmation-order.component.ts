@@ -46,7 +46,9 @@ export class ModalConfirmationOrderComponent {
         },
       };
 
+      // Usando o serviço para criar o evento no calendário do barbeiro
       await this.calendarService.createEventForBarber(event, this.data.barbeariaId, this.data.barberId);
+
       alert('Agendamento confirmado com sucesso!');
       this.dialogRef.close();
     } catch (error) {
@@ -56,6 +58,7 @@ export class ModalConfirmationOrderComponent {
       this.isProcessing = false;
     }
   }
+
 
   private addDurationToTime(time: string, duration: number): string {
     const [hours, minutes] = time.split(':').map(Number);
