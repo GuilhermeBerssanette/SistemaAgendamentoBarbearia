@@ -9,21 +9,21 @@ import { ModalRegisterBarbeiroComponent } from "./pages/admin/barbershop-admin/m
 import { BarbersComponent } from "./pages/user/barbers/barbers.component";
 import { BarberAdminComponent } from "./pages/admin/barber-admin/barber-admin.component";
 import { OrdersComponent } from "./pages/user/orders/orders.component";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { canActivateAuthGuard } from "./services/auth-guard.service";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'initial-page', component: InitialPageComponent, canActivate: [canActivateAuthGuard] },
+  { path: 'initial-page', component: InitialPageComponent, canActivate: [canActivateAuthGuard] }, // Client
   { path: 'register-barbearia', component: RegisterBarbeariaComponent, canActivate: [canActivateAuthGuard] },
   { path: 'barbearia/:id', component: BarbershopComponent, canActivate: [canActivateAuthGuard] },
-  { path: 'barbearia/:id/admin', component: BarbershopAdminComponent, canActivate: [canActivateAuthGuard] },
-  { path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent, canActivate: [canActivateAuthGuard] },
   { path: 'barbearia/:id/barber/:barberId', component: BarbersComponent, canActivate: [canActivateAuthGuard] },
   { path: 'barbearia/:id/barber/:barberId/orders', component: OrdersComponent, canActivate: [canActivateAuthGuard] },
   { path: 'barbearia/:id/barber/:barberId/admin', component: BarberAdminComponent, canActivate: [canActivateAuthGuard] },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'barbearia/:id/admin', component: BarbershopAdminComponent, canActivate: [canActivateAuthGuard] },
+  { path: 'barbearia/:id/cadastrar-barbeiro', component: ModalRegisterBarbeiroComponent, canActivate: [canActivateAuthGuard] },
   { path: '**', redirectTo: 'login' }
 ];
+
+

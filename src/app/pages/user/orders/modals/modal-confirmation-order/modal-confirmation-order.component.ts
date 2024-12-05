@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   standalone: true,
 })
 export class ModalConfirmationOrderComponent {
-  userName: string = ''; // Adicionando a propriedade userName
+  userName: string = '';
   isProcessing: boolean = false;
 
   constructor(
@@ -35,7 +35,7 @@ export class ModalConfirmationOrderComponent {
       const event = {
         summary: `Agendamento: ${this.data.serviceName}`,
         location: 'Barbearia',
-        description: `Cliente: ${this.userName}`, // Incluindo o nome do usuário
+        description: `Cliente: ${this.userName}`,
         start: {
           dateTime: `${localDate.toISOString().split('T')[0]}T${this.data.time}:00`,
           timeZone: 'America/Sao_Paulo',

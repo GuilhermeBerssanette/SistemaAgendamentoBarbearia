@@ -1,4 +1,4 @@
-import {ApplicationConfig} from '@angular/core';
+import {ApplicationConfig, InjectionToken} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -13,7 +13,12 @@ import { getFirestore } from "@angular/fire/firestore";
 import { provideEnvironmentNgxMask } from "ngx-mask";
 import { provideStorage } from "@angular/fire/storage";
 import { getStorage } from "@angular/fire/storage";
+import {cloud} from "../environments/cloud";
 
+export const CLOUD_CONFIG = new InjectionToken('CloudConfig', {
+  providedIn: 'root',
+  factory: () => cloud.CloudConfig,
+});
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,9 +30,10 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    { provide: CLOUD_CONFIG, useValue: cloud.CloudConfig },
   ]
 };
 
 
-//sistema-agendamento-horarios@sistema-agendamento-barbearia.iam.gserviceaccount.com
+
