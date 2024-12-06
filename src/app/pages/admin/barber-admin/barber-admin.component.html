@@ -50,6 +50,7 @@
             <div class="m-3">
               <button class="service-button " (click)="openModalRegisterService()">Cadastrar Serviço</button>
               <button class="service-button " (click)="openModalRegisterCombo()">Cadastrar Combo</button>
+              <button class="service-button" (click)="openModalManageSchedule()">Gerenciar Agenda</button>
             </div>
 
             <div *ngIf="registeredServices && registeredServices.length > 0; else noServices" class="service-combo-container">
