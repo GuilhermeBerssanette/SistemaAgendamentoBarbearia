@@ -54,7 +54,7 @@ export class BarberAdminComponent implements OnInit {
   registeredCombos: any[] = [];
   form: FormGroup;
   storage = getStorage();
-  selectedSection: string = 'appointments';
+  selectedSection: string = 'dashboard';
   appointments: any[] = [];
   calendarService = inject(GoogleCalendarService);
 
@@ -120,35 +120,6 @@ export class BarberAdminComponent implements OnInit {
 
     console.log('Agendamentos carregados:', this.appointments);
   }
-
-
-
-  async cancelAppointment(appointment: any) {
-    const confirmCancel = confirm(`Tem certeza que deseja cancelar o agendamento de ${appointment.client}?`);
-    if (confirmCancel) {
-      try {
-        const appointmentDocRef = doc(
-          this.firestore,
-          `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/appointments/${appointment.id}`
-        );
-        await deleteDoc(appointmentDocRef);
-
-        if (appointment.googleEventId) {
-          await this.calendarService.deleteEvent(appointment.googleEventId);
-        }
-
-
-        await this.getAppointments();
-        alert('Agendamento cancelado com sucesso.');
-      } catch (error) {
-        console.error('Erro ao cancelar o agendamento:', error);
-        alert('Erro ao cancelar o agendamento. Verifique os logs.');
-      }
-    }
-  }
-
-
-
 
   async getBarbeiroData() {
     const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}`);
