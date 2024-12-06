@@ -76,7 +76,7 @@ export class OrdersComponent implements OnInit {
       if (scheduleDoc.exists()) {
         const scheduleData = scheduleDoc.data();
         if (scheduleData?.['workingDays']) {
-          this.workingHours = scheduleData?.['workingDays'];
+          this.workingHours = scheduleData['workingDays'];
         }
       }
     } catch (error) {
@@ -120,8 +120,9 @@ export class OrdersComponent implements OnInit {
   generateAvailableSlots(date: Date, bookedSlots: string[]) {
     this.availableSlots = [];
 
-    // Obter o nome do dia no formato correto
-    const dayName = date.toLocaleDateString('pt-BR', { weekday: 'long' }).replace(/^\w/, c => c.toUpperCase());
+    const dayName = date
+      .toLocaleDateString('pt-BR', { weekday: 'long' })
+      .replace(/^\w/, c => c.toUpperCase());
 
     const workingDay = this.workingHours.find(work => work.day === dayName);
     if (!workingDay) {
