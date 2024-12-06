@@ -62,7 +62,7 @@ export class OrdersComponent implements OnInit {
     this.selectedDate = new Date(today);
 
     await this.calendarService.initGoogleAPI();
-    await this.calendarService.ensureAuthenticated('client', this.currentUserId);
+    await this.calendarService.ensureClientAuthenticated();
 
     await this.updateAvailableSlots(this.selectedDate);
   }

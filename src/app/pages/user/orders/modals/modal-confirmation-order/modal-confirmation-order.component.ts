@@ -21,8 +21,10 @@ export class ModalConfirmationOrderComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
+
   async confirmOrder() {
     if (this.isProcessing) {
+      console.log('Já está processando o agendamento. Aguarde...');
       return;
     }
 
@@ -33,32 +35,50 @@ export class ModalConfirmationOrderComponent {
       localDate.setHours(0, 0, 0, 0);
 
       const event = {
-        summary: `Agendamento: ${this.data.serviceName}`,
+        summary: `Agendamento: Barbearia`,
         location: 'Barbearia',
-        description: `Cliente: ${this.userName}`,
+        description: `Serviço: ${this.data.serviceName}`,
         start: {
           dateTime: `${localDate.toISOString().split('T')[0]}T${this.data.time}:00`,
           timeZone: 'America/Sao_Paulo',
         },
         end: {
-          dateTime: `${localDate.toISOString().split('T')[0]}T${this.addDurationToTime(this.data.time, this.data.duration)}`,
+          dateTime: `${localDate.toISOString().split('T')[0]}T${this.addDurationToTime(
+            this.data.time,
+            this.data.duration
+          )}:00`,
           timeZone: 'America/Sao_Paulo',
         },
       };
 
-      // Usando o serviço para criar o evento no calendário do barbeiro
-      await this.calendarService.createEventForBarber(event, this.data.barbeariaId, this.data.barberId);
+      const clientEvent = await this.calendarService.createEvent(
+        event,
+        this.data.barbeariaId,
+        this.data.barberId,
+        this.userName,
+        this.data.serviceName,
+        this.data.type === 'combo'
+      );
+
+      console.log('Evento criado no Google Calendar do cliente:', clientEvent);
+
+      const barberEvent = await this.calendarService.createEventForBarber(
+        event,
+        this.data.barberId,
+        this.data.barbeariaId
+      );
+
+      console.log('Evento criado no Google Calendar do barbeiro:', barberEvent);
 
       alert('Agendamento confirmado com sucesso!');
       this.dialogRef.close();
     } catch (error) {
       console.error('Erro ao criar evento:', error);
-      alert('Erro ao confirmar o agendamento.');
+      alert('Erro ao confirmar o agendamento. Verifique os logs.');
     } finally {
       this.isProcessing = false;
     }
   }
-
 
   private addDurationToTime(time: string, duration: number): string {
     const [hours, minutes] = time.split(':').map(Number);
