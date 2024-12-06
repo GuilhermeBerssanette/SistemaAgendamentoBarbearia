@@ -84,7 +84,7 @@ export class BarberAdminComponent implements OnInit {
 
     try {
       await this.calendarService.initGoogleAPI();
-      await this.calendarService.ensureAuthenticated('barber', this.barbeiroId, this.barbeariaId);
+      await this.calendarService.ensureBarberAuthenticated(this.barbeariaId, this.barbeiroId);
       await this.getBarbeiroData();
       await this.getGalleryItems();
       await this.loadRegisteredServices();
@@ -134,13 +134,9 @@ export class BarberAdminComponent implements OnInit {
         await deleteDoc(appointmentDocRef);
 
         if (appointment.googleEventId) {
-          await this.calendarService.deleteEvent(
-            appointment.googleEventId,
-            'barber',
-            this.barbeiroId,
-            this.barbeariaId
-          );
+          await this.calendarService.deleteEvent(appointment.googleEventId);
         }
+
 
         await this.getAppointments();
         alert('Agendamento cancelado com sucesso.');
