@@ -20,6 +20,7 @@ import {HeaderBarbersAdminComponent} from "../../../components/header-barbers-ad
 import { MatIcon } from '@angular/material/icon';
 import {GoogleCalendarService} from "../../../services/google-calendar.service";
 import {DashboardComponent} from "../../../components/dashboard/dashboard.component";
+import {ModalManageScheduleComponent} from "./modals/modal-manage-schedule/modal-manage-schedule.component";
 
 @Component({
   selector: 'app-barber-admin',
@@ -353,6 +354,14 @@ export class BarberAdminComponent implements OnInit {
       }
     }
   }
+
+  openModalManageSchedule() {
+    this.dialog.open(ModalManageScheduleComponent, {
+      width: '600px',
+      data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
+    });
+  }
+
 
 
   showSection(section: string) {

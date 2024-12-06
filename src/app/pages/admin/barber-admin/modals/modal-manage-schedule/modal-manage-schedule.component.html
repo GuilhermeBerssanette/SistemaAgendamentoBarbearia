@@ -1,0 +1,60 @@
+<h2 class="text-center">Gerenciar Agenda</h2>
+<form [formGroup]="scheduleForm">
+  <div class="mb-3">
+    <h4>Dias de Trabalho</h4>
+    <button class="btn btn-primary btn-sm mb-2" (click)="addWorkingDay()" type="button">Adicionar Dia</button>
+    <div formArrayName="workingDays" *ngFor="let _ of workingDays.controls; let i = index">
+      <div [formGroupName]="i" class="row mb-2">
+        <div class="col-4">
+          <label>Dia:</label>
+          <select class="form-control" formControlName="day">
+            <option value="" disabled>Selecione o dia</option>
+            <option *ngFor="let day of availableDaysOfWeek" [value]="day">{{ day }}</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label>Início:</label>
+          <input class="form-control" type="time" formControlName="startTime" />
+        </div>
+        <div class="col-3">
+          <label>Fim:</label>
+          <input class="form-control" type="time" formControlName="endTime" />
+        </div>
+        <div class="col-2 d-flex align-items-end">
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="removeWorkingDay(i)"
+            type="button"
+          >
+            Remover
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <h4>Datas Bloqueadas</h4>
+    <button class="btn btn-primary btn-sm mb-2" (click)="addBlockedDate()" type="button">Adicionar Data</button>
+    <div formArrayName="blockedDates" *ngFor="let _ of blockedDates.controls; let i = index">
+      <div class="row mb-2">
+        <div class="col-10">
+          <input class="form-control" type="date" [formControlName]="i" />
+        </div>
+        <div class="col-2 d-flex align-items-end">
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="removeBlockedDate(i)"
+            type="button"
+          >
+            Remover
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-success" (click)="saveSchedule()" type="button">
+    Salvar
+  </button>
+</form>

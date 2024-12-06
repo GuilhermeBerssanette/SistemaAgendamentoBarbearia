@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { GoogleCalendarService } from '../../../services/google-calendar.service';
 import { ModalConfirmationOrderComponent } from './modals/modal-confirmation-order/modal-confirmation-order.component';
 import { NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, getDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 
 @Component({
@@ -26,8 +25,9 @@ export class OrdersComponent implements OnInit {
   barberId!: string;
   currentUserId!: string;
 
+  workingHours: { day: string; startTime: string; endTime: string }[] = [];
+
   constructor(
-    private calendarService: GoogleCalendarService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private firestore: Firestore,
@@ -61,10 +61,27 @@ export class OrdersComponent implements OnInit {
     this.todayString = today.toISOString().split('T')[0];
     this.selectedDate = new Date(today);
 
-    await this.calendarService.initGoogleAPI();
-    await this.calendarService.ensureClientAuthenticated();
-
+    await this.loadWorkingHours();
     await this.updateAvailableSlots(this.selectedDate);
+  }
+
+  async loadWorkingHours() {
+    try {
+      const scheduleDocRef = doc(
+        this.firestore,
+        `barbearia/${this.barbeariaId}/barbers/${this.barberId}/schedules/schedule`
+      );
+      const scheduleDoc = await getDoc(scheduleDocRef);
+
+      if (scheduleDoc.exists()) {
+        const scheduleData = scheduleDoc.data();
+        if (scheduleData?.['workingDays']) {
+          this.workingHours = scheduleData?.['workingDays'];
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao carregar horários de trabalho do barbeiro:', error);
+    }
   }
 
   async updateAvailableSlots(date: Date) {
@@ -102,11 +119,23 @@ export class OrdersComponent implements OnInit {
 
   generateAvailableSlots(date: Date, bookedSlots: string[]) {
     this.availableSlots = [];
+
+    // Obter o nome do dia no formato correto
+    const dayName = date.toLocaleDateString('pt-BR', { weekday: 'long' }).replace(/^\w/, c => c.toUpperCase());
+
+    const workingDay = this.workingHours.find(work => work.day === dayName);
+    if (!workingDay) {
+      console.warn(`O barbeiro não trabalha no dia ${dayName}`);
+      return;
+    }
+
     const startTime = new Date(date);
-    startTime.setHours(9, 0, 0, 0);
+    const [startHours, startMinutes] = workingDay.startTime.split(':').map(Number);
+    startTime.setHours(startHours, startMinutes, 0, 0);
 
     const endTime = new Date(date);
-    endTime.setHours(17, 0, 0, 0);
+    const [endHours, endMinutes] = workingDay.endTime.split(':').map(Number);
+    endTime.setHours(endHours, endMinutes, 0, 0);
 
     const now = new Date();
     now.setHours(now.getHours(), now.getMinutes(), 0, 0);
@@ -130,7 +159,7 @@ export class OrdersComponent implements OnInit {
       currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
     }
 
-    console.log(`Horários disponíveis para ${date.toDateString()}:`, this.availableSlots);
+    console.log(`Horários disponíveis para ${dayName}:`, this.availableSlots);
   }
 
   async onDateChange(event: any) {
