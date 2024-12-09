@@ -1,13 +1,31 @@
-<div class="modal-container">
-  <h2>Confirmação do Agendamento</h2>
-  <p>Data: {{ data.date | date: 'shortDate' }}</p>
-  <p>Horário: {{ data.time }}</p>
-  <p>Serviço: {{ data.serviceName }}</p>
-  <p>Barbeiro: {{ data.barberName }}</p>
-  <p>Preço: R$ {{ data.servicePrice }}</p>
-
-  <label for="userName">Seu Nome:</label>
-  <input id="userName" [(ngModel)]="userName" placeholder="Digite seu nome" />
-
-  <button (click)="confirmOrder()">Confirmar</button>
+<div class="areaModal">
+  <div class="navbar">
+    <div class="d-flex justify-content-start container-fluid p-3">
+      <span class="title">Confirmação</span>
+      <mat-icon class="hover ms-auto" (click)="onClose()">close</mat-icon>
+    </div>
+  </div>
+  <div class="order m-2">
+    <p>Data: {{ data.date | date: 'shortDate' }}</p>
+    <p>Horário: {{ data.time }}</p>
+    <p>Serviço: {{ data.serviceName }}</p>
+    <p>Barbeiro: {{ data.barberName }}</p>
+    <p>Preço: R$ {{ data.servicePrice }}</p>
+  </div>
+  <div class="mb-3">
+    <input
+      id="userName"
+      class="form-control p-2"
+      [(ngModel)]="userName"
+      placeholder="Digite seu nome"
+    />
+  </div>
+  <div class="w-100 d-flex justify-content-center align-items-center">
+    <button
+      class="btn btnOption m-2"
+      (click)="confirmOrder()"
+    >
+      Confirmar
+    </button>
+  </div>
 </div>
