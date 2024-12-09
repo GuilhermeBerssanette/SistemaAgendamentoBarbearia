@@ -10,8 +10,8 @@
 <div class="bgColor p-3">
   <form [formGroup]="filterForm" class="form">
     <!-- Estado -->
-    <div class="form-group">
-      <label for="estado">Estado</label>
+    <div class="form-group mb-3">
+      <label for="estado" class="form-label">Estado</label>
       <select id="estado" class="form-select" formControlName="estado">
         <option value="">Selecione um estado</option>
         <option *ngFor="let estado of estadosList" [value]="estado.sigla">{{ estado.nome }}</option>
@@ -19,8 +19,8 @@
     </div>
 
     <!-- Cidade -->
-    <div class="form-group">
-      <label for="cidade">Cidade</label>
+    <div class="form-group mb-3">
+      <label for="cidade" class="form-label">Cidade</label>
       <select id="cidade" class="form-select" formControlName="cidade" [disabled]="!cidadesList.length">
         <option value="">Selecione uma cidade</option>
         <option *ngFor="let cidade of cidadesList" [value]="cidade.nome">{{ cidade.nome }}</option>
@@ -28,33 +28,36 @@
     </div>
 
     <!-- Comodidades -->
-    <div class="form-group">
-      <label>Comodidades</label>
+    <div class="form-group mb-3">
+      <label class="form-label">Comodidades</label>
       <ng-container *ngFor="let comodidade of comodidades; let i = index">
-        <div>
-          <input type="checkbox" [formControl]="getComodidadeControl(i)"> {{ comodidade }}
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" [formControl]="getComodidadeControl(i)">
+          <label class="form-check-label">{{ comodidade }}</label>
         </div>
       </ng-container>
     </div>
 
     <!-- Tipo de Atendimento -->
-    <div class="form-group">
-      <label>Tipo de Atendimento</label>
+    <div class="form-group mb-3">
+      <label class="form-label">Tipo de Atendimento</label>
       <ng-container *ngFor="let tipo of tiposAtendimento; let i = index">
-        <div>
-          <input type="checkbox" [formControl]="getTipoAtendimentoControl(i)"> {{ tipo }}
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" [formControl]="getTipoAtendimentoControl(i)">
+          <label class="form-check-label">{{ tipo }}</label>
         </div>
       </ng-container>
     </div>
 
     <!-- Valor Máximo -->
     <div class="form-group">
-      <label for="valorMaximo">Valor Máximo (opcional)</label>
+      <label for="valorMaximo" class="form-label">Valor Máximo (opcional)</label>
       <input type="number" id="valorMaximo" class="form-control" formControlName="valorMaximo" placeholder="R$">
     </div>
   </form>
+  <div class="areaBtn">
+    <button class="btn btnFilter hover" (click)="aplicarFiltro()">Aplicar Filtro</button>
+  </div>
 </div>
 
-<div class="areaBtn">
-  <button class="btn btnFilter hover" (click)="aplicarFiltro()">Aplicar Filtro</button>
-</div>
+
