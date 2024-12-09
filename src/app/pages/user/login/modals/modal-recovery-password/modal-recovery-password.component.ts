@@ -1,3 +1,4 @@
+import { MatIcon } from '@angular/material/icon';
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
@@ -8,7 +9,8 @@ import {NgIf} from "@angular/common";
   standalone: true,
   imports: [
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIcon
   ],
   templateUrl: './modal-recovery-password.component.html',
   styleUrl: './modal-recovery-password.component.scss'
