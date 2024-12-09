@@ -4,13 +4,15 @@ import { Auth } from '@angular/fire/auth';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgForOf, NgIf } from "@angular/common";
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-favorites',
   standalone: true,
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    MatIcon
   ],
   templateUrl: './modal-favorites.component.html',
   styleUrls: ['./modal-favorites.component.scss']
@@ -52,5 +54,9 @@ export class ModalFavoritesComponent implements OnInit {
   async navigateToBarbearia(barbeariaId: string) {
     this.dialogRef.close();
     await this.router.navigate(['/barbearia', barbeariaId]);
+  }
+
+  closeModal(){
+    this.dialogRef.close();
   }
 }

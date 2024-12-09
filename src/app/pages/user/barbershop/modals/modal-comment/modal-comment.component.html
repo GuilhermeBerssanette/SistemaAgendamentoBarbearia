@@ -1,14 +1,14 @@
-<div class="modal-body">
-  <div class="navbar">
-    <div class="container-fluid d-flex justify-content-start p-3">
+<div class="modal-container">
+  <nav class="navbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
       <span>Comentários</span>
-      <mat-icon class="hover ms-auto" (click)="closeModalComment()">close</mat-icon>
+      <mat-icon class="hover" (click)="closeModalComment()">close</mat-icon>
     </div>
-  </div>
+  </nav>
 
-  <hr style="border: 1px solid white; width: 100%; ">
+  <div class="linhaBranca"></div>
 
-  <div class="modal-body">
+  <div class="content">
     <div *ngFor="let comment of comments" class="comment-box m-4">
       <h5>{{ comment.userEmail }} <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small></h5>
       <p>{{ comment.comment }}</p>

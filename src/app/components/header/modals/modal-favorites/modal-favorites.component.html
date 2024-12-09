@@ -1,10 +1,27 @@
-<h2>Barbearias Favoritas</h2>
-<div *ngIf="favoriteBarbearias.length > 0; else noFavorites">
-  <div *ngFor="let barbearia of favoriteBarbearias">
-    <a (click)="navigateToBarbearia(barbearia.id)" class="barbearia-link">{{ barbearia.nomeFantasia }}</a>
-    <p>{{ barbearia.endereco }}</p>
+<div class="modal-container">
+  <nav class="navbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
+      <span class="fs-16 title">Barbearias Favoritas</span>
+      <mat-icon class="hover" (click)="closeModal()">close</mat-icon>
+    </div>
+  </nav>
+
+  <div class="w-100 linhaBranca"></div>
+
+  <div class="content p-3">
+    <div *ngIf="favoriteBarbearias.length > 0; else noFavorites">
+      <div *ngFor="let barbearia of favoriteBarbearias" class="favorite-barbearia">
+        <a
+          (click)="navigateToBarbearia(barbearia.id)"
+          class="barbearia-link d-block"
+        >
+          {{ barbearia.nomeFantasia }}
+        </a>
+        <p class="barbearia-address">{{ barbearia.endereco }}</p>
+      </div>
+    </div>
+    <ng-template #noFavorites>
+      <p class="no-favorites">Nenhuma barbearia favorita encontrada.</p>
+    </ng-template>
   </div>
 </div>
-<ng-template #noFavorites>
-  <p>Nenhuma barbearia favorita encontrada.</p>
-</ng-template>
