@@ -1,34 +1,45 @@
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+/* Container do modal */
+.modal-container {
+  background-color: #05465F;
+  width: 100%; /* Ocupar toda a largura do modal */
+  height: 100%; /* Ocupar toda a altura do modal */
+  margin: 0; /* Remove margens */
+  padding: 0; /* Remove padding */
+  border-radius: 0; /* Remove bordas arredondadas */
+  overflow: hidden; /* Garante que o conteúdo não transborde */
+  box-shadow: none; /* Remove sombra ao redor */
 }
 
+/* Navbar */
 .navbar {
   background-color: #028090;
   position: relative;
-  padding: 5px 0; /* Ajusta o padding conforme necessário */
-  height: 20%;
+  padding: 5px 0;
+  height: 15%;
 }
 
-span{
+span {
   font-size: 24px;
   font-weight: 500;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 10px;
+/* Linha separadora */
+.linhaBranca {
+  height: 2px;
+  background-color: #ffffff;
+  position: relative;
 }
 
-.modal-body {
+/* Conteúdo do modal */
+.content {
+  height: calc(100% - 65px); /* Altura restante após a navbar */
+  overflow-y: auto; /* Permitir scroll se o conteúdo for muito longo */
+  padding: 10px; /* Adiciona espaçamento interno */
   background-color: #05465F;
-  padding-bottom: 60px;
+  color: #fff;
 }
 
+/* Caixa de comentário */
 .comment-box {
   background-color: #f8f9fa;
   padding: 10px;
@@ -36,16 +47,20 @@ span{
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
 }
 
+/* Rodapé do modal */
 .modal-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding-top: 10px;
   background-color: #05465F;
-  height: 10px;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
-input, mat-icon{
+/* Estilo do input e botão */
+input, mat-icon {
   margin-bottom: 20px;
 }
 
@@ -54,15 +69,36 @@ textarea,
 .form-control {
   border: 0;
   outline: none;
-
-  &:focus {
-    box-shadow: none;
-    outline: none;
-    border: 0;
-  }
 }
 
-.btn{
+.btn {
   border: 0 none;
   outline: none;
+}
+
+/* Estilo do input */
+input.form-control {
+  border: none;
+  outline: none;
+  background-color: #fff;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 5px; 
+}
+
+input.form-control:focus {
+  box-shadow: none; /* Remove a sombra do foco */
+  outline: none; /* Garante que não apareça o contorno azul */
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #05465F;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
