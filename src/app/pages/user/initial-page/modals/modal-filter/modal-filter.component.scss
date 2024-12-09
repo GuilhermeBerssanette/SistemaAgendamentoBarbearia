@@ -1,48 +1,109 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
+/* Navbar */
 .navbar {
   background-color: #028090;
   position: relative;
-  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  padding: 5px 0;
   height: 15%;
 }
 
-span{
+/* Texto */
+span {
   font-size: 24px;
   font-weight: 500;
 }
 
+/* Linha separadora */
 .linhaBranca {
   height: 2px;
   background-color: #ffffff;
   position: relative;
 }
 
-.bgColor{
+/* Fundo do formulário */
+.bgColor {
   background-color: #05465F;
   height: 85%;
   z-index: 1000;
-  max-height: 600px;
+  max-height: 610px;
+  overflow-y: auto;
 }
 
-.areaBtn{
+/* Botões */
+.areaBtn {
   border: none !important;
   box-shadow: none !important;
   background-color: #05465F;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px 0;
 }
 
-.btnFilter{
+/* Botão */
+.btnFilter {
   background-color: #028090;
-  width: 95%; /* Você pode ajustar conforme necessário */
-  max-width: 690px; /* Defina um valor máximo para evitar que fique muito largo */
-  margin: 0 auto; /* Centraliza horizontalmente */
-  padding: 10px; /* Adiciona algum preenchimento ao botão */
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
   margin-bottom: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  outline: none; /* Remove contorno */
+  box-shadow: none; /* Remove sombra padrão do Bootstrap */
+  transition: background-color 0.3s ease; /* Suaviza o hover */
+}
+
+.btnFilter:hover {
+  background-color: #026778; /* Cor de fundo mais escura no hover */
+}
+
+.btnFilter:focus {
+  outline: none; /* Remove contorno ao focar */
+  box-shadow: none; /* Remove sombra ao focar */
+}
+
+/* Inputs e selects */
+.form-control,
+.form-select {
+  background-color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  outline: none; /* Remove contorno ao focar */
+  box-shadow: none; /* Remove sombra padrão do Bootstrap */
+  transition: border-color 0.2s ease; /* Suaviza mudanças de borda */
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none; /* Remove contorno azul */
+  border: 1px solid #026778; /* Adiciona borda mais sutil ao focar */
+  box-shadow: none; /* Remove sombra ao focar */
+}
+
+/* Checkbox */
+.form-check-input {
+  margin-right: 5px;
+  outline: none; /* Remove contorno */
+  box-shadow: none; /* Remove sombra ao focar */
+}
+
+.form-check-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+select{
+  background-color: var(--input-color)
+}
+
+select, .form-control, .form-control-lg{
+border: none;
+outline: none;
+box-shadow: none;
+background-color:  var(--input-color, transparent);
 }

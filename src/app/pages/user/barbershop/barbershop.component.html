@@ -36,13 +36,13 @@
       </button>
       <div class="name-info-container">
         <span>{{ barber.nome }}</span>
-        <button class="btn" (click)="openModalInfos(barber, $event)"><mat-icon>help</mat-icon></button>
+        <button class="btn custom-mat-icon" (click)="openModalInfos(barber, $event)"><mat-icon>help</mat-icon></button>
       </div>
     </div>
   </div>
   <p class="text-danger" *ngIf="(barbers.length === 0)">Nenhum barbeiro cadastrado.</p>
 
   <div class="button">
-    <button class="btn btn-lg" (click)="openModalComment()"><mat-icon>comment</mat-icon></button>
+    <button class="btn btn-lg" (click)="openModalComment()"><mat-icon class="custom-mat-icon">comment</mat-icon></button>
   </div>
 </div>

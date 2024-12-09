@@ -3,12 +3,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GoogleCalendarService } from '../../../../../services/google-calendar.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-confirmation-order',
   templateUrl: './modal-confirmation-order.component.html',
   styleUrls: ['./modal-confirmation-order.component.scss'],
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule, DatePipe, MatIcon],
   standalone: true,
 })
 export class ModalConfirmationOrderComponent {
@@ -85,5 +86,9 @@ export class ModalConfirmationOrderComponent {
     const date = new Date();
     date.setHours(hours, minutes + duration);
     return date.toTimeString().slice(0, 5);
+  }
+
+  onClose(){
+    this.dialogRef.close()
   }
 }

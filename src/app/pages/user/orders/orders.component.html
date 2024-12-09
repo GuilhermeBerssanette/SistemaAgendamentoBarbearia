@@ -1,27 +1,37 @@
-<div class="orders-container">
-  <h2>Agendar Serviço</h2>
+<app-header-admin></app-header-admin>
+<div class="orders-page">
+  <div class="container orders-container mt-2">
+    <h2 class="text-center mb-4 ">Agendar Serviço</h2>
 
-  <!-- Data -->
-  <label for="date">Selecione a data:</label>
-  <input
-    type="date"
-    id="date"
-    [value]="todayString"
-    (change)="onDateChange($event)"
-    min="{{ todayString }}"
-  />
+    <!-- Data -->
+    <div class="mb-4">
+      <label for="date" class="form-label ">Selecione a data:</label>
+      <input
+        type="date"
+        id="date"
+        class="form-control"
+        [value]="todayString"
+        (change)="onDateChange($event)"
+        min="{{ todayString }}"
+      />
+    </div>
 
-  <!-- Horários Disponíveis -->
-  <h3 *ngIf="availableSlots.length > 0">Horários Disponíveis:</h3>
-  <p *ngIf="availableSlots.length === 0">Nenhum horário disponível.</p>
+    <!-- Horários Disponíveis -->
+    <div *ngIf="availableSlots.length > 0" class="mb-3">
+      <h3 class="text-center text-white">Horários Disponíveis:</h3>
+      <div class="d-flex flex-wrap justify-content-center gap-2 slots-container">
+        <button
+          *ngFor="let slot of availableSlots"
+          (click)="openConfirmationModal(slot)"
+          class="btn slot-button"
+        >
+          {{ slot }}
+        </button>
+      </div>
+    </div>
 
-  <div *ngIf="availableSlots.length > 0" class="slots-container">
-    <button
-      *ngFor="let slot of availableSlots"
-      (click)="openConfirmationModal(slot)"
-      class="slot-button"
-    >
-      {{ slot }}
-    </button>
+    <p *ngIf="availableSlots.length === 0" class="text-center text-danger ">
+      Nenhum horário disponível.
+    </p>
   </div>
 </div>

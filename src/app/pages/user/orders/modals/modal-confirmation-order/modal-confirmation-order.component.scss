@@ -1,0 +1,59 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.areaModal{
+  width: 310px;
+}
+
+.navbar {
+  background-color: #028090;
+  position: relative;
+  padding: 5px 0;
+  height: 20%;
+}
+
+form, .areaModal{
+  background-color: #05465F;
+  min-height: 39vh;
+}
+
+input{
+  background-color: var(--input-color)
+}
+
+input, .form-control, .form-control-lg{
+border: none;
+outline: none;
+box-shadow: none;
+background-color:  var(--input-color, transparent);
+}
+
+
+.form-control {
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 8px;
+}
+
+.btnOption {
+  background-color: #028090;
+  padding: 5px 10px;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+  width: 100%; /* Adicionado para ocupar toda a largura */
+}
+
+.title{
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.order{
+  background-color: #fff; // Fundo do conteúdo principal
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
