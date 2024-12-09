@@ -1,31 +1,71 @@
-.orders-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.slots-container {
+// Fundo geral da página
+.orders-page {
+  background-color: #05465f; // Cor de fundo da página
+  min-height: 100vh; // Preencher a altura inteira da tela
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: flex-start; // Alinhar o conteúdo no topo
   justify-content: center;
+  padding: 20px; // Espaçamento geral para celular
+  box-sizing: border-box;
 }
 
-.slot-button {
-  background-color: #05668d;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+// Container principal
+.orders-container {
+  width: 100%;
+  max-width: 500px; // Limitar largura em telas grandes
+  padding: 20px;
+  background-color: #fff; // Fundo do conteúdo principal
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 40px; // Espaçamento superior customizado para elevar a box
 
-.slot-button:hover {
-  background-color: #028090;
-}
+  // Input de data
+  input[type='date'] {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
 
-.slot-button:active {
-  background-color: #05465f;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Botões de horários disponíveis
+  .slots-container {
+    .slot-button {
+      background-color: #028090;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: #05668d;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        background-color: #033a49;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Responsividade
+  @media (max-width: 768px) {
+    padding: 15px; // Espaçamento extra em dispositivos móveis
+    margin-top: 20px; // Menor margem em dispositivos móveis
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .slots-container .slot-button {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }
 }

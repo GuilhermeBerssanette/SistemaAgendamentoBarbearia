@@ -5,13 +5,14 @@ import { NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, collection, getDocs, doc, getDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
+import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
   standalone: true,
-  imports: [NgIf, NgForOf],
+  imports: [NgIf, NgForOf, HeaderAdminComponent],
 })
 export class OrdersComponent implements OnInit {
   availableSlots: string[] = [];
