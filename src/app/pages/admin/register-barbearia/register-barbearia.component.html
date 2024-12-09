@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="col-lg-5 col-md-5">
-                  <input type="text" class="form-control" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
+                  <input type="text" class="form-control inputSyle form-control-lg" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
                     <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
                       <small *ngIf="form.get('inscricaoEstadual')?.errors?.['required']" class="text-danger">Inscrição Estadual é obrigatória.</small>
                     </div>

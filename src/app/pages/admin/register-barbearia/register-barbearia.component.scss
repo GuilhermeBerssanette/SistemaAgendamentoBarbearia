@@ -140,10 +140,21 @@ mat-form-field {
   border: #00A896;
 }
 
-input, select, select, mat-select, mat-select-trigger, mat-option, mat-label{
+select, mat-select, mat-select-trigger, mat-option, mat-label{
   background-color: var(--input-color)
 }
 
 mat-label{
   border-radius: 3px;
+}
+
+input{
+  background-color: var(--input-color)
+}
+
+input, select, .form-control, .form-control-lg{
+border: none;
+outline: none;
+box-shadow: none;
+background-color:  var(--input-color, transparent);
 }
