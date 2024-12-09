@@ -60,12 +60,12 @@
 }
 
 .btn-login{
-    background-color: #00A896;
+    background-color: #00A896 !important;
 }
 
-/*.btn-login:hover{
-    background-color: #09685e;
-}*/
+.btn-login:hover, :focus{
+    background-color: #00A896;
+}
 
 .bg-holder{
     position: absolute;
