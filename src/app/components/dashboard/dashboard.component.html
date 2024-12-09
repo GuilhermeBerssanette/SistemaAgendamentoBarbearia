@@ -26,24 +26,25 @@
     </div>
   </div>
 
-  <!-- Gráfico de Barras -->
+  <!-- Gráfico -->
   <div class="row mb-4">
     <div class="col-12">
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <h5 class="card-title">Renda e Serviços por Barbeiro</h5>
-          <canvas baseChart
-                  [data]="groupedChartData"
-                  [labels]="groupedChartLabels"
-                  [type]="'bar'"
-                  [options]="groupedChartOptions">
-          </canvas>
+          <canvas
+            baseChart
+            [data]="groupedChartData"
+            [labels]="groupedChartLabels"
+            type="bar"
+            [options]="groupedChartOptions"
+          ></canvas>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Tabela de Cortes -->
+  <!-- Tabela de Agendamentos -->
   <div class="row">
     <div class="col-12">
       <div class="p-3 shadow-sm bg-white rounded">

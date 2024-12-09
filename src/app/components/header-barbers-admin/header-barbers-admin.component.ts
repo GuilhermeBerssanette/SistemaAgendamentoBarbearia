@@ -3,20 +3,20 @@ import { Auth, signOut } from "@angular/fire/auth";
 import { ActivatedRoute, Router } from "@angular/router";
 import { doc, Firestore, getDoc } from "@angular/fire/firestore";
 import { MatIcon } from '@angular/material/icon';
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: 'app-header-barbers-admin',
   templateUrl: './header-barbers-admin.component.html',
   styleUrls: ['./header-barbers-admin.component.scss'],
   standalone: true,
-  imports: [MatIcon, ]
+  imports: [MatIcon, NgIf],
 })
 export class HeaderBarbersAdminComponent implements OnInit {
   dropdownOpen: boolean = false;
   sidebarOpen: boolean = false;
   profileImageUrl: string | null = null;
-  barbeiro: any;
-
+  barberEmail: string | null = null;
 
   constructor(
     private auth: Auth,
@@ -28,6 +28,7 @@ export class HeaderBarbersAdminComponent implements OnInit {
   ngOnInit(): void {
     const barbeariaId = this.route.snapshot.paramMap.get('id');
     const barberId = this.route.snapshot.paramMap.get('barberId');
+
     if (barbeariaId && barberId) {
       this.loadBarberProfile(barbeariaId, barberId);
     }
@@ -60,13 +61,16 @@ export class HeaderBarbersAdminComponent implements OnInit {
     try {
       const barberDocRef = doc(this.firestore, `barbearia/${barbeariaId}/barbers/${barberId}`);
       const barberDoc = await getDoc(barberDocRef);
+
       if (barberDoc.exists()) {
-        this.profileImageUrl = barberDoc.data()['profileImageUrl'];
+        const barberData = barberDoc.data();
+        this.profileImageUrl = barberData['profileImageUrl'] || null;
+        this.barberEmail = barberData['email'] || null;
       } else {
         console.error('Barbeiro não encontrado!');
       }
     } catch (error) {
-      console.error('Erro ao carregar imagem do barbeiro:', error);
+      console.error('Erro ao carregar dados do barbeiro:', error);
     }
   }
 

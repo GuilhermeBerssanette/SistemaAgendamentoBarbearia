@@ -1,26 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Firestore, collection, doc, getDoc, getDocs } from '@angular/fire/firestore';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { NgIf, NgForOf, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  standalone: true,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  standalone: true,
   imports: [NgChartsModule, NgIf, NgForOf, CurrencyPipe],
 })
 export class DashboardComponent implements OnInit {
   @Input() barbeariaId!: string;
   @Input() barbeiroId?: string;
 
-  // Campos de Resumo
   monthlyProfit: number | null = null;
   haircutsCompleted: number | null = null;
   appointmentsDetails: Array<{ date: string; barber?: string; client: string; revenue: number }> = [];
+  barberName!: string;
 
-  // Dados do Gráfico
+  // Configurações do gráfico
   groupedChartLabels: string[] = [];
   groupedChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
@@ -32,28 +32,21 @@ export class DashboardComponent implements OnInit {
       legend: { position: 'top' },
       tooltip: {
         callbacks: {
-          label: (tooltipItem) => {
-            return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
-          },
+          label: tooltipItem => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`,
         },
       },
     },
     scales: {
       x: { stacked: false },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 200,
-        },
-        suggestedMax: 1000, // Será ajustado dinamicamente
-      },
+      y: { beginAtZero: true, max: 0 },
     },
   };
+  groupedChartType: ChartType = 'bar';
+
 
   constructor(private firestore: Firestore) {}
 
   async ngOnInit(): Promise<void> {
-    console.log('Dashboard carregado.');
     await this.loadDashboardData();
   }
 
@@ -64,103 +57,117 @@ export class DashboardComponent implements OnInit {
     }
 
     try {
-      let totalProfit = 0;
-      let totalAppointments = 0;
-      const labels: string[] = [];
-      const revenueData: number[] = [];
-      const servicesData: number[] = [];
-      const appointmentDetails: Array<{ date: string; barber?: string; client: string; revenue: number }> = [];
+      const chartDataMap = new Map<string, { revenue: number; services: number }>();
 
-      const barbersCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
-      const barbersSnapshot = await getDocs(barbersCollectionRef);
+      if (this.barbeiroId) {
+        const barberDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}`);
+        const barberDoc = await getDoc(barberDocRef);
+        this.barberName = barberDoc.exists() ? barberDoc.data()['email'] || 'Desconhecido' : 'Desconhecido';
 
-      for (const barberDoc of barbersSnapshot.docs) {
-        const barberId = barberDoc.id;
-        const barberName = barberDoc.data()['email'] || 'Desconhecido';
-        labels.push(barberName);
+        await this.loadBarberData(this.barbeiroId, chartDataMap);
+      } else {
+        const barbersCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
+        const barbersSnapshot = await getDocs(barbersCollectionRef);
 
-        let barberRevenue = 0;
-        let barberServices = 0;
+        for (const barberDoc of barbersSnapshot.docs) {
+          const barberId = barberDoc.id;
+          const barberName = barberDoc.data()['email'] || 'Desconhecido';
 
-        const appointmentsCollectionRef = collection(
-          this.firestore,
-          `barbearia/${this.barbeariaId}/barbers/${barberId}/appointments`
-        );
-        const appointmentsSnapshot = await getDocs(appointmentsCollectionRef);
-
-        for (const appointmentDoc of appointmentsSnapshot.docs) {
-          const appointmentData = appointmentDoc.data();
-          const serviceOrComboId = appointmentData['serviceOrCombo'];
-          const clientName = appointmentData['client'] || 'Desconhecido';
-          const appointmentDate = new Date(appointmentData['start']).toLocaleDateString('pt-BR');
-
-          const revenue = await this.getServiceOrComboPrice(serviceOrComboId, barberId);
-          barberRevenue += revenue;
-          barberServices++;
-
-          appointmentDetails.push({
-            date: appointmentDate,
-            barber: barberName,
-            client: clientName,
-            revenue,
-          });
+          await this.loadBarberData(barberId, chartDataMap, barberName);
         }
-
-        revenueData.push(barberRevenue);
-        servicesData.push(barberServices);
-        totalProfit += barberRevenue;
-        totalAppointments += barberServices;
       }
 
-      this.updateGroupedChartData(labels, revenueData, servicesData);
-      this.monthlyProfit = totalProfit;
-      this.haircutsCompleted = totalAppointments;
-      this.appointmentsDetails = appointmentDetails.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      this.updateGroupedChartData(chartDataMap);
     } catch (error) {
       console.error('Erro ao carregar os dados do dashboard:', error);
     }
   }
 
-  async getServiceOrComboPrice(serviceOrComboId: string, barberId: string): Promise<number> {
-    try {
-      const comboDocRef = doc(
-        this.firestore,
-        `barbearia/${this.barbeariaId}/barbers/${barberId}/combos/${serviceOrComboId}`
-      );
-      const comboDoc = await getDoc(comboDocRef);
+  async loadBarberData(
+    barberId: string,
+    chartDataMap: Map<string, { revenue: number; services: number }>,
+    barberName?: string
+  ) {
+    const appointmentsCollectionRef = collection(
+      this.firestore,
+      `barbearia/${this.barbeariaId}/barbers/${barberId}/appointments`
+    );
+    const appointmentsSnapshot = await getDocs(appointmentsCollectionRef);
 
-      if (comboDoc.exists()) return parseFloat(comboDoc.data()['price']) || 0;
+    let totalRevenue = 0;
+    let totalServices = 0;
 
-      const serviceDocRef = doc(
-        this.firestore,
-        `barbearia/${this.barbeariaId}/barbers/${barberId}/services/${serviceOrComboId}`
-      );
-      const serviceDoc = await getDoc(serviceDocRef);
+    for (const appointmentDoc of appointmentsSnapshot.docs) {
+      const appointmentData = appointmentDoc.data();
+      const appointmentDate = new Date(appointmentData['start']).toLocaleDateString('pt-BR');
+      const clientName = appointmentData['client'] || 'Desconhecido';
+      const serviceOrComboId = appointmentData['serviceOrCombo'];
 
-      if (serviceDoc.exists()) return parseFloat(serviceDoc.data()['price']) || 0;
+      const revenue = await this.getServiceOrComboPrice(serviceOrComboId, barberId);
+      totalRevenue += revenue;
+      totalServices++;
 
-      return 0;
-    } catch (error) {
-      console.error('Erro ao buscar preço de serviço ou combo:', error);
-      return 0;
+      this.appointmentsDetails.push({
+        date: appointmentDate,
+        barber: barberName,
+        client: clientName,
+        revenue,
+      });
+
+      const key = this.barbeiroId ? this.barberName : barberName || 'Desconhecido';
+      const currentData = chartDataMap.get(key) || { revenue: 0, services: 0 };
+      chartDataMap.set(key, {
+        revenue: currentData.revenue + revenue,
+        services: currentData.services + 1,
+      });
     }
+
+    this.monthlyProfit = (this.monthlyProfit || 0) + totalRevenue;
+    this.haircutsCompleted = (this.haircutsCompleted || 0) + totalServices;
+
+    this.appointmentsDetails.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
   }
 
-  updateGroupedChartData(labels: string[], revenueData: number[], servicesData: number[]): void {
+
+
+  async getServiceOrComboPrice(serviceOrComboId: string, barberId: string): Promise<number> {
+    const comboDocRef = doc(
+      this.firestore,
+      `barbearia/${this.barbeariaId}/barbers/${barberId}/combos/${serviceOrComboId}`
+    );
+    const comboDoc = await getDoc(comboDocRef);
+
+    if (comboDoc.exists()) return parseFloat(comboDoc.data()['price']) || 0;
+
+    const serviceDocRef = doc(
+      this.firestore,
+      `barbearia/${this.barbeariaId}/barbers/${barberId}/services/${serviceOrComboId}`
+    );
+    const serviceDoc = await getDoc(serviceDocRef);
+
+    if (serviceDoc.exists()) return parseFloat(serviceDoc.data()['price']) || 0;
+
+    return 0;
+  }
+
+  updateGroupedChartData(chartDataMap: Map<string, { revenue: number; services: number }>): void {
+    const labels = Array.from(chartDataMap.keys());
+    const revenueData: number[] = [];
+    const servicesData: number[] = [];
+
+    chartDataMap.forEach(value => {
+      revenueData.push(value.revenue);
+      servicesData.push(value.services);
+    });
+
     const maxRevenue = Math.max(...revenueData);
-    const suggestedMax = Math.ceil((maxRevenue + 400) / 200) * 200;
+    const maxYAxis = maxRevenue + 100;
 
     this.groupedChartLabels = labels;
-    this.groupedChartOptions.scales = {
-      ...this.groupedChartOptions.scales,
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 200,
-        },
-        suggestedMax,
-      },
-    };
     this.groupedChartData = {
       labels: this.groupedChartLabels,
       datasets: [
@@ -176,5 +183,7 @@ export class DashboardComponent implements OnInit {
         },
       ],
     };
+
+    this.groupedChartOptions.scales!['y'] = { ...this.groupedChartOptions.scales!['y'], max: maxYAxis };
   }
 }
