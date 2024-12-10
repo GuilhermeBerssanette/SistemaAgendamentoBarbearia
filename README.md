@@ -847,8 +847,7 @@ gerenciamento de projetos, facilitando futuras expansões e melhorias do
 sistema. Este repositório foi estruturado para garantir fácil navegação
 e compreensão do código.
 
-O projeto pode ser acessado no seguinte endereço: \[Link para o
-repositório no GitHub\].
+O projeto pode ser acessado no seguinte endereço: https://github.com/GuilhermeBerssanette/SistemaAgendamentoBarbearia
 
 ## Conclusão
 
