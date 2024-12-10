@@ -130,5 +130,12 @@
   cursor: pointer;
 }
 
+.profile-image {
+  width: 5px; /* Ajuste o tamanho conforme necessário */
+  height: 5px; /* Mantém a imagem proporcional */
+  object-fit: cover; /* Garante que a imagem se ajuste ao contêiner */
+}
+
+
 .btn:focus, mat-icon:focus{ outline: none; border-color: transparent; border: transparent;}
 
