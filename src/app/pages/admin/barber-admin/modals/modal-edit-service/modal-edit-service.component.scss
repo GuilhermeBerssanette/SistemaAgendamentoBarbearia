@@ -5,7 +5,7 @@
 }
 
 .navbar {
-  background-color: #028090;
+  background-color: #D9D9D9D9;
   position: relative;
   padding: 5px 0; /* Ajusta o padding conforme necessário */
   height: 20%;
@@ -29,14 +29,16 @@ span{
 }
 
 .modal-body {
-  background-color: #05465F;
+  background-color: #D9D9D9D9;
 }
 
 input{
-  margin-left: 15px;
-  margin-bottom: 8px;
-  border-radius: 4px;
-  width: auto;
+  color: #FFFFFF;
+  caret-color: #FFFFFF;
+}
+
+input::placeholder{
+  color: #FFFFFF;
 }
 
 input:focus{
@@ -52,3 +54,35 @@ input:focus{
   margin-left: 15px;
   background-color: #028090;
 }
+
+.card{
+  background-color: #028090;
+  border: transparent;
+}
+
+.form-control {
+  background-color: #007381;
+  color: #FFFFFF;
+}
+
+mat-icon{
+  color: red;
+}
+
+.btnOption {
+  padding: 5px 10px;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+}
+
+.confirm-button {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+.cancel-button {
+  background-color: #dc3545; /* Vermelho */
+  color: white;
+}
+

@@ -1,6 +1,6 @@
 /* Navbar */
 .navbar {
-  background-color: #028090;
+  background-color: #D9D9D9;
   position: relative;
   padding: 5px 0;
   height: 15%;
@@ -12,16 +12,10 @@ span {
   font-weight: 500;
 }
 
-/* Linha separadora */
-.linhaBranca {
-  height: 2px;
-  background-color: #ffffff;
-  position: relative;
-}
 
 /* Fundo do formulário */
 .bgColor {
-  background-color: #05465F;
+  background-color: #D9D9D9;
   height: 85%;
   z-index: 1000;
   max-height: 610px;
@@ -32,7 +26,7 @@ span {
 .areaBtn {
   border: none !important;
   box-shadow: none !important;
-  background-color: #05465F;
+  background-color: #D9D9D9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +35,7 @@ span {
 
 /* Botão */
 .btnFilter {
-  background-color: #028090;
+  background-color: #04B05D;
   width: 100%;
   margin: 0 auto;
   padding: 10px;
@@ -67,15 +61,9 @@ span {
 }
 
 /* Inputs e selects */
-.form-control,
-.form-select {
-  background-color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px;
-  outline: none; /* Remove contorno ao focar */
-  box-shadow: none; /* Remove sombra padrão do Bootstrap */
-  transition: border-color 0.2s ease; /* Suaviza mudanças de borda */
+.form-select{
+  background-color: #007381;
+  color: #FFFFFF;
 }
 
 .form-control:focus,
@@ -105,5 +93,18 @@ select, .form-control, .form-control-lg{
 border: none;
 outline: none;
 box-shadow: none;
-background-color:  var(--input-color, transparent);
+background-color:  #007381;
+}
+
+mat-icon{
+  color: red;
+}
+
+.card{
+  background-color: #028090;
+  border: transparent;
+}
+
+.form-label, .form-check-label{
+  color: #FFFFFF;
 }

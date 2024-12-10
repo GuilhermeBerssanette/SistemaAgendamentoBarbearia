@@ -142,8 +142,6 @@
   }
 }
 
-
-
 .service-button{
   background-color: #D9D9D9;
   color: #000000;
@@ -156,6 +154,12 @@
 
   &:hover {
     background-color: rgb(184, 184, 184);
+  }
+}
+
+@media (max-width: 768px) {
+  .manage-schedule-button {
+    margin-top: 15px;
   }
 }
 
@@ -221,6 +225,7 @@
     background-color: var(--input-color, transparent);
     width: 60%;
     border: none;
+    color: #FFFFFF;
     outline: none;
     box-shadow: none;
     color: #FFFFFF;
@@ -229,12 +234,53 @@
 
   .btn-login {
     background-color: #00A896;
-    width: 92%;
-  }
+    max-width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-  @media (min-width: 768px){
-    .btn-login{
-      width: 98%;
+/* Para telas grandes (acima de 1024px) */
+@media (min-width: 1025px) {
+    .btn-login {
+        width: 100%; /* Ajuste o tamanho conforme necessário */
+    }
+}
+
+
+/* Para telas médias (até 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .btn-login {
+        width: 98%; /* Ajuste o tamanho conforme necessário */
+    }
+}
+
+/* Para telas pequenas (até 768px) */
+@media (max-width: 768px) {
+    .btn-login {
+        width: 96%; /* Já definido */
+    }
+}
+
+/* Para telas muito pequenas (até 480px) */
+@media (max-width: 480px) {
+    .btn-login {
+        width: 93%; /* Ajuste o tamanho conforme necessário */
+    }
+}
+
+input::placeholder {
+  color: #FFFFFF;
+}
+
+  .form-container {
+    width: 48%;
+    margin: 0 auto;
+
+    @media (max-width: 768px) { // Para dispositivos móveis
+      width: 100%;
     }
   }
+
 

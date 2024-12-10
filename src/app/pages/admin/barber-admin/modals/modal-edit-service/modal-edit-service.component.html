@@ -6,10 +6,9 @@
     </div>
   </div>
 
-  <hr style="border: 1px solid white; width: 100%; ">
 
 <form [formGroup]="form" (ngSubmit)="saveService()">
-  <div>
+  <div class="card p-3 m-2">
     <h3 class="subtitle">Valor</h3>
     <input class="form-control" type="number" formControlName="price" placeholder="Preço" />
     <div *ngIf="form.get('price')?.invalid && (form.get('price')?.touched || form.get('price')?.dirty)">
@@ -17,7 +16,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="card p-3 m-2">
     <h3 class="subtitle">Duração</h3>
     <input class="form-control" type="number" formControlName="duration" placeholder="Duração (minutos)" />
     <div *ngIf="form.get('duration')?.invalid && (form.get('duration')?.touched || form.get('duration')?.dirty)">
@@ -25,9 +24,9 @@
     </div>
   </div>
 
-  <div>
-    <button class="btn" type="submit" [disabled]="form.invalid">Salvar</button>
-    <button class="btn" type="button" (click)="close()">Cancelar</button>
+  <div class="button-group container-fluid d-flex flex-column align-items-center mb-2 w-100 p-3">
+    <button class="btn btnOption cancel-button col-12 mb-2" type="button" (click)="close()">Cancelar</button>
+    <button class="btn btnOption confirm-button col-12" type="submit" [disabled]="form.invalid">Salvar</button>
   </div>
 </form>
 </div>
