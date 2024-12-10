@@ -5,12 +5,11 @@
   </div>
 </nav>
 
-<div class="w-100 linhaBranca"></div>
 
 <div class="bgColor p-3">
   <form [formGroup]="filterForm" class="form">
     <!-- Estado -->
-    <div class="form-group mb-3">
+    <div class="card p-3 m-2">
       <label for="estado" class="form-label">Estado</label>
       <select id="estado" class="form-select" formControlName="estado">
         <option value="">Selecione um estado</option>
@@ -19,7 +18,7 @@
     </div>
 
     <!-- Cidade -->
-    <div class="form-group mb-3">
+    <div class="card p-3 m-2">
       <label for="cidade" class="form-label">Cidade</label>
       <select id="cidade" class="form-select" formControlName="cidade" [disabled]="!cidadesList.length">
         <option value="">Selecione uma cidade</option>
@@ -28,7 +27,7 @@
     </div>
 
     <!-- Comodidades -->
-    <div class="form-group mb-3">
+    <div class="card p-3 m-2">
       <label class="form-label">Comodidades</label>
       <ng-container *ngFor="let comodidade of comodidades; let i = index">
         <div class="form-check">
@@ -39,7 +38,7 @@
     </div>
 
     <!-- Tipo de Atendimento -->
-    <div class="form-group mb-3">
+    <div class="card p-3 m-2">
       <label class="form-label">Tipo de Atendimento</label>
       <ng-container *ngFor="let tipo of tiposAtendimento; let i = index">
         <div class="form-check">
@@ -50,7 +49,7 @@
     </div>
 
     <!-- Valor Máximo -->
-    <div class="form-group">
+    <div class="card p-3 m-2">
       <label for="valorMaximo" class="form-label">Valor Máximo (opcional)</label>
       <input type="number" id="valorMaximo" class="form-control" formControlName="valorMaximo" placeholder="R$">
     </div>
