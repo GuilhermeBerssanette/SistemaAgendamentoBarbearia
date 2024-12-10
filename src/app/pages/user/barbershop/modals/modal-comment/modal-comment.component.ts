@@ -4,7 +4,7 @@ import { Firestore, collection, addDoc, collectionData, doc, deleteDoc } from '@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Timestamp } from '@firebase/firestore';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 
@@ -12,14 +12,8 @@ import { inject } from '@angular/core';
   selector: 'app-modal-comment',
   templateUrl: './modal-comment.component.html',
   standalone: true,
-  imports: [
-    NgForOf,
-    DatePipe,
-    ReactiveFormsModule,
-    MatIcon,
-    NgIf,
-  ],
-  styleUrls: ['./modal-comment.component.scss']
+  imports: [NgForOf, DatePipe, ReactiveFormsModule, MatIcon, NgIf],
+  styleUrls: ['./modal-comment.component.scss'],
 })
 export class ModalCommentComponent implements OnInit {
   comments: any[] = [];
@@ -35,7 +29,7 @@ export class ModalCommentComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { barbeariaId: string }
   ) {
     this.form = new FormGroup({
-      comment: new FormControl('', [Validators.required])
+      comment: new FormControl('', [Validators.required]),
     });
   }
 
@@ -46,9 +40,9 @@ export class ModalCommentComponent implements OnInit {
 
   loadComments(): void {
     const commentsCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/comments`);
-    collectionData(commentsCollectionRef, { idField: 'id' }).subscribe(data => {
+    collectionData(commentsCollectionRef, { idField: 'id' }).subscribe((data) => {
       this.comments = data;
-      this.userHasCommented = this.comments.some(comment => comment.userId === this.currentUser?.uid);
+      this.userHasCommented = this.comments.some((comment) => comment.userId === this.currentUser?.uid);
     });
   }
 
