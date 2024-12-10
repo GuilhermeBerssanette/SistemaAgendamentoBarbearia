@@ -7,7 +7,7 @@ declare const google: any;
   providedIn: 'root',
 })
 export class GoogleCalendarService {
-  private clientId = '228837673406-hi9740ollb29cclqatptb2ni4mrg9cv3.apps.googleusercontent.com';
+  private clientId = '228837673406-hned74oa8euov22mv1tkffeuald53k7s.apps.googleusercontent.com';
   private scopes = 'https://www.googleapis.com/auth/calendar.events';
   private tokenClient: any;
   private accessToken: string | null = null;
