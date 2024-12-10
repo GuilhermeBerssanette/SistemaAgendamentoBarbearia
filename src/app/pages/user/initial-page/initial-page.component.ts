@@ -84,16 +84,13 @@ export class InitialPageComponent implements OnInit {
       this.addFilterOnce(cidade);
     }
 
+    // Corrigindo o processamento das comodidades
     if (comodidades.length > 0) {
-      const selectedComodidades = comodidades
-        .map((checked: boolean, index: number): string | null => (checked ? this.comodidades[index] : null))
-        .filter((item: string | null): item is string => item !== null);
-
       barbeariasFiltradas = barbeariasFiltradas.filter(barbearia =>
-        selectedComodidades.every((comodidade: string) => barbearia.comodidades.includes(comodidade))
+        comodidades.every((comodidade: string) => barbearia.comodidades.includes(comodidade))
       );
 
-      selectedComodidades.forEach((c: string) => this.addFilterOnce(c));
+      comodidades.forEach((c: string) => this.addFilterOnce(c));
     }
 
     if (tiposAtendimento.length > 0) {
@@ -103,6 +100,7 @@ export class InitialPageComponent implements OnInit {
 
     this.filteredBarbearias = barbeariasFiltradas;
   }
+
 
   async filterByTiposAtendimento(barbearias: any[], tiposAtendimento: string[]): Promise<any[]> {
     const barbeariasFiltradas: any[] = [];

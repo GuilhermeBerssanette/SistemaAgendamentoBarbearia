@@ -22,7 +22,7 @@
 
 <div class="sidebar" [class.active]="sidebarOpen">
   <div class="profileSide">
-    <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
+    <img [src]="'/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
     <span *ngIf="barberEmail">{{ barberEmail }}</span>
   </div>
   <button class="btn close-btn float-end" (click)="toggleSidebar()">
