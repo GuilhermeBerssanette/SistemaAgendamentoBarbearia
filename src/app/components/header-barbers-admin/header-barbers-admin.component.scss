@@ -4,25 +4,33 @@
   box-sizing: border-box;
 }
 
+.navbar {
+  background-color: #028090;
+  position: relative;
+  height: 80px; /* Altura ajustada para acomodar a imagem */
+  padding-left: 70px; /* Dá espaço para a imagem no layout */
+}
+
 .profile {
-  border-radius: 50%;
+  position: absolute;
+  top: 10px; /* Posição superior da imagem */
+  left: 10px; /* Posição à esquerda da imagem */
   z-index: 10;
   cursor: pointer;
 
   img {
-    margin-left: 8px;
-    margin-top: -110px;
-    width: 80%;
-    height: 80%;
+    width: 50px; /* Tamanho da imagem */
+    height: 50px; /* Mantém a imagem proporcional */
     border-radius: 50%;
+    object-fit: cover; /* Garante que a imagem seja ajustada ao contêiner */
   }
 }
 
-.profileSide{
+.profileSide {
   border-radius: 50%;
   z-index: 10;
 
-  img{
+  img {
     margin-left: 8px;
     margin-top: -65px;
     width: 20%;
@@ -31,29 +39,26 @@
   }
 }
 
-.navbar {
-  background-color: #028090;
-  position: relative;
-  height: 18%;
-}
-
 .linhaBranca {
   height: 2px;
   background-color: #ffffff;
   position: relative;
 }
 
-@media (min-width: 992px) {
+@media (max-width: 991px) {
   .profile {
-    top: -45px;
-    left: 8px;
-  }
-}
+    top: 5px;
+    left: 5px;
 
-@media (min-width: 1919px) {
-  .profile {
-    top: -55px;
-    left: 8px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .navbar {
+    height: 70px;
+    padding-left: 50px;
   }
 }
 
@@ -98,7 +103,6 @@
     }
 
     &:hover {
-      /*background-color: #053a4e;*/
       cursor: pointer;
     }
   }
@@ -123,19 +127,20 @@
   }
 }
 
-.logout{
+.logout {
   position: absolute;
   bottom: 0;
   width: 100%;
   cursor: pointer;
 }
 
-.profile-image {
-  width: 5px; /* Ajuste o tamanho conforme necessário */
-  height: 5px; /* Mantém a imagem proporcional */
-  object-fit: cover; /* Garante que a imagem se ajuste ao contêiner */
+.btn:focus,
+mat-icon:focus {
+  outline: none;
+  border-color: transparent;
+  border: transparent;
 }
 
-
-.btn:focus, mat-icon:focus{ outline: none; border-color: transparent; border: transparent;}
-
+.nomeBarbearia{
+  color: #ffffff;
+}

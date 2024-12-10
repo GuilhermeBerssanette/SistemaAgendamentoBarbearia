@@ -16,8 +16,8 @@
 
     <div class="sidebar" [class.active]="sidebarOpen">
       <div class="profileSide">
-        <img [src]="barbeiro?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
-        <span *ngIf="userEmail">{{ userEmail }}</span>
+        <img src="../../../assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
+        <span class="nomeBarbearia" *ngIf="userEmail">{{ userEmail }}</span>
       </div>
       <button class="btn close-btn float-end" (click)="toggleSidebar()">
         <mat-icon>close</mat-icon>

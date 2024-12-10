@@ -1,36 +1,30 @@
 <nav class="navbar navbar-light">
-  <div class="container-fluid">
-    <!-- Imagem de perfil -->
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <!-- Imagem de perfil no canto superior esquerdo -->
     <div class="profile" (click)="toggleSidebar()">
-      <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle profile-image">
+      <img src="../../../assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
     </div>
 
-
     <!-- Logo centralizado -->
-    <img src="/assets/Logo_barb.svg" class="img-fluid mx-auto d-block bg-holder" alt="Logo da barbearia" width="240" height="150" priority>
-
-    <!-- Link para cadastrar barbearia no canto inferior direito -->
-    <div class="position-absolute bottom-0 end-0 p-1">
+    <div class="logo">
+      <img src="/assets/Logo_barb.svg" class="img-fluid" alt="Logo da barbearia" width="240" height="150" priority>
     </div>
   </div>
 </nav>
-
 <!-- Linha branca logo abaixo da navbar -->
 <div class="w-100 linhaBranca"></div>
 
 <!-- Sidebar Lateral -->
-
 <div class="sidebar" [class.active]="sidebarOpen">
   <div class="profileSide">
-    <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
-    <span *ngIf="barberEmail">{{ barberEmail }}</span>
+    <img src="../../../assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
+    <span class="nomeBarbearia" *ngIf="barberEmail">{{ barberEmail }}</span>
   </div>
   <button class="btn close-btn float-end" (click)="toggleSidebar()">
     <mat-icon>close</mat-icon>
   </button>
   <div class="linhaBranca"></div>
   <ul class="nav flex-column mt-4">
-
     <li class="nav-item logout">
       <a class="nav-link" (click)="logout()">
         <mat-icon>logout</mat-icon>Sair
@@ -41,5 +35,3 @@
 
 <!-- Sobreposição escura -->
 <div class="overlay" [class.show]="sidebarOpen" (click)="toggleSidebar()"></div>
-
-
