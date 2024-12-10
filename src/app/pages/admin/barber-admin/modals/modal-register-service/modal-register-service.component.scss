@@ -1,12 +1,12 @@
 .navbar {
-  background-color: #028090;
+  background-color: #D9D9D9;
   position: relative;
   padding: 5px 0;
   height: 20%;
 }
 
 form, .areaModal{
-  background-color: #05465F;
+  background-color: #D9D9D9;
   min-height: 34vh;
 }
 
@@ -24,7 +24,7 @@ form, .areaModal{
 }
 
 .btnOption {
-  background-color: #028090;
+  background-color: #D9D9D9;
   padding: 5px 10px;
   white-space: nowrap;
   text-align: center;
@@ -40,4 +40,29 @@ input:focus, select:focus, button:focus{
 span{
   font-size: 24px;
   font-weight: 500;
+}
+
+.card{
+  background-color: #028090;
+  border: transparent;
+}
+
+.confirm-button{
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+.cancel-button {
+  background-color: #dc3545; /* Vermelho */
+  color: white;
+}
+
+label{
+  color: #FFFFFF;
+  font-size: 18px;
+  padding: 3px;
+}
+
+mat-icon{
+  color: red;
 }
