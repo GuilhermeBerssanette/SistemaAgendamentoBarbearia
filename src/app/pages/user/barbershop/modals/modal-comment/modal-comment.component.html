@@ -1,4 +1,4 @@
-<div class="modal-body">
+<div class="modal-container">
   <div class="navbar">
     <div class="container-fluid d-flex justify-content-start p-3">
       <span>Comentários</span>
@@ -6,23 +6,42 @@
     </div>
   </div>
 
-  <hr style="border: 1px solid white; width: 100%; ">
+  <hr class="linhaBranca">
 
-  <div class="modal-body">
-    <div *ngFor="let comment of comments" class="comment-box m-4">
-      <h5>{{ comment.userEmail }} <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small></h5>
-      <p>{{ comment.comment }}</p>
-      <button *ngIf="comment.userId === currentUser?.uid" class="btn btn-link text-danger" (click)="confirmDeleteComment(comment.id)">
+  <div class="content">
+    <div *ngFor="let comment of comments" class="comment-box">
+      <h5 class="comment-header">
+        {{ comment.userEmail }}
+        <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small>
+      </h5>
+      <p class="comment-text">{{ comment.comment }}</p>
+      <button
+        *ngIf="comment.userId === currentUser?.uid"
+        class="btn btn-link text-danger delete-btn"
+        (click)="confirmDeleteComment(comment.id)"
+      >
         Deletar
       </button>
-      <hr>
+      <hr class="comment-separator">
     </div>
   </div>
 
   <div class="modal-footer" *ngIf="!userHasCommented">
     <form [formGroup]="form" class="w-100 d-flex align-items-center m-4">
-      <input type="text" formControlName="comment" class="form-control" placeholder="Escreva um comentário">
-      <button type="button" class="btn mt-1 ms-1" (click)="submitComment()" [disabled]="form.invalid"><mat-icon>send</mat-icon></button>
+      <input
+        type="text"
+        formControlName="comment"
+        class="form-control"
+        placeholder="Escreva um comentário"
+      />
+      <button
+        type="button"
+        class="btn send-btn mt-1 ms-1"
+        (click)="submitComment()"
+        [disabled]="form.invalid"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
     </form>
   </div>
 </div>
