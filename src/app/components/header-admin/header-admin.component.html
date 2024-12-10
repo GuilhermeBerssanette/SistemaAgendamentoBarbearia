@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Imagem de perfil -->
     <div class="profile" (click)="toggleSidebar()">
-      <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
+      <img src="../../../assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
     </div>
 
     <!-- Logo centralizado -->
@@ -21,8 +21,8 @@
 <!-- Sidebar Lateral -->
 <div class="sidebar" [class.active]="sidebarOpen">
   <div class="profileSide">
-    <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
-    <span *ngIf="barbeariaName">{{ barbeariaName }}</span> <!-- Exibindo o nome da barbearia -->
+    <img src="../../../assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
+    <span class="nomeBarbearia" *ngIf="barbeariaName">{{ barbeariaName }}</span> <!-- Exibindo o nome da barbearia -->
   </div>
   <button class="btn close-btn float-end" (click)="toggleSidebar()">
     <mat-icon>close</mat-icon>
