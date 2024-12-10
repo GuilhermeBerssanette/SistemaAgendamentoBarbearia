@@ -1,22 +1,22 @@
-<h2 class="text-center">Gerenciar Agenda</h2>
-<form [formGroup]="scheduleForm">
+<h2 class="text-center areaModal">Gerenciar Agenda</h2>
+<form [formGroup]="scheduleForm" class="card p-3 m-2">
   <div class="mb-3">
     <h4>Dias de Trabalho</h4>
     <button class="btn btn-primary btn-sm mb-2" (click)="addWorkingDay()" type="button">Adicionar Dia</button>
     <div formArrayName="workingDays" *ngFor="let _ of workingDays.controls; let i = index">
       <div [formGroupName]="i" class="row mb-2">
-        <div class="col-4">
+        <div class="col-4 ">
           <label>Dia:</label>
           <select class="form-control" formControlName="day">
             <option value="" disabled>Selecione o dia</option>
             <option *ngFor="let day of availableDaysOfWeek" [value]="day">{{ day }}</option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-3 ">
           <label>Início:</label>
           <input class="form-control" type="time" formControlName="startTime" />
         </div>
-        <div class="col-3">
+        <div class="col-3 ">
           <label>Fim:</label>
           <input class="form-control" type="time" formControlName="endTime" />
         </div>
