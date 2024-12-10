@@ -175,8 +175,8 @@
     align-items: center;
 
     .card {
-      flex: 1 1 250px; // Largura mínima de 250px, cresce conforme o espaço
-      max-width: 350px; // Largura máxima para evitar que fique muito grande
+      flex: 1 1 250px;
+      max-width: 350px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
@@ -223,11 +223,13 @@
 
   input.form-control.form-control-lg {
     background-color: var(--input-color, transparent);
-    width: 100%;
+    width: 60%;
     border: none;
     color: #FFFFFF;
     outline: none;
     box-shadow: none;
+    color: #FFFFFF;
+
   }
 
   .btn-login {
@@ -245,6 +247,7 @@
         width: 100%; /* Ajuste o tamanho conforme necessário */
     }
 }
+
 
 /* Para telas médias (até 1024px) */
 @media (max-width: 1024px) and (min-width: 769px) {

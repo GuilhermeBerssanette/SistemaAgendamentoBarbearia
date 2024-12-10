@@ -150,7 +150,7 @@
 
           <!-- Validações de redes sociais -->
           <div class="m-3">
-            <input class="form-control form-control-lg fs-6" type="text" placeholder="Instagram" formControlName="instagram">
+            <input class="form-control form-control-lg fs-6 " type="text" placeholder="Instagram" formControlName="instagram">
             <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
               <small class="text-danger" *ngIf="form.get('instagram')?.errors?.['invalidInstagramUrl']">URL do Instagram é inválida. Deve seguir o formato https://www.instagram.com/SeuUsername/</small>
             </div>
@@ -171,7 +171,7 @@
           </div>
 
           <div class="m-3">
-            <input class="form-control form-control-lg fs-6" type="text" placeholder="Twitter" formControlName="twitter">
+            <input class="form-control form-control-lg fs-6 " type="text" placeholder="Twitter" formControlName="twitter">
             <div *ngIf="form.get('twitter')?.invalid && (form.get('twitter')?.dirty || form.get('twitter')?.touched)">
               <small class="text-danger" *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
             </div>

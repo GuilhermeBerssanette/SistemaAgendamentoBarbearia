@@ -2,14 +2,15 @@
   <div class="container-fluid">
     <!-- Imagem de perfil -->
     <div class="profile" (click)="toggleSidebar()">
-      <img src="/assets/FtPerfil.svg" alt="Foto de perfil" class="img-fluid rounded-circle">
+      <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
     </div>
 
     <!-- Logo centralizado -->
     <img src="/assets/Logo_barb.svg" class="img-fluid mx-auto d-block bg-holder" alt="Logo da barbearia" width="240" height="150" priority>
 
-    <!-- Link para cadastrar barbearia no canto inferior direito -->
-    <div class="position-absolute bottom-0 end-0 p-1">
+    <!-- Nome da Barbearia -->
+    <div class="text-center mt-2">
+      <span *ngIf="barbeariaName" class="fw-bold text-white">{{ barbeariaName }}</span>
     </div>
   </div>
 </nav>
@@ -18,10 +19,10 @@
 <div class="w-100 linhaBranca"></div>
 
 <!-- Sidebar Lateral -->
-
 <div class="sidebar" [class.active]="sidebarOpen">
   <div class="profileSide">
-    <img [src]="barbeiro?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
+    <img [src]="profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle">
+    <span *ngIf="barbeariaName">{{ barbeariaName }}</span> <!-- Exibindo o nome da barbearia -->
   </div>
   <button class="btn close-btn float-end" (click)="toggleSidebar()">
     <mat-icon>close</mat-icon>
@@ -38,5 +39,3 @@
 
 <!-- Sobreposição escura -->
 <div class="overlay" [class.show]="sidebarOpen" (click)="toggleSidebar()"></div>
-
-
