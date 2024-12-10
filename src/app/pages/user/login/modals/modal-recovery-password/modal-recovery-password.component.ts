@@ -25,6 +25,8 @@ export class ModalRecoveryPasswordComponent {
     this.recoveryForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
+
+    this.dialogRef.updateSize('500px', '300px');
   }
 
   onSubmit(): void {
