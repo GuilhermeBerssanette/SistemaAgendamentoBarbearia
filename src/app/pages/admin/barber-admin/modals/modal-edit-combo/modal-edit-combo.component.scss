@@ -5,7 +5,7 @@
 }
 
 .navbar {
-  background-color: #028090;
+  background-color: #D9D9D9D9;
   position: relative;
   padding: 5px 0; /* Ajusta o padding conforme necessário */
   height: 20%;
@@ -29,7 +29,7 @@ span{
 }
 
 .modal-body {
-  background-color: #05465F;
+  background-color: #D9D9D9D9;
 }
 
 input{
@@ -43,30 +43,49 @@ input:focus{
   box-shadow: 0 0 0 0;
   outline: none;
   border: 0 none;
+  color: #FFFFFF;
 }
 
-.cardService{
-    flex: 1 1 170px;  // Flexibilidade e largura mínima de 200px
-    max-width: 370px; // Define um limite de largura
-    overflow: hidden;
-    border-radius: 8px;
-    margin-left: 15px;
-    background-color: #FFFFFF;
-    h3{
-      font-size: 18px;
-      font-weight: 400;
-    }
+h3{
+  color: #FFFFFF;
+}
 
     li{
       text-decoration: none;
       margin-left: 2px;
       font-size: 15px;
+      color: #FFFFFF;
     }
-  }
 
-.btn{
-  padding: 10px;
-  margin: 5px;
-  margin-left: 15px;
+.card{
   background-color: #028090;
+  border: transparent;
+}
+
+.form-control {
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 8px;
+  background-color: #007381;
+}
+
+mat-icon{
+  color: red;
+}
+
+.btnOption {
+  padding: 5px 10px;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+}
+
+.confirm-button {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+.cancel-button {
+  background-color: #dc3545; /* Vermelho */
+  color: white;
 }
