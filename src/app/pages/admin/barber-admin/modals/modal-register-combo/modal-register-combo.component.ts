@@ -22,6 +22,7 @@ export class ModalRegisterComboComponent implements OnInit {
   registeredServices: { id: string, duration: number }[] = [];
   totalDuration = 0;
   anyServiceSelected = false;
+  dialog: any;
 
   constructor(
     private firestore: Firestore,
@@ -98,5 +99,17 @@ export class ModalRegisterComboComponent implements OnInit {
 
   onCancel() {
     this.dialogRef.close(false);
+  }
+
+  openModal(): void {
+    this.dialog.open(ModalRegisterComboComponent, {
+      width: '600px', // Largura do modal
+      height: '500px', // Altura do modal
+      maxWidth: '90vw', // Responsivo: limite de largura máxima
+      data: {
+        barberId: 'exampleBarberId',
+        barbeariaId: 'exampleBarbeariaId',
+      },
+    });
   }
 }
