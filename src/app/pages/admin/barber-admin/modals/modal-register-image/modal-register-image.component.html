@@ -31,7 +31,7 @@
         <input class="form-control container p-2" type="text" formControlName="comment" placeholder="Comentário (máx 50 caracteres)" />
         <div *ngIf="form.get('comment')?.invalid && form.get('comment')?.touched">
           <small class="container-fluid text-danger ms-2" *ngIf="form.get('comment')?.errors?.['required']">Comentário é obrigatório.</small>
-          <small *ngIf="form.get('comment')?.errors?.['maxlength']">Comentário deve ter no máximo 50 caracteres.</small>
+          <small *ngIf="form.get('comment')?.errors?.['maxlength']" class="container-fluid text-danger ms-2">Comentário deve ter no máximo 50 caracteres.</small>
         </div>
       </div>
 
@@ -39,7 +39,7 @@
         <p>Progresso do upload: {{ uploadProgress }}%</p>
       </div>
 
-      <div class="button-group container-fluid d-flex justify-content-center mb-2">
+      <div class="button-group container-fluid d-flex justify-content-center mb-2 mt-4 ">
         <button class="btn col-8 btnOption me-1" type="submit" [disabled]="form.invalid || !selectedFile">Cadastrar Imagem</button>
         <button class="btn col-4 btnOption" type="button" (click)="onCancel()">Cancelar</button>
       </div>
