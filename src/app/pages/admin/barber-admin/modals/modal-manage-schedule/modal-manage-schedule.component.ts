@@ -2,13 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Firestore, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
-import { NgForOf } from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-modal-manage-schedule',
   templateUrl: './modal-manage-schedule.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, NgForOf],
+  imports: [ReactiveFormsModule, NgForOf, NgIf],
   styleUrls: ['./modal-manage-schedule.component.scss'],
 })
 export class ModalManageScheduleComponent implements OnInit {
@@ -42,13 +42,17 @@ export class ModalManageScheduleComponent implements OnInit {
   }
 
   addWorkingDay() {
-    this.workingDays.push(
-      this.fb.group({
-        day: ['', []],
-        startTime: ['', []],
-        endTime: ['', []],
-      })
-    );
+    if (this.availableDaysOfWeek.length > 0) {
+      this.workingDays.push(
+        this.fb.group({
+          day: ['', []], // Inicializa vazio
+          startTime: ['', []],
+          endTime: ['', []],
+        })
+      );
+    } else {
+      alert('Todos os dias já foram cadastrados!');
+    }
     this.updateAvailableDays();
   }
 
@@ -59,7 +63,7 @@ export class ModalManageScheduleComponent implements OnInit {
   async removeWorkingDay(index: number) {
     const removedDay = this.workingDays.at(index).value.day;
     this.workingDays.removeAt(index);
-    this.updateAvailableDays(removedDay);
+    this.updateAvailableDays(); // Chamada corrigida
 
     // Atualizar no Firestore
     try {
@@ -80,6 +84,7 @@ export class ModalManageScheduleComponent implements OnInit {
       console.error('Erro ao remover o dia do Firestore:', error);
     }
   }
+
 
   addBlockedDate() {
     this.blockedDates.push(new FormControl(''));
@@ -143,15 +148,14 @@ export class ModalManageScheduleComponent implements OnInit {
 
 
 
-  private updateAvailableDays(removedDay?: string) {
+  private updateAvailableDays() {
     const selectedDays = this.workingDays.controls
       .map((control) => control.get('day')?.value)
-      .filter((day) => day); // Garante que só considera valores não vazios
+      .filter((day) => day);
 
-    this.availableDaysOfWeek = this.daysOfWeek.filter(
-      (day) => !selectedDays.includes(day) || day === removedDay
-    );
+    this.availableDaysOfWeek = this.daysOfWeek.filter((day) => !selectedDays.includes(day));
   }
+
 
 
 
