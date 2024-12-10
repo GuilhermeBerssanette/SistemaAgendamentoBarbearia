@@ -87,11 +87,11 @@ export class OrdersComponent implements OnInit {
   }
 
   async updateAvailableSlots(date: Date) {
-    const cleanDate = new Date(date);
-    cleanDate.setHours(0, 0, 0, 0);
+    const cleanDate = new Date(date.toISOString().split('T')[0] + 'T00:00:00');
     const bookedSlots = await this.getBookedSlots(cleanDate);
     this.generateAvailableSlots(cleanDate, bookedSlots);
   }
+
 
   async getBookedSlots(date: Date): Promise<string[]> {
     const bookedSlots: string[] = [];
@@ -166,8 +166,7 @@ export class OrdersComponent implements OnInit {
   }
 
   async onDateChange(event: any) {
-    const selectedDate = new Date(event.target.value);
-    selectedDate.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(event.target.value + 'T00:00:00'); // Força a interpretação correta da data
 
     if (selectedDate >= new Date(this.todayString)) {
       this.selectedDate = selectedDate;
@@ -176,6 +175,7 @@ export class OrdersComponent implements OnInit {
       alert('Não é possível selecionar uma data anterior a hoje!');
     }
   }
+
 
   openConfirmationModal(slot: string) {
     this.dialog.open(ModalConfirmationOrderComponent, {

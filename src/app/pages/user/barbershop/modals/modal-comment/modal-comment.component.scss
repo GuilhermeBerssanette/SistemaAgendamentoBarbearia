@@ -1,104 +1,100 @@
 /* Container do modal */
 .modal-container {
-  background-color: #05465F;
-  width: 100%; /* Ocupar toda a largura do modal */
-  height: 100%; /* Ocupar toda a altura do modal */
-  margin: 0; /* Remove margens */
-  padding: 0; /* Remove padding */
-  border-radius: 0; /* Remove bordas arredondadas */
-  overflow: hidden; /* Garante que o conteúdo não transborde */
-  box-shadow: none; /* Remove sombra ao redor */
+  background-color: #05465f; /* Fundo azul escuro */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  overflow: hidden;
 }
 
 /* Navbar */
 .navbar {
   background-color: #028090;
-  position: relative;
-  padding: 5px 0;
-  height: 15%;
+  padding: 15px;
 }
 
 span {
   font-size: 24px;
   font-weight: 500;
+  color: #ffffff;
 }
 
 /* Linha separadora */
 .linhaBranca {
   height: 2px;
-  background-color: #ffffff;
-  position: relative;
+  background-color: #d9d9d9;
 }
 
 /* Conteúdo do modal */
 .content {
-  height: calc(100% - 65px); /* Altura restante após a navbar */
-  overflow-y: auto; /* Permitir scroll se o conteúdo for muito longo */
-  padding: 10px; /* Adiciona espaçamento interno */
-  background-color: #05465F;
-  color: #fff;
+  padding: 10px;
+  overflow-y: auto; /* Permite rolagem se necessário */
 }
 
 /* Caixa de comentário */
 .comment-box {
-  background-color: #f8f9fa;
+  background-color: #ffffff; /* Bloco branco */
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho do comentário */
+.comment-header {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Texto do comentário */
+.comment-text {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #555;
+}
+
+/* Botão de deletar */
+.delete-btn {
+  color: #ff5252;
+  font-size: 14px;
+}
+
+/* Linha separadora do comentário */
+.comment-separator {
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+/* Rodapé */
+.modal-footer {
+  background-color: #05465f;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Input */
+input.form-control {
+  border: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.55);
+  flex: 1;
+  background-color: #ffffff; /* Mantém o input em branco */
 }
 
-/* Rodapé do modal */
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #05465F;
-  padding: 10px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-/* Estilo do input e botão */
-input, mat-icon {
-  margin-bottom: 20px;
-}
-
-input,
-textarea,
-.form-control {
-  border: 0;
-  outline: none;
-}
-
-.btn {
-  border: 0 none;
-  outline: none;
-}
-
-/* Estilo do input */
-input.form-control {
+/* Botão enviar */
+.send-btn {
+  background-color: #028090;
+  color: #ffffff;
   border: none;
-  outline: none;
-  background-color: #fff;
-  padding: 15px;
-  font-size: 16px;
-  border-radius: 5px; 
+  border-radius: 5px;
+  padding: 10px 15px;
 }
 
-input.form-control:focus {
-  box-shadow: none; /* Remove a sombra do foco */
-  outline: none; /* Garante que não apareça o contorno azul */
-}
-
-/* Modal Footer */
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #05465F;
-  padding: 10px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+.send-btn:hover {
+  background-color: #02667c;
 }

@@ -1,29 +1,29 @@
-**[INSTITUTO FEDERAL DO PARANÁ]{.smallcaps}**
+INSTITUTO FEDERAL DO PARANÁ
 
-**[GUILHERME OTAVIO ESPIRITO SANTO BERSSANETTE]{.smallcaps}**
+GUILHERME OTAVIO ESPIRITO SANTO BERSSANETTE
 
-**[JOÃO VITOR SILVA]{.smallcaps}**
+JOÃO VITOR SILVA
 
-**[MANOEL PEDRO MARTINS NETO]{.smallcaps}**
+MANOEL PEDRO MARTINS NETO
 
-**[DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM
-BARBEARIAS]{.smallcaps}**
+DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM
+BARBEARIAS
 
-**[PONTA GROSSA]{.smallcaps}**
+PONTA GROSSA
 
-**[2024]{.smallcaps}**
+2024
 
-> **[GUILHERME OTAVIO ESPIRITO SANTO BERSSANETTE]{.smallcaps}**
+GUILHERME OTAVIO ESPIRITO SANTO BERSSANETTE
 
-**[JOÃO VITOR SILVA]{.smallcaps}**
+JOÃO VITOR SILVA
 
-**[MANOEL PEDRO MARTINS NETO]{.smallcaps}**
+MANOEL PEDRO MARTINS NETO
 
-**[DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM
-BARBEARIAS]{.smallcaps}**
+DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM
+BARBEARIAS
 
-**[DEVELOPMENT OF A WEB SYSTEM FOR MANAGING BARBERSHOP
-ACTIVITIES]{.smallcaps}**
+DEVELOPMENT OF A WEB SYSTEM FOR MANAGING BARBERSHOP
+ACTIVITIES
 
 > Projeto apresentado ao componente curricular Projeto e Desenvolvimento
 > de Sistemas, do curso Técnico em Informática Integrado ao Ensino Médio
@@ -32,16 +32,16 @@ ACTIVITIES]{.smallcaps}**
 >
 > Orientador(a): Prof. Dr. João Henrique Berssanette
 
-**[PONTA GROSSA]{.smallcaps}**
+[PONTA GROSSA
 
-**[2024]{.smallcaps}**
+2024
 
-**[FOLHA DE APROVAÇÃO]{.smallcaps}**
+FOLHA DE APROVAÇÃO
 
-**[NOME COMPLETO E POR EXTENSO DO(A) AUTOR(A)]{.smallcaps}**
+NOME COMPLETO E POR EXTENSO DO(A) AUTOR(A)
 
-**[TÍTULO DO TRABALHO: SUBTÍTULO (SE HOUVER) PRECEDIDO DE DOIS
-PONTOS]{.smallcaps}**
+TÍTULO DO TRABALHO: SUBTÍTULO (SE HOUVER) PRECEDIDO DE DOIS
+PONTOS
 
 O presente trabalho em nível de graduação foi avaliado e aprovado por
 banca examinadora composta pelos seguintes membros:
@@ -84,7 +84,7 @@ Coordenação do Curso
 
 Local e Data de aprovação: Dia/mês por extenso/ano
 
-  
+
 **AGRADECIMENTOS**
 
 Certamente, estas palavras não serão suficientes para expressar toda a
@@ -115,8 +115,8 @@ conquista.
 Se este trabalho pôde ser realizado com sucesso, é graças ao apoio de
 todas essas pessoas e instituições.
 
-  
-**[RESUMO]{.smallcaps}**
+
+RESUMO
 
 O mercado de salões de beleza masculino está em plena expansão, mas
 muitas barbearias ainda enfrentam dificuldades na organização de
@@ -141,7 +141,7 @@ barbearias.
 
 **Palavras-chave:** Sistema web; Controle de agendamento; Barbearia.
 
-**[ABSTRACT]{.smallcaps}**
+ABSTRACT
 
 The men\'s beauty salon market is booming, but many barbershops still
 face difficulties in organizing their schedules due to the lack of
@@ -164,8 +164,8 @@ modernizing and optimizing barbershop processes.
 
 **Keywords**: web system; appointment control; barbershop.
 
-  
-**[LISTA DE ABREVIATURAS E SIGLAS]{.smallcaps}**
+
+LISTA DE ABREVIATURAS E SIGLAS
 
 <table>
 <colgroup>
@@ -944,20 +944,4 @@ de estilo masculino no Brasil. São Paulo: Mundo do Marketing, 2024
 
 AGÊNCIA EUROMONITOR. Consumo do mercado de beleza masculino. 2018.
 
-A.   **Anexos**
 
-Documentação técnica do sistema
-
-Capturas de tela do sistema em funcionamento
-
-Outros materiais relevantes ao desenvolvimento e compreensão do
-trabalho.
-
-A.  **Apêndices**
-
-Documentação técnica do sistema
-
-Capturas de tela do sistema em funcionamento
-
-Outros materiais relevantes ao desenvolvimento e compreensão do
-trabalho.

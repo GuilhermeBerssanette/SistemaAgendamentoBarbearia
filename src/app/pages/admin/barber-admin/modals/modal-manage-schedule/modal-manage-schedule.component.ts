@@ -52,6 +52,10 @@ export class ModalManageScheduleComponent implements OnInit {
     this.updateAvailableDays();
   }
 
+
+
+
+
   async removeWorkingDay(index: number) {
     const removedDay = this.workingDays.at(index).value.day;
     this.workingDays.removeAt(index);
@@ -111,24 +115,48 @@ export class ModalManageScheduleComponent implements OnInit {
       if (scheduleDoc.exists()) {
         const data = scheduleDoc.data();
         if (data?.['workingDays']) {
+          this.workingDays.clear(); // Limpa quaisquer dias anteriores antes de adicionar os novos
           data['workingDays'].forEach((day: any) => {
-            this.workingDays.push(this.fb.group(day));
+            this.workingDays.push(
+              this.fb.group({
+                day: [day.day || '', []], // Garante que o dia seja exibido corretamente
+                startTime: [day.startTime || '', []],
+                endTime: [day.endTime || '', []],
+              })
+            );
           });
         }
         if (data?.['blockedDates']) {
+          this.blockedDates.clear(); // Limpa quaisquer datas bloqueadas anteriores
           data['blockedDates'].forEach((date: any) => {
-            this.blockedDates.push(new FormControl(date));
+            this.blockedDates.push(new FormControl(date || ''));
           });
         }
-        this.updateAvailableDays();
+        this.updateAvailableDays(); // Atualiza os dias disponíveis com base nos já cadastrados
       }
     } catch (error) {
       console.error('Erro ao carregar agenda:', error);
     }
   }
 
+
+
+
+
   private updateAvailableDays(removedDay?: string) {
-    const selectedDays = this.workingDays.controls.map((control) => control.value.day);
-    this.availableDaysOfWeek = this.daysOfWeek.filter((day) => !selectedDays.includes(day) || day === removedDay);
+    const selectedDays = this.workingDays.controls
+      .map((control) => control.get('day')?.value)
+      .filter((day) => day); // Garante que só considera valores não vazios
+
+    this.availableDaysOfWeek = this.daysOfWeek.filter(
+      (day) => !selectedDays.includes(day) || day === removedDay
+    );
   }
+
+
+
+
+
+
+
 }

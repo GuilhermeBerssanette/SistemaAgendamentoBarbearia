@@ -271,7 +271,7 @@ export class BarberAdminComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalRegisterServiceComponent, {
       data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
       width: '400px',
-      height: '300px',
+      height: '545px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -286,7 +286,7 @@ export class BarberAdminComponent implements OnInit {
     this.dialog.open(ModalRegisterComboComponent, {
       data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
       width: '400px',
-      height: '400px',
+      height: '545px',
     }).afterClosed().subscribe(result => {
       if (result) {
         this.loadRegisteredCombos();
@@ -302,7 +302,7 @@ export class BarberAdminComponent implements OnInit {
         service: service
       },
       width: '400px',
-      height: '300px',
+      height: '510px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -324,7 +324,7 @@ export class BarberAdminComponent implements OnInit {
         combo: combo
       },
       width: '400px',
-      height: '400px',
+      height: '570px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
