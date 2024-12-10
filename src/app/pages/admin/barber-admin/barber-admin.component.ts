@@ -161,7 +161,10 @@ export class BarberAdminComponent implements OnInit {
         duration: data['duration']
       };
     });
+
+    console.log('Serviços registrados:', this.registeredServices);
   }
+
 
   async loadRegisteredCombos() {
     const combosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/combos`);
@@ -265,12 +268,19 @@ export class BarberAdminComponent implements OnInit {
   }
 
   openModalRegisterService(): void {
-    this.dialog.open(ModalRegisterServiceComponent, {
+    const dialogRef = this.dialog.open(ModalRegisterServiceComponent, {
       data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
       width: '400px',
       height: '300px',
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRegisteredServices();
+      }
+    });
   }
+
 
   openModalRegisterCombo(): void {
     this.dialog.open(ModalRegisterComboComponent, {
