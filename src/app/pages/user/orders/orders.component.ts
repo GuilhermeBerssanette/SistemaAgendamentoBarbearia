@@ -5,7 +5,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, collection, getDocs, doc, getDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
-import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
+import {HeaderAdminComponent} from "../../../components/header-admin/header-admin.component";
 
 @Component({
   selector: 'app-orders',
@@ -33,7 +33,8 @@ export class OrdersComponent implements OnInit {
     private route: ActivatedRoute,
     private firestore: Firestore,
     private auth: Auth
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
@@ -122,7 +123,7 @@ export class OrdersComponent implements OnInit {
     this.availableSlots = [];
 
     const dayName = date
-      .toLocaleDateString('pt-BR', { weekday: 'long' })
+      .toLocaleDateString('pt-BR', {weekday: 'long'})
       .replace(/^\w/, c => c.toUpperCase());
 
     const workingDay = this.workingHours.find(work => work.day === dayName);
