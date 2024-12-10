@@ -26,7 +26,7 @@ span {
 /* Linha separadora */
 .linhaBranca {
   height: 2px;
-  background-color: #ffffff;
+  background-color: #D9D9D9D9;
   position: relative;
 }
 
@@ -36,7 +36,7 @@ span {
   overflow-y: auto; /* Permitir scroll se o conteúdo for muito longo */
   padding: 10px; /* Adiciona espaçamento interno */
   background-color: #05465F;
-  color: #fff;
+  color: #D9D9D9D9;
 }
 
 /* Caixa de comentário */
@@ -83,7 +83,7 @@ input.form-control {
   background-color: #fff;
   padding: 15px;
   font-size: 16px;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 input.form-control:focus {

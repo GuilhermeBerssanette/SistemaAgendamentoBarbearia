@@ -31,11 +31,16 @@
       <label class="form-label">Comodidades</label>
       <ng-container *ngFor="let comodidade of comodidades; let i = index">
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" [formControl]="getComodidadeControl(i)">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [formControl]="getComodidadeControl(i)"
+          />
           <label class="form-check-label">{{ comodidade }}</label>
         </div>
       </ng-container>
     </div>
+
 
     <!-- Tipo de Atendimento -->
     <div class="card p-3 m-2">

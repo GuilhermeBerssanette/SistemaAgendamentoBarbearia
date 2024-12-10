@@ -78,24 +78,30 @@ export class ModalFilterComponent implements OnInit {
   aplicarFiltro() {
     const filtro = this.filterForm.value;
 
-    const selectedComodidades = this.filterForm.value.comodidades
-      .map((checked: boolean, index: number) => checked ? this.comodidades[index] : null)
-      .filter((item: string | null) => item);
+    // Captura as comodidades selecionadas com base nos índices corretos
+    const selectedComodidades = this.filterForm.get('comodidades')!.value
+      .map((isSelected: boolean, index: number) => isSelected ? this.comodidades[index] : null)
+      .filter((comodidade: string | null) => comodidade !== null);
 
-    const selectedTiposAtendimento = this.filterForm.value.tiposAtendimento
-      .map((checked: boolean, index: number) => checked ? this.tiposAtendimento[index] : null)
-      .filter((item: string | null) => item);
+    // Captura os tipos de atendimento selecionados com base nos índices corretos
+    const selectedTiposAtendimento = this.filterForm.get('tiposAtendimento')!.value
+      .map((isSelected: boolean, index: number) => isSelected ? this.tiposAtendimento[index] : null)
+      .filter((tipo: string | null) => tipo !== null);
 
+    // Consolida os filtros selecionados
     const filtrosSelecionados = {
-      estado: filtro.estado,
-      cidade: filtro.cidade,
+      estado: filtro.estado || null,
+      cidade: filtro.cidade || null,
       comodidades: selectedComodidades,
       tiposAtendimento: selectedTiposAtendimento,
-      valorMaximo: filtro.valorMaximo // Adicionando valor máximo
+      valorMaximo: filtro.valorMaximo || null,
     };
 
+    // Fecha o modal retornando os filtros aplicados
     this.dialogRef.close(filtrosSelecionados);
   }
+
+
 
   closeModalFilter() {
     this.dialogRef.close();
