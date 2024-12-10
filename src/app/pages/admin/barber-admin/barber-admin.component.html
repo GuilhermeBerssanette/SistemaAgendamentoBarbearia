@@ -50,7 +50,7 @@
             <div class="m-3">
               <button class="service-button " (click)="openModalRegisterService()">Cadastrar Serviço</button>
               <button class="service-button " (click)="openModalRegisterCombo()">Cadastrar Combo</button>
-              <button class="service-button" (click)="openModalManageSchedule()">Gerenciar Agenda</button>
+              <button class="service-button manage-schedule-button" (click)="openModalManageSchedule()">Gerenciar Agenda</button>
             </div>
 
             <div *ngIf="registeredServices && registeredServices.length > 0; else noServices" class="service-combo-container">
@@ -102,8 +102,8 @@
       </ng-container>
 
       <ng-container *ngIf="selectedSection === 'editProfile'">
-        <h1 class="title">Editar perfil</h1>
-        <form class="" [formGroup]="form" (ngSubmit)="updateProfile()">
+        <!--<h1 class="title">Editar perfil</h1>-->
+        <form class="form-container mt-5" [formGroup]="form" (ngSubmit)="updateProfile()" >
 
           <div class=" m-3">
             <input class="form-control form-control-lg fs-6" type="text" placeholder="Nome" formControlName="nome">
@@ -176,9 +176,7 @@
               <small class="text-danger" *ngIf="form.get('twitter')?.errors?.['invalidTwitterUrl']">URL do Twitter inválida. Deve seguir o formato https://www.twitter.com/SeuUsername/</small>
             </div>
           </div>
-
           <button class="btn btn-login btn-lg m-3" type="submit" [disabled]="form.invalid">Atualizar</button>
-
         </form>
       </ng-container>
 

@@ -5,20 +5,34 @@
       <mat-icon class="hover ms-auto" (click)="onClose()">close</mat-icon>
     </div>
   </div>
-  <div class="order m-2">
-    <p>Data: {{ data.date | date: 'shortDate' }}</p>
-    <p>Horário: {{ data.time }}</p>
-    <p>Serviço: {{ data.serviceName }}</p>
-    <p>Barbeiro: {{ data.barberName }}</p>
-    <p>Preço: R$ {{ data.servicePrice }}</p>
-  </div>
-  <div class="mb-3">
-    <input
+  <div class=" m-2">
+    <div class="card p-3 m-2">
+      <p>Data: {{ data.date | date: 'shortDate' }}</p>
+    </div>
+    <div class="card p-3 m-2">
+      <p>Horário: {{ data.time }}</p>
+    </div>
+    <div class="card p-3 m-2">
+      <p>Serviço: {{ data.serviceName }}</p>
+    </div>
+    <div class="card p-3 m-2">
+      <p>Barbeiro: {{ data.barberName }}</p>
+    </div>
+    <div class="card p-3 m-2">
+      <p>Preço: R$ {{ data.servicePrice }}</p>
+    </div>
+    <div class="card p-3 m-2">
+      <p>Digite seu nome: </p>
+      <input
       id="userName"
       class="form-control p-2"
       [(ngModel)]="userName"
-      placeholder="Digite seu nome"
+      placeholder="Seu nome"
     />
+    </div>
+  </div>
+  <div class="mb-3">
+
   </div>
   <div class="w-100 d-flex justify-content-center align-items-center">
     <button
