@@ -79,7 +79,6 @@ export class BarberAdminComponent implements OnInit {
     this.barbeiroId = this.route.snapshot.paramMap.get('barberId')!;
 
     if (!this.barbeariaId || !this.barbeiroId) {
-      console.error('ID da barbearia ou do barbeiro não encontrado!');
       return;
     }
 
@@ -93,11 +92,9 @@ export class BarberAdminComponent implements OnInit {
       await this.getAppointments();
       this.populateForm();
     } catch (error) {
-      console.error('Erro ao inicializar o componente:', error);
+      return;
     }
   }
-
-
 
   async getAppointments() {
     const appointmentsCollectionRef = collection(
@@ -118,8 +115,6 @@ export class BarberAdminComponent implements OnInit {
         type: data['type'],
       };
     });
-
-    console.log('Agendamentos carregados:', this.appointments);
   }
 
   async getBarbeiroData() {
@@ -129,10 +124,9 @@ export class BarberAdminComponent implements OnInit {
     if (barbeiroDoc.exists()) {
       this.barbeiro = barbeiroDoc.data() as Barbeiros;
     } else {
-      console.error('Barbeiro não encontrado!');
+      return;
     }
   }
-
 
   async getGalleryItems() {
     const galleryRef = ref(this.storage, `gallery/${this.barbeiroId}`);
@@ -161,10 +155,7 @@ export class BarberAdminComponent implements OnInit {
         duration: data['duration']
       };
     });
-
-    console.log('Serviços registrados:', this.registeredServices);
   }
-
 
   async loadRegisteredCombos() {
     const combosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers/${this.barbeiroId}/combos`);
@@ -237,7 +228,7 @@ export class BarberAdminComponent implements OnInit {
         await updateDoc(barbeiroDocRef, this.form.value);
         alert('Perfil atualizado com sucesso!');
       } catch (error) {
-        console.error('Erro ao atualizar o perfil:', error);
+        return;
       }
     }
   }
@@ -261,9 +252,7 @@ export class BarberAdminComponent implements OnInit {
       const storageRef = ref(this.storage, item.filePath);
       deleteObject(storageRef).then(() => {
         this.galleryItems = this.galleryItems.filter(galleryItem => galleryItem.filePath !== item.filePath);
-      }).catch((error) => {
-        console.error('Erro ao deletar a postagem:', error);
-      });
+      })
     }
   }
 
@@ -307,11 +296,7 @@ export class BarberAdminComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadRegisteredServices().then(() => {
-          console.log('Serviços carregados com sucesso');
-        }).catch((error) => {
-          console.error('Erro ao carregar os serviços:', error);
-        });
+        this.loadRegisteredServices();
       }
     });
   }
@@ -344,11 +329,10 @@ export class BarberAdminComponent implements OnInit {
         alert('Serviço excluído com sucesso.');
         await this.loadRegisteredServices();
       } catch (error) {
-        console.error('Erro ao excluir o serviço:', error);
+        return;
       }
     }
   }
-
 
   async deleteCombo(comboId: string): Promise<void> {
     const confirmDelete = confirm('Tem certeza que deseja excluir este combo?');
@@ -360,7 +344,7 @@ export class BarberAdminComponent implements OnInit {
         alert('Combo excluído com sucesso.');
         await this.loadRegisteredCombos();
       } catch (error) {
-        console.error('Erro ao excluir o combo:', error);
+        return;
       }
     }
   }
@@ -371,8 +355,6 @@ export class BarberAdminComponent implements OnInit {
       data: { barberId: this.barbeiroId, barbeariaId: this.barbeariaId },
     });
   }
-
-
 
   showSection(section: string) {
     this.selectedSection = section;

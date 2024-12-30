@@ -92,7 +92,7 @@ export class ModalRegisterComboComponent implements OnInit {
         await setDoc(comboRef, comboData);
         this.dialogRef.close(true);
       } catch (error) {
-        console.error('Erro ao registrar o combo:', error);
+        return;
       }
     }
   }
@@ -101,15 +101,4 @@ export class ModalRegisterComboComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
-  openModal(): void {
-    this.dialog.open(ModalRegisterComboComponent, {
-      width: '600px', // Largura do modal
-      height: '500px', // Altura do modal
-      maxWidth: '90vw', // Responsivo: limite de largura máxima
-      data: {
-        barberId: 'exampleBarberId',
-        barbeariaId: 'exampleBarbeariaId',
-      },
-    });
-  }
 }

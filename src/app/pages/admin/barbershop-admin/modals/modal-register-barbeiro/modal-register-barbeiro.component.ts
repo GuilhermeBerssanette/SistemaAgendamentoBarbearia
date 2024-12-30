@@ -85,9 +85,6 @@ export class ModalRegisterBarbeiroComponent {
 
       uploadTask.on('state_changed',
         () => { },
-        (error) => {
-          console.error('Erro ao fazer upload da imagem:', error);
-        },
         async () => {
           this.downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
@@ -138,14 +135,7 @@ export class ModalRegisterBarbeiroComponent {
         }
       );
     } catch (error: any) {
-      console.error('Erro ao criar conta de barbeiro:', error);
-      if (error.code === 'auth/email-already-in-use') {
-        alert('Este e-mail já está registrado.');
-      } else if (error.code === 'auth/invalid-email') {
-        alert('O formato do e-mail é inválido.');
-      } else {
-        alert('Erro ao registrar o barbeiro. Verifique os dados e tente novamente.');
-      }
+      return;
     }
   }
 

@@ -1,24 +1,15 @@
 <nav class="navbar navbar-light">
   <div class="container-fluid">
-    <!-- Imagem de perfil -->
     <div class="profile" (click)="toggleSidebar()">
       <img [src]=" '/assets/FtPerfil.svg'" alt="Foto de perfil" class="img-fluid rounded-circle profile-image">
     </div>
-
-
-    <!-- Logo centralizado -->
     <img src="/assets/Logo_barb.svg" class="img-fluid mx-auto d-block bg-holder" alt="Logo da barbearia" width="240" height="150" priority>
-
-    <!-- Link para cadastrar barbearia no canto inferior direito -->
     <div class="position-absolute bottom-0 end-0 p-1">
     </div>
   </div>
 </nav>
 
-<!-- Linha branca logo abaixo da navbar -->
 <div class="w-100 linhaBranca"></div>
-
-<!-- Sidebar Lateral -->
 
 <div class="sidebar" [class.active]="sidebarOpen">
   <div class="profileSide">
@@ -39,7 +30,6 @@
   </ul>
 </div>
 
-<!-- Sobreposição escura -->
 <div class="overlay" [class.show]="sidebarOpen" (click)="toggleSidebar()"></div>
 
 

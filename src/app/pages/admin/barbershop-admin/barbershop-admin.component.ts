@@ -72,13 +72,6 @@ export class BarbershopAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
-    if (!this.barbeariaId) {
-      console.error('ID da barbearia não encontrado!');
-    } else {
-      this.initForm();
-      this.loadBarbeariaData();
-      this.loadBarbeiros();
-    }
   }
 
   initForm() {
@@ -102,31 +95,6 @@ export class BarbershopAdminComponent implements OnInit {
     });
   }
 
-  async loadBarbeariaData(): Promise<void> {
-    const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
-    const barbeariaDoc = await getDoc(barbeariaDocRef);
-
-    if (barbeariaDoc.exists()) {
-      this.profileForm.patchValue(barbeariaDoc.data());
-    } else {
-      console.error('Barbearia não encontrada!');
-    }
-  }
-
-  async loadBarbeiros(): Promise<void> {
-    try {
-      const barbeirosCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
-      const barbeirosSnapshot = await getDocs(barbeirosCollectionRef);
-
-      this.barbeiros = barbeirosSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error('Erro ao carregar os barbeiros:', error);
-    }
-  }
-
   confirmDeleteBarbeiro(barbeiro: any) {
     const confirmed = confirm(`Tem certeza que deseja excluir o barbeiro ${barbeiro.nome}?`);
     if (confirmed) {
@@ -142,15 +110,12 @@ export class BarbershopAdminComponent implements OnInit {
         cpf: barbeiro.cpf,
         dataExclusao: Timestamp.now()
       });
-
       const barbeiroDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}/barbers/${barbeiro.id}`);
       await deleteDoc(barbeiroDocRef);
-
       this.barbeiros = this.barbeiros.filter(b => b.id !== barbeiro.id);
-
       alert('Barbeiro excluído com sucesso!');
     } catch (error) {
-      console.error('Erro ao excluir o barbeiro:', error);
+     return;
     }
   }
 
@@ -171,9 +136,6 @@ export class BarbershopAdminComponent implements OnInit {
       const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
 
       uploadTask.on('state_changed', () => { },
-        (error) => {
-          console.error('Erro ao fazer upload da imagem:', error);
-        },
         async () => {
           updatedData.profileImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
           await this.updateBarbeariaData(updatedData);
@@ -183,14 +145,13 @@ export class BarbershopAdminComponent implements OnInit {
     }
   }
 
-
   async updateBarbeariaData(data: any): Promise<void> {
     try {
       const barbeariaDocRef = doc(this.firestore, `barbearia/${this.barbeariaId}`);
       await updateDoc(barbeariaDocRef, data);
       alert('Perfil atualizado com sucesso!');
     } catch (error) {
-      console.error('Erro ao atualizar os dados da barbearia:', error);
+      return;
     }
   }
 

@@ -8,7 +8,6 @@
 
 <div class="bgColor p-3">
   <form [formGroup]="filterForm" class="form">
-    <!-- Estado -->
     <div class="card p-3 m-2">
       <label for="estado" class="form-label">Estado</label>
       <select id="estado" class="form-select" formControlName="estado">
@@ -17,7 +16,6 @@
       </select>
     </div>
 
-    <!-- Cidade -->
     <div class="card p-3 m-2">
       <label for="cidade" class="form-label">Cidade</label>
       <select id="cidade" class="form-select" formControlName="cidade" [disabled]="!cidadesList.length">
@@ -26,7 +24,6 @@
       </select>
     </div>
 
-    <!-- Comodidades -->
     <div class="card p-3 m-2">
       <label class="form-label">Comodidades</label>
       <ng-container *ngFor="let comodidade of comodidades; let i = index">
@@ -41,8 +38,6 @@
       </ng-container>
     </div>
 
-
-    <!-- Tipo de Atendimento -->
     <div class="card p-3 m-2">
       <label class="form-label">Tipo de Atendimento</label>
       <ng-container *ngFor="let tipo of tiposAtendimento; let i = index">
@@ -58,5 +53,3 @@
     <button class="btn btnFilter hover" (click)="aplicarFiltro()">Aplicar Filtro</button>
   </div>
 </div>
-
-

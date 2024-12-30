@@ -1,25 +1,22 @@
-// Fundo geral da página
 .orders-page {
-  background-color: #05465f; // Cor de fundo da página
-  min-height: 100vh; // Preencher a altura inteira da tela
+  background-color: #05465f;
+  min-height: 100vh;
   display: flex;
-  align-items: flex-start; // Alinhar o conteúdo no topo
+  align-items: flex-start;
   justify-content: center;
-  padding: 20px; // Espaçamento geral para celular
+  padding: 20px;
   box-sizing: border-box;
 }
 
-// Container principal
 .orders-container {
   width: 100%;
-  max-width: 500px; // Limitar largura em telas grandes
+  max-width: 500px;
   padding: 20px;
-  background-color: #fff; // Fundo do conteúdo principal
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 40px; // Espaçamento superior customizado para elevar a box
+  margin-top: 40px;
 
-  // Input de data
   input[type='date'] {
     background-color: #f8f9fa;
     color: #333;
@@ -33,7 +30,6 @@
     }
   }
 
-  // Botões de horários disponíveis
   .slots-container {
     .slot-button {
       background-color: #028090;
@@ -54,10 +50,9 @@
     }
   }
 
-  // Responsividade
   @media (max-width: 768px) {
-    padding: 15px; // Espaçamento extra em dispositivos móveis
-    margin-top: 20px; // Menor margem em dispositivos móveis
+    padding: 15px;
+    margin-top: 20px;
 
     h2 {
       font-size: 1.5rem;

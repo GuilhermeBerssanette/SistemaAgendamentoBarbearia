@@ -14,7 +14,6 @@ import {NgForOf, NgIf} from '@angular/common';
 export class ModalManageScheduleComponent implements OnInit {
   scheduleForm!: FormGroup;
 
-  // Dias da semana disponíveis
   daysOfWeek: string[] = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
   availableDaysOfWeek: string[] = [...this.daysOfWeek];
 
@@ -45,7 +44,7 @@ export class ModalManageScheduleComponent implements OnInit {
     if (this.availableDaysOfWeek.length > 0) {
       this.workingDays.push(
         this.fb.group({
-          day: ['', []], // Inicializa vazio
+          day: ['', []],
           startTime: ['', []],
           endTime: ['', []],
         })
@@ -56,16 +55,11 @@ export class ModalManageScheduleComponent implements OnInit {
     this.updateAvailableDays();
   }
 
-
-
-
-
   async removeWorkingDay(index: number) {
     const removedDay = this.workingDays.at(index).value.day;
     this.workingDays.removeAt(index);
-    this.updateAvailableDays(); // Chamada corrigida
+    this.updateAvailableDays();
 
-    // Atualizar no Firestore
     try {
       const scheduleDocRef = doc(
         this.firestore,
@@ -78,13 +72,11 @@ export class ModalManageScheduleComponent implements OnInit {
           (day: any) => day.day !== removedDay
         );
         await updateDoc(scheduleDocRef, { workingDays: updatedWorkingDays });
-        console.log(`Dia "${removedDay}" removido com sucesso do Firestore.`);
       }
     } catch (error) {
-      console.error('Erro ao remover o dia do Firestore:', error);
+     return;
     }
   }
-
 
   addBlockedDate() {
     this.blockedDates.push(new FormControl(''));
@@ -105,8 +97,7 @@ export class ModalManageScheduleComponent implements OnInit {
       alert('Agenda salva com sucesso!');
       this.dialogRef.close();
     } catch (error) {
-      console.error('Erro ao salvar agenda:', error);
-      alert('Erro ao salvar a agenda. Verifique os logs.');
+      return;
     }
   }
 
@@ -120,11 +111,11 @@ export class ModalManageScheduleComponent implements OnInit {
       if (scheduleDoc.exists()) {
         const data = scheduleDoc.data();
         if (data?.['workingDays']) {
-          this.workingDays.clear(); // Limpa quaisquer dias anteriores antes de adicionar os novos
+          this.workingDays.clear();
           data['workingDays'].forEach((day: any) => {
             this.workingDays.push(
               this.fb.group({
-                day: [day.day || '', []], // Garante que o dia seja exibido corretamente
+                day: [day.day || '', []],
                 startTime: [day.startTime || '', []],
                 endTime: [day.endTime || '', []],
               })
@@ -132,21 +123,17 @@ export class ModalManageScheduleComponent implements OnInit {
           });
         }
         if (data?.['blockedDates']) {
-          this.blockedDates.clear(); // Limpa quaisquer datas bloqueadas anteriores
+          this.blockedDates.clear();
           data['blockedDates'].forEach((date: any) => {
             this.blockedDates.push(new FormControl(date || ''));
           });
         }
-        this.updateAvailableDays(); // Atualiza os dias disponíveis com base nos já cadastrados
+        this.updateAvailableDays();
       }
     } catch (error) {
-      console.error('Erro ao carregar agenda:', error);
+      return;
     }
   }
-
-
-
-
 
   private updateAvailableDays() {
     const selectedDays = this.workingDays.controls
@@ -155,12 +142,5 @@ export class ModalManageScheduleComponent implements OnInit {
 
     this.availableDaysOfWeek = this.daysOfWeek.filter((day) => !selectedDays.includes(day));
   }
-
-
-
-
-
-
-
 
 }

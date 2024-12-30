@@ -75,8 +75,8 @@
 }
 
 .card {
-  flex: 1 1 250px; /* Largura mínima de 250px */
-  max-width: 350px; /* Largura máxima para evitar que fique muito grande */
+  flex: 1 1 250px;
+  max-width: 350px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
@@ -122,7 +122,7 @@ label{
 .comodidades-container {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Espaço entre o label e o select */
+  gap: 8px;
   width: 100%;
 }
 

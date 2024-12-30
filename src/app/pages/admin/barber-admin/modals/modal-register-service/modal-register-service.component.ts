@@ -36,8 +36,6 @@ export class ModalRegisterServiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterAvailableServices()
-      .then(() => console.log('Serviços disponíveis filtrados com sucesso.'))
-      .catch((error) => console.error('Erro ao filtrar serviços disponíveis:', error));
   }
 
   async filterAvailableServices() {
@@ -71,7 +69,7 @@ export class ModalRegisterServiceComponent implements OnInit {
         await setDoc(serviceRef, serviceData);
         this.dialogRef.close(true);
       } catch (error) {
-        console.error('Erro ao registrar o serviço:', error);
+        return;
       }
     }
   }

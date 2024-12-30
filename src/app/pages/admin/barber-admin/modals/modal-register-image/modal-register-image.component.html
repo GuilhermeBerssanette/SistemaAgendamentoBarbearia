@@ -8,13 +8,11 @@
 
   <div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!-- Contêiner de seleção e pré-visualização de imagem -->
       <div class="containerInput">
         <div class="image-preview-container" (click)="fileInput.click()">
           <ng-container *ngIf="imagePreview; else placeholder">
             <img [src]="imagePreview" alt="Pré-visualização da imagem" class="image-preview" />
           </ng-container>
-          <!-- Exibir o quadrado com texto "Clique para adicionar" -->
           <ng-template #placeholder>
             <span class="placeholder-text">Clique para adicionar uma imagem</span>
           </ng-template>

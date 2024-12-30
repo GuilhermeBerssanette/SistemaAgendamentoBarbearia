@@ -62,7 +62,7 @@ export class ModalCommentComponent implements OnInit {
         await addDoc(commentsCollectionRef, newComment);
         this.form.reset();
       } else {
-        console.error('Usuário não autenticado. Comentário não pode ser salvo.');
+        return;
       }
     }
   }
@@ -78,9 +78,8 @@ export class ModalCommentComponent implements OnInit {
       const commentDocRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}/comments/${commentId}`);
       await deleteDoc(commentDocRef);
       this.userHasCommented = false;
-      console.log('Comentário deletado com sucesso.');
     } catch (error) {
-      console.error('Erro ao deletar comentário:', error);
+      return;
     }
   }
 

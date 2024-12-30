@@ -1,12 +1,10 @@
 <app-header-admin></app-header-admin>
-<!-- Adicionando o banner com a imagem de fundo e a imagem circular sobreposta -->
 <div class="container-fluid banner">
   <div class="image-wrapper">
     <input type="file" id="upload-banner" style="display: none;" />
     <label for="upload-banner" class="upload-label-banner">
       <mat-icon style="padding-top: 4px;">upload</mat-icon>Adicionar arquivo
     </label>
-
     <div class="profile-image">
       <img [ngSrc]="barbearia?.profileImageUrl || 'assets/FtPerfil.svg'" alt="Foto de perfil" width="100" height="100" class="img-fluid">
     </div>

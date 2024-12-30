@@ -41,16 +41,13 @@ export class HeaderAdminComponent implements OnInit {
     this.dropdownOpen = false;
 
     if (!confirm('Tem certeza de que deseja sair?')) {
-      console.log('Logout cancelado pelo usuário.');
       return;
     }
 
     try {
       await signOut(this.auth);
-      console.log('Usuário deslogado com sucesso.');
       await this.router.navigate(['/']);
     } catch (error) {
-      console.error('Erro ao fazer logout:', error);
       alert('Erro ao sair. Tente novamente.');
       await this.router.navigate(['/']);
     }
@@ -66,10 +63,10 @@ export class HeaderAdminComponent implements OnInit {
         this.profileImageUrl = barbeariaData['profileImageUrl'] || null;
         this.barbeariaName = barbeariaData['nomeFantasia'] || 'Barbearia Desconhecida';
       } else {
-        console.error('Barbearia não encontrada!');
+        return;
       }
     } catch (error) {
-      console.error('Erro ao carregar dados da barbearia:', error);
+      return;
     }
   }
 
@@ -80,4 +77,5 @@ export class HeaderAdminComponent implements OnInit {
       this.dropdownOpen = false;
     }
   }
+
 }

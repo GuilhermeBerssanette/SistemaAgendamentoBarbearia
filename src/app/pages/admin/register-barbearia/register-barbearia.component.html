@@ -2,17 +2,14 @@
   <div class="col-12 col-xl-6 col-lg-6 position-relative m-0 p-0 order-md-1">
     <img class="bg-holder py-3 img-fluid px-md-5 z-index" src="/assets/Logo_barb.svg" width="369" height="360" alt="Logo"/>
    </div>
-
    <div class="col-lg-6 col-md-12 order-md-2">
     <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
       <div class="col col-sm-6 col-lg-7 col-xl-6">
-
           <form [formGroup]="form" (ngSubmit)="onSubmit()" class="area-form" novalidate>
           <div class="container">
             <div class="text-center">
               <p class="fw-bold mt-5">Crie sua conta</p>
              </div>
-            <!--  Dados da barbearia-->
             <div class="row">
               <div class="col-12 mb-3">
                 <input type="text" class="form-control" placeholder="Nome Fantasia" formControlName="nomeFantasia">
@@ -21,7 +18,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12 mb-3">
                 <input type="text" class="form-control" placeholder="Razão Social" formControlName="razaoSocial">
@@ -30,11 +26,9 @@
                 </div>
               </div>
             </div>
-
             <div class="mb-3">
               <input type="text" class="form-control" placeholder="Responsável" formControlName="responsavel">
             </div>
-
             <div class="container radio-label">
               <div class="text-center">
                 <p class="fw-bold">Selecione</p>
@@ -46,14 +40,11 @@
                 <input type="radio" formControlName="tipoPessoa" value="PF" (change)="onTipoPessoaChange('PF')"> Pessoa Física
               </label>
             </div>
-
-            <!-- Campos para Pessoa Jurídica -->
             <div *ngIf="isPJ">
               <div class="row mb-2">
                 <div class="col-lg-7 col-md-12 mb-2">
                   <input type="text" class="form-control" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
                 </div>
-
                 <div class="col-lg-5 col-md-5">
                   <input type="text" class="form-control inputSyle form-control-lg" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
                     <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
@@ -62,8 +53,6 @@
                   </div>
               </div>
             </div>
-
-            <!-- Campos para Pessoa Física -->
             <div *ngIf="isPF">
               <div class="row mb-2">
                 <div class="col-lg-6 col-md-12 mb-2">
@@ -77,8 +66,6 @@
                 </div>
               </div>
             </div>
-
-            <!--  Endereço-->
             <div class="row">
               <div class="col-6 mb-2">
                 <div class="form-group">
@@ -89,7 +76,6 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-6 mb-2">
                 <div class="form-group">
                   <label for="cidade">Cidade</label>
@@ -99,7 +85,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row mb-2">
               <div class="col-9 mb-2">
                 <input type="text" class="form-control" placeholder="Rua" formControlName="rua">
@@ -107,7 +92,6 @@
                   <small *ngIf="form.get('rua')?.errors?.['required']" class="text-danger">Rua é obrigatória.</small>
                 </div>
               </div>
-
               <div class="col-3 mb-2">
                 <input type="text" class="form-control" placeholder="N°" formControlName="numero">
                 <div *ngIf="form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)">
@@ -116,8 +100,6 @@
                 </div>
               </div>
           </div>
-
-            <!--Contato-->
             <div class="row mb-2">
               <div class="col-12 col-md-12">
                 <div class="text-center">
@@ -130,7 +112,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row mb-2">
               <div class="col-6 col-md-6">
                 <input type="text" class="form-control" placeholder="Celular" formControlName="celular" mask="(00)00000-0000" />
@@ -139,8 +120,6 @@
                   <small *ngIf="form.get('celular')?.errors?.['invalidContato']" class="text-danger">Formato do contato inválido. Use (xx)xxxxx-xxxx.</small>
                 </div>
               </div>
-
-
               <div class="col-6 col-md-6">
                 <input type="text" class="form-control" placeholder="WhatsApp" formControlName="whats" mask="(00)00000-0000" />
                 <div *ngIf="form.get('whats')?.invalid && (form.get('whats')?.dirty || form.get('whats')?.touched)">
@@ -149,7 +128,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12 col-md-12">
                 <input type="text" class="form-control mb-2" placeholder="Telefone" formControlName="telefone" mask="(00)00000-0000" />
@@ -159,8 +137,6 @@
                 </div>
               </div>
             </div>
-
-            <!--    Redes Sociais-->
             <div class="row">
               <div class="col-12 col-md-12">
                 <div class="text-center">
@@ -172,7 +148,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12 col-md-12 mb-2">
                 <input type="text" class="form-control" placeholder="Facebook" formControlName="facebook">
@@ -181,7 +156,6 @@
                 </div>
               </div>
           </div>
-
           <div class="row">
             <div class="col-12 col-md-12 mb-2">
                 <input type="text" class="form-control" placeholder="TikTok" formControlName="tiktok" />
@@ -190,7 +164,6 @@
                 </div>
               </div>
           </div>
-
           <div class="row">
             <div class="col-12 col-md-12 mb-2">
                 <input type="text" class="form-control" placeholder="Twitter" formControlName="twitter" />
@@ -199,8 +172,6 @@
                 </div>
             </div>
           </div>
-
-            <!--  Comodidades-->
             <div class="form-group">
               <mat-form-field class="w-100">
                 <mat-label>Comodidades</mat-label>
@@ -215,9 +186,6 @@
                 </mat-select>
               </mat-form-field>
             </div>
-
-
-
             <div class="row">
               <div class="col-12 mb-3">
                 <input type="file" class="form-control" placeholder="foto de perfil" formControlName="profileImage" (change)="onFileSelected($event)">
@@ -226,19 +194,12 @@
                 </div>
               </div>
             </div>
-
-
-
             <div class="row">
               <div class="col-12 col-md-12 mb-4">
-
                 <button
                   class="btn w-100 btnCadastro"
                   type="submit"
                   [disabled]="!form.valid || !isFormValidForSelectedTipoPessoa()">Cadastrar</button>
-
-
-
               </div>
             </div>
           </div>

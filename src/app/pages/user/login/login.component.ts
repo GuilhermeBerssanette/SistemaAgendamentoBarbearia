@@ -39,10 +39,9 @@ export class LoginComponent {
 
     try {
       await signInWithEmailAndPassword(this.auth, email, pass);
-      console.log("Login successful");
       await this.redirectUserBasedOnRole();
     } catch (error) {
-      console.error('Erro ao fazer login:', error instanceof Error ? error.message : error);
+      return;
     }
   }
 
@@ -52,7 +51,6 @@ export class LoginComponent {
       const user = result.user;
 
       if (!user) {
-        console.error('Usuário não encontrado após login com Google.');
         return;
       }
 
@@ -66,13 +64,10 @@ export class LoginComponent {
           photoURL: user.photoURL || '',
           userType: 'client'
         });
-        console.log('Novo usuário adicionado ao Firestore.');
       }
-
-      console.log("Google login successful");
       await this.redirectUserBasedOnRole();
     } catch (error) {
-      console.error('Erro ao fazer login com Google:', error instanceof Error ? error.message : error);
+      return;
     }
   }
 
@@ -132,7 +127,6 @@ export class LoginComponent {
         await this.router.navigate(['/login']);
       }
     } catch (error) {
-      console.error('Erro ao redirecionar usuário:', error);
       await this.router.navigate(['/login']);
     }
   }
@@ -148,16 +142,14 @@ export class LoginComponent {
       if (email) {
         this.sendPasswordResetEmail(email);
       }
-      console.log('Modal de recuperação de senha fechado');
     });
   }
 
   private async sendPasswordResetEmail(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(this.auth, email);
-      console.log(`E-mail de recuperação de senha enviado para ${email}`);
     } catch (error) {
-      console.error('Erro ao enviar e-mail de recuperação:', error instanceof Error ? error.message : error);
+      return;
     }
   }
 }

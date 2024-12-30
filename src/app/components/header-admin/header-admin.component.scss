@@ -57,7 +57,6 @@
   }
 }
 
-// Estilos da Sidebar
 .sidebar {
   height: 100%;
   width: 0;
@@ -98,13 +97,11 @@
     }
 
     &:hover {
-      /*background-color: #053a4e;*/
       cursor: pointer;
     }
   }
 }
 
-// Overlay escura que aparece com a sidebar
 .overlay {
   position: fixed;
   top: 0;

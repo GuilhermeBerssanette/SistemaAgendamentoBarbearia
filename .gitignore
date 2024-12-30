@@ -44,9 +44,9 @@ Thumbs.db
 cloud.ts
 firebase.development.ts
 firebase.ts
-environments/
-environments
-
+src/environments/
+environment.ts
+environment.development.ts
 
 
 

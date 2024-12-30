@@ -48,7 +48,7 @@ export class ModalInfoComponent implements OnInit {
         ...doc.data()
       })) as Service[];
     } catch (error) {
-      console.error('Erro ao carregar serviços:', error);
+      return;
     }
   }
 

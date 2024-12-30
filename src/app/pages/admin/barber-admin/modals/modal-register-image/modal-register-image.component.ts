@@ -66,7 +66,7 @@ export class ModalRegisterImageComponent implements OnInit {
           this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
         (error) => {
-          console.error('Erro ao fazer upload da imagem:', error);
+          console.error(error);
         },
         () => {
           this.dialogRef.close(false);

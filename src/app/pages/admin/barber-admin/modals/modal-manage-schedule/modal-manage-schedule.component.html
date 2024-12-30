@@ -1,11 +1,9 @@
 <h2 class="text-center areaModal">Gerenciar Agenda</h2>
 <form [formGroup]="scheduleForm" class="card p-3 m-2">
-  <!-- Dias já cadastrados -->
   <div *ngIf="workingDays.controls.length > 0" class="mb-3">
     <h4>Dias já cadastrados</h4>
     <div *ngFor="let control of workingDays.controls; let i = index">
       <div class="row mb-2">
-        <!-- Dia desabilitado para exibição -->
         <div class="col-4">
           <label>Dia:</label>
           <select
@@ -17,7 +15,6 @@
           </select>
         </div>
 
-        <!-- Exibição dos horários -->
         <div class="col-3">
           <label>Início:</label>
           <input
@@ -41,12 +38,10 @@
     </div>
   </div>
 
-  <!-- Dias de Trabalho - Adicionar novo dia -->
   <div class="mb-3">
     <h4>Adicionar Novo Dia de Trabalho</h4>
     <button class="btn btn-primary btn-sm mb-2" (click)="addWorkingDay()" type="button">Adicionar Dia</button>
 
-    <!-- Formulário para novos dias -->
     <div formArrayName="workingDays" *ngFor="let workingDay of workingDays.controls; let i = index">
       <div [formGroupName]="i" class="row mb-2">
         <div class="col-4">
@@ -85,7 +80,7 @@
     </div>
   </div>
 
-  <!-- Datas Bloqueadas -->
+
   <div class="mb-3">
     <h4>Datas Bloqueadas</h4>
     <button class="btn btn-primary btn-sm mb-2" (click)="addBlockedDate()" type="button">Adicionar Data</button>
@@ -103,6 +98,5 @@
     </div>
   </div>
 
-  <!-- Botão Salvar -->
   <button class="btn btn-success" (click)="saveSchedule()" type="button">Salvar</button>
 </form>

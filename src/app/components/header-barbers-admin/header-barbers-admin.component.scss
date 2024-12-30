@@ -57,7 +57,6 @@
   }
 }
 
-// Estilos da Sidebar
 .sidebar {
   height: 100%;
   width: 0;
@@ -98,13 +97,11 @@
     }
 
     &:hover {
-      /*background-color: #053a4e;*/
       cursor: pointer;
     }
   }
 }
 
-// Overlay escura que aparece com a sidebar
 .overlay {
   position: fixed;
   top: 0;
@@ -131,9 +128,9 @@
 }
 
 .profile-image {
-  width: 5px; /* Ajuste o tamanho conforme necessário */
-  height: 5px; /* Mantém a imagem proporcional */
-  object-fit: cover; /* Garante que a imagem se ajuste ao contêiner */
+  width: 5px;
+  height: 5px;
+  object-fit: cover;
 }
 
 

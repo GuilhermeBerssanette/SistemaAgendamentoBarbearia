@@ -40,7 +40,6 @@
     </ng-template>
   </ng-container>
 
-
   <ng-container *ngIf="selectedSection === 'editProfile'">
     <h1 class="title">Editar Perfil</h1>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -111,7 +110,6 @@
         </div>
       </div>
 
-      <!-- Redes Sociais -->
       <div>
         <label>Instagram</label>
         <input class="form-control form-control-lg fs-6" formControlName="instagram" placeholder="Instagram" />
@@ -152,7 +150,6 @@
         </div>
       </div>
 
-      <!-- Comodidades -->
       <div class="comodidades-container">
         <label>Comodidades</label>
         <mat-form-field appearance="fill">
@@ -177,11 +174,9 @@
         <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
       </div>
 
-
       <div class="button-group w-100 d-flex justify-content-center mb-2 mt-1 pb-3">
         <button type="submit" class="btnOption btn" [disabled]="profileForm.invalid">Salvar Alterações</button>
       </div>
-
 
     </form>
   </ng-container>
