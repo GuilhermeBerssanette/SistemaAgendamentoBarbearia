@@ -12,21 +12,17 @@ import {HttpClient} from "@angular/common/http";
 import {BarbeariasService} from "../../../services/barbearias.service";
 import {Router} from "@angular/router";
 import {Barbearias} from "../../../interfaces/barbearias";
-
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatOptionModule} from "@angular/material/core";
 import {MatInput} from "@angular/material/input";
-
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
-
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import {uploadBytesResumable} from "@angular/fire/storage";
 import {Auth} from "@angular/fire/auth";
 import {doc, setDoc} from "@angular/fire/firestore";
-
 
 @Component({
   selector: 'app-register-barbearia',
@@ -42,7 +38,6 @@ import {doc, setDoc} from "@angular/fire/firestore";
     MatInput,
     NgxMaskDirective,
     NgxMaskPipe,
-
   ],
   templateUrl: './register-barbearia.component.html',
   styleUrl: './register-barbearia.component.scss'
@@ -64,7 +59,6 @@ export class RegisterBarbeariaComponent implements OnInit {
   auth = inject(Auth);
 
   selectedFile: File | null = null;
-  downloadURL: string | null = null;
 
   iePatterns: { [key: string]: { pattern: RegExp, format: string } } = {
     'AC': {pattern: /^\d{13}$/, format: 'xxx.xxx.xxx.xxx'},
@@ -99,22 +93,18 @@ export class RegisterBarbeariaComponent implements OnInit {
   createIeValidator(regex: RegExp): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const ie = control.value;
-
       if (!ie) {
         return null;
       }
-
       if (!regex.test(ie)) {
         return {invalidIeFormat: true};
       }
-
       return null;
     };
   }
 
   updateIeValidator() {
     const estado = this.form.controls['estado'].value;
-
     if (typeof estado === 'string' && estado in this.iePatterns) {
       const {pattern} = this.iePatterns[estado];
       const ieValidator = this.createIeValidator(pattern);
@@ -129,17 +119,13 @@ export class RegisterBarbeariaComponent implements OnInit {
   instagramValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const instagramUrl = control.value;
-
       if (!instagramUrl) {
         return null;
       }
-
       const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
-
       if (!instagramRegex.test(instagramUrl)) {
         return {invalidInstagramUrl: true};
       }
-
       return null;
     };
   }
@@ -147,12 +133,10 @@ export class RegisterBarbeariaComponent implements OnInit {
   facebookValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const facebookUrl = control.value;
-
       if (!facebookUrl) {
         return null;
       }
       const facebookRegex = /^https:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9.]+\/?$/;
-
       if (!facebookRegex.test(facebookUrl)) {
         return {invalidFacebookUrl: true};
       }
@@ -163,17 +147,13 @@ export class RegisterBarbeariaComponent implements OnInit {
   tiktokValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const tiktokUrl = control.value;
-
       if (!tiktokUrl) {
         return null;
       }
-
       const tiktokRegex = /^https:\/\/(www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)$/;
-
       if (!tiktokRegex.test(tiktokUrl)) {
         return {invalidTiktokUrl: true};
       }
-
       return null;
     };
   }
@@ -181,17 +161,13 @@ export class RegisterBarbeariaComponent implements OnInit {
   twitterValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const twitterUrl = control.value;
-
       if (!twitterUrl) {
         return null;
       }
-
       const twitterRegex = /^https:\/\/(www\.)?twitter\.com\/[a-zA-Z0-9_]+\/?$/;
-
       if (!twitterRegex.test(twitterUrl)) {
         return {invalidTwitterUrl: true};
       }
-
       return null;
     };
   }
@@ -199,7 +175,6 @@ export class RegisterBarbeariaComponent implements OnInit {
   onTipoPessoaChange(tipo: string): void {
     this.isPJ = tipo === 'PJ';
     this.isPF = tipo === 'PF';
-
     if (tipo === 'PJ') {
       this.form.get('cnpj')?.setValidators([Validators.required]);
       this.form.get('inscricaoEstadual')?.setValidators([Validators.required]);
@@ -211,7 +186,6 @@ export class RegisterBarbeariaComponent implements OnInit {
       this.form.get('cnpj')?.clearValidators();
       this.form.get('inscricaoEstadual')?.clearValidators();
     }
-
     this.form.get('cnpj')?.updateValueAndValidity();
     this.form.get('inscricaoEstadual')?.updateValueAndValidity();
     this.form.get('cpf')?.updateValueAndValidity();
@@ -221,7 +195,6 @@ export class RegisterBarbeariaComponent implements OnInit {
   ngOnInit(): void {
     this.loadEstados();
     this.form.controls['estado'].valueChanges.subscribe(() => this.updateIeValidator());
-
     this.form.get('tipoPessoa')?.valueChanges.subscribe(value => {
       if (value === 'PJ') {
         this.isPJ = true;
@@ -264,7 +237,6 @@ export class RegisterBarbeariaComponent implements OnInit {
     const siglaEstado = target.value;
     this.cidadesList = [];
     this.form.controls['cidade'].setValue('');
-
     if (siglaEstado) {
       this.http.get<any[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${siglaEstado}/municipios`)
         .subscribe(cidades => {
@@ -302,20 +274,13 @@ export class RegisterBarbeariaComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
 
-
   onSubmit(): void {
-
-
     const rawForm = this.form.getRawValue();
-
     if (!this.selectedFile) {
-      console.error('Imagem de perfil não selecionada.');
       return;
     }
-
     const userId = this.auth.currentUser?.uid;
     if (!userId) {
-      console.error('Usuário não autenticado.');
       return;
     }
 
@@ -357,22 +322,15 @@ export class RegisterBarbeariaComponent implements OnInit {
     uploadTask.on('state_changed',
       () => {
       },
-      (error) => {
-        console.error('Erro ao fazer upload da imagem:', error);
-      },
       async () => {
         try {
           barbeariaData.profileImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-
           const barbeariaRef = await this.barbeariasService.addBarbearia(barbeariaData);
-
           const userDocRef = doc(this.barbeariasService.firestore, 'users', userId);
           await setDoc(userDocRef, {userType: 'admin'}, {merge: true});
-
           await this.router.navigate(['/barbearia', barbeariaRef.id, 'admin']);
-          console.log('Cadastro da barbearia concluído com sucesso.');
         } catch (error) {
-          console.error('Erro ao cadastrar barbearia:', error);
+          return;
         }
       }
     );

@@ -5,12 +5,7 @@
       <mat-icon class="hover ms-auto" (click)="onCancel()">close</mat-icon>
     </div>
   </div>
-
-
 <form [formGroup]="form" (ngSubmit)="addBarberToBarbearia()" class="service-form">
-
-  <!-- Campo de Upload da Foto de Perfil -->
-
   <div class="containerInput mt-2">
     <div class="image-preview-container" (click)="fileInput.click()">
       <ng-container *ngIf="imagePreview; else placeholder">
@@ -74,7 +69,6 @@
     </div>
   </div>
 
-  <!-- Validações de redes sociais -->
   <div class="form-group mb-3">
     <input class="form-control" type="text" placeholder="Instagram" formControlName="instagram">
     <div class="text-danger error" *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">
@@ -103,7 +97,6 @@
     </div>
   </div>
 
-  <!-- Perguntas Sim/Não -->
   <div class="checkbox-container">
     <input class="ms-3" type="checkbox" formControlName="atendeAutista">
     <label>Atende Autista?</label>
@@ -129,7 +122,6 @@
     <label>Oferece serviços para eventos (casamentos, formaturas)?</label>
   </div>
 
-  <!--<button type="submit" [disabled]="form.invalid">Registrar</button>-->
   <div class="button-group container-fluid d-flex justify-content-center mb-2">
     <button class="btn col-8 btnOption me-1" type="submit" [disabled]="form.invalid">Registrar</button>
     <button class="btn col-4 btnOption" type="button" (click)="onCancel()">Cancelar</button>

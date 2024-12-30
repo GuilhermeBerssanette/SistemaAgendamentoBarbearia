@@ -14,8 +14,4 @@ import {LoginComponent} from "./pages/user/login/login.component";
 export class AppComponent {
   http = inject(HttpClient)
   title = 'projeto_barbearia';
-
-  logout(): void {
-    console.log('logout')
-  }
 }

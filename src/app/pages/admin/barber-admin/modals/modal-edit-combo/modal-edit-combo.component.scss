@@ -7,7 +7,7 @@
 .navbar {
   background-color: #D9D9D9D9;
   position: relative;
-  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  padding: 5px 0;
   height: 20%;
 }
 
@@ -50,12 +50,12 @@ h3{
   color: #FFFFFF;
 }
 
-    li{
-      text-decoration: none;
-      margin-left: 2px;
-      font-size: 15px;
-      color: #FFFFFF;
-    }
+li{
+  text-decoration: none;
+  margin-left: 2px;
+  font-size: 15px;
+  color: #FFFFFF;
+}
 
 .card{
   background-color: #028090;
@@ -81,11 +81,11 @@ mat-icon{
 }
 
 .confirm-button {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745;
   color: white;
 }
 
 .cancel-button {
-  background-color: #dc3545; /* Vermelho */
+  background-color: #dc3545;
   color: white;
 }

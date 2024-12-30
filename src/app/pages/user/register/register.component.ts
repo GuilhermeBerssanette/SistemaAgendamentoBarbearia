@@ -32,18 +32,14 @@ export class RegisterComponent {
     const { email, password } = this.form.getRawValue();
 
     if (email && password) {
-      try {
         await lastValueFrom(this.authService.register(email, password));
         const navigationSuccess = await this.router.navigate(['/login']);
 
         if (navigationSuccess) {
-          console.log("Navegação para a página de login bem-sucedida");
+          return;
         } else {
-          console.error("Erro na navegação para a página de login");
+          return;
         }
-      } catch (error) {
-        console.error('Erro ao registrar:', error);
-      }
     }
   }
 }

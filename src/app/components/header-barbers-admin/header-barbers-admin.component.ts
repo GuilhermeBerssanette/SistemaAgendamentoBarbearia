@@ -40,21 +40,8 @@ export class HeaderBarbersAdminComponent implements OnInit {
 
   async logout() {
     this.dropdownOpen = false;
-
-    if (!confirm('Tem certeza de que deseja sair?')) {
-      console.log('Logout cancelado pelo usuário.');
-      return;
-    }
-
-    try {
       await signOut(this.auth);
-      console.log('Usuário deslogado com sucesso.');
       await this.router.navigate(['/']);
-    } catch (error) {
-      console.error('Erro ao fazer logout:', error);
-      alert('Erro ao sair. Tente novamente.');
-      await this.router.navigate(['/']);
-    }
   }
 
   private async loadBarberProfile(barbeariaId: string, barberId: string): Promise<void> {
@@ -67,10 +54,10 @@ export class HeaderBarbersAdminComponent implements OnInit {
         this.profileImageUrl = barberData['profileImageUrl'] || null;
         this.barberEmail = barberData['email'] || null;
       } else {
-        console.error('Barbeiro não encontrado!');
+        return;
       }
     } catch (error) {
-      console.error('Erro ao carregar dados do barbeiro:', error);
+      return;
     }
   }
 

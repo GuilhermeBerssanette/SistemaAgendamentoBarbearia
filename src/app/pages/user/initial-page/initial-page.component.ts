@@ -71,7 +71,7 @@ export class InitialPageComponent implements OnInit {
     const { estado, cidade, comodidades, tiposAtendimento } = filterData;
 
     let barbeariasFiltradas: any[] = [...this.barbearias];
-    this.selectedFilters = []; // Reset filters
+    this.selectedFilters = [];
 
     if (estado) {
       const estadoSigla = this.getEstadoSigla(estado);
@@ -84,7 +84,6 @@ export class InitialPageComponent implements OnInit {
       this.addFilterOnce(cidade);
     }
 
-    // Corrigindo o processamento das comodidades
     if (comodidades.length > 0) {
       barbeariasFiltradas = barbeariasFiltradas.filter(barbearia =>
         comodidades.every((comodidade: string) => barbearia.comodidades.includes(comodidade))
@@ -100,7 +99,6 @@ export class InitialPageComponent implements OnInit {
 
     this.filteredBarbearias = barbeariasFiltradas;
   }
-
 
   async filterByTiposAtendimento(barbearias: any[], tiposAtendimento: string[]): Promise<any[]> {
     const barbeariasFiltradas: any[] = [];
@@ -168,7 +166,7 @@ export class InitialPageComponent implements OnInit {
 
   goToBarbearia(id: string) {
     this.router.navigate(['/barbearia', id]).then(() => {
-      console.log(`Navigated to barbearia with ID: ${id}`);
+     return;
     });
   }
 

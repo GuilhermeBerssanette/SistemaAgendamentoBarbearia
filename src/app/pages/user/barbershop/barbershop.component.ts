@@ -74,7 +74,7 @@ export class BarbershopComponent implements OnInit {
           alert('Endereço não encontrado. Verifique as informações fornecidas.');
         }
       } catch (error) {
-        alert('Erro ao abrir o Google Maps. Por favor, tente novamente.');
+        return;
       }
     }
   }

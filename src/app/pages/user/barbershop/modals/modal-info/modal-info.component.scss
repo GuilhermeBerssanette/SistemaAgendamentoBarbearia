@@ -7,25 +7,25 @@
 .navbar {
   background-color: #028090;
   position: relative;
-  padding: 5px 0; /* Ajusta o padding conforme necessário */
+  padding: 5px 0;
   height: 20%;
 }
 
 .container-fluid {
-  position: relative; /* Necessário para posicionar o ícone relativo a este container */
+  position: relative;
 }
 
 .barber-name {
   font-size: 24px;
   font-weight: 500;
   padding-bottom: 3px;
-  margin-right: auto; /* Garante que o nome fique à esquerda */
+  margin-right: auto;
 }
 
 .close-icon {
   position: absolute;
   top: 50%;
-  right: 15px; /* Ajuste conforme necessário */
+  right: 15px;
   transform: translateY(-50%);
   cursor: pointer;
 }

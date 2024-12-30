@@ -53,10 +53,10 @@ export class BarbersComponent implements OnInit {
       if (barberDoc.exists()) {
         this.barbeiro = barberDoc.data();
       } else {
-        console.error('Barbeiro não encontrado!');
+       return;
       }
     } catch (error) {
-      console.error('Erro ao carregar informações do barbeiro:', error);
+      return;
     }
   }
 
@@ -64,7 +64,7 @@ export class BarbersComponent implements OnInit {
     try {
       this.galleryItems = await this.imageService.getGalleryItems(this.barberId);
     } catch (error) {
-      console.error('Erro ao carregar a galeria de imagens:', error);
+      return;
     }
   }
 
@@ -81,7 +81,7 @@ export class BarbersComponent implements OnInit {
         };
       });
     } catch (error) {
-      console.error('Erro ao carregar serviços do barbeiro:', error);
+      return;
     }
   }
 
@@ -99,10 +99,9 @@ export class BarbersComponent implements OnInit {
         };
       });
     } catch (error) {
-      console.error('Erro ao carregar combos do barbeiro:', error);
+      return;
     }
   }
-
 
   async goToOrder(serviceOrCombo: any, type: 'service' | 'combo') {
     try {
@@ -116,14 +115,10 @@ export class BarbersComponent implements OnInit {
           type: type,
         },
       });
-      console.log('Navegação bem-sucedida para a página de agendamento');
     } catch (error) {
-      console.error('Erro ao navegar para a página de agendamento:', error);
+      return;
     }
   }
-
-
-
 
   showSection(section: string) {
     this.currentSection = section;

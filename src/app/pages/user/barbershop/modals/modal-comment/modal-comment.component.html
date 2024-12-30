@@ -15,13 +15,7 @@
         <small class="text-muted">{{ comment.date.toDate() | date: 'short' }}</small>
       </h5>
       <p class="comment-text">{{ comment.comment }}</p>
-      <button
-        *ngIf="comment.userId === currentUser?.uid"
-        class="btn btn-link text-danger delete-btn"
-        (click)="confirmDeleteComment(comment.id)"
-      >
-        Deletar
-      </button>
+      <button *ngIf="comment.userId === currentUser?.uid" class="btn btn-link text-danger delete-btn" (click)="confirmDeleteComment(comment.id)">Deletar</button>
       <hr class="comment-separator">
     </div>
   </div>

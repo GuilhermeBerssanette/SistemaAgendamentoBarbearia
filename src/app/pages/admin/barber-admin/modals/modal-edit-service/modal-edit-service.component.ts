@@ -43,7 +43,7 @@ export class ModalEditServiceComponent {
 
       this.dialogRef.close(true);
     } catch (error) {
-      console.error('Erro ao atualizar o serviço:', error);
+      return;
     }
   }
 

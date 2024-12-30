@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Firestore, collection, doc, getDoc, getDocs } from '@angular/fire/firestore';
-import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { NgIf, NgForOf, CurrencyPipe } from '@angular/common';
 
@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
   appointmentsDetails: Array<{ date: string; barber?: string; client: string; revenue: number }> = [];
   barberName!: string;
 
-  // Configurações do gráfico
   groupedChartLabels: string[] = [];
   groupedChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
@@ -41,8 +40,6 @@ export class DashboardComponent implements OnInit {
       y: { beginAtZero: true, max: 0 },
     },
   };
-  groupedChartType: ChartType = 'bar';
-
 
   constructor(private firestore: Firestore) {}
 
@@ -52,7 +49,6 @@ export class DashboardComponent implements OnInit {
 
   async loadDashboardData(): Promise<void> {
     if (!this.barbeariaId) {
-      console.error('ID da barbearia não encontrado!');
       return;
     }
 
@@ -79,7 +75,7 @@ export class DashboardComponent implements OnInit {
 
       this.updateGroupedChartData(chartDataMap);
     } catch (error) {
-      console.error('Erro ao carregar os dados do dashboard:', error);
+      return;
     }
   }
 
@@ -131,8 +127,6 @@ export class DashboardComponent implements OnInit {
       return dateB - dateA;
     });
   }
-
-
 
   async getServiceOrComboPrice(serviceOrComboId: string, barberId: string): Promise<number> {
     const comboDocRef = doc(
@@ -186,4 +180,5 @@ export class DashboardComponent implements OnInit {
 
     this.groupedChartOptions.scales!['y'] = { ...this.groupedChartOptions.scales!['y'], max: maxYAxis };
   }
+
 }

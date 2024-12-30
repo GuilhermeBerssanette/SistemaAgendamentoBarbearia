@@ -62,7 +62,7 @@ export class ModalEditComboComponent {
         };
       });
     } else {
-      console.error('Combo não encontrado!');
+      return;
     }
   }
 
@@ -80,7 +80,7 @@ export class ModalEditComboComponent {
 
       this.dialogRef.close(true);
     } catch (error) {
-      console.error('Erro ao atualizar o combo:', error);
+      return;
     }
   }
 
@@ -91,4 +91,5 @@ export class ModalEditComboComponent {
   closeModalComment(): void {
     this.dialogRef.close();
   }
+
 }

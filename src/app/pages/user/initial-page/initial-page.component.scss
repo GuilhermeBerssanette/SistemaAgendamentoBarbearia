@@ -1,4 +1,3 @@
-/* Reseta as margens e o padding, e define box-sizing */
 * {
   margin: 0;
   padding: 0;
@@ -114,7 +113,6 @@
   min-height: 100vh;
 }
 
-/* Estilo dos filtros aplicados */
 .selected-filters {
   display: flex;
   flex-wrap: wrap;

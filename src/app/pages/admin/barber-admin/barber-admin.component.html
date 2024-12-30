@@ -12,7 +12,6 @@
       <button class="btnContent" [class.active]="selectedSection === 'editProfile'" (click)="showSection('editProfile')">Editar Perfil</button>
     </div>
 
-
     <ng-container *ngIf="selectedSection === 'dashboard'">
       <app-dashboard [barbeariaId]="barbeariaId" [barbeiroId]="barbeiroId"></app-dashboard>
     </ng-container>
@@ -148,7 +147,6 @@
             </div>
           </div>
 
-          <!-- Validações de redes sociais -->
           <div class="m-3">
             <input class="form-control form-control-lg fs-6 " type="text" placeholder="Instagram" formControlName="instagram">
             <div *ngIf="form.get('instagram')?.invalid && (form.get('instagram')?.dirty || form.get('instagram')?.touched)">

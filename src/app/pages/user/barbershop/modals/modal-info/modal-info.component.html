@@ -1,20 +1,17 @@
 <div class="navbar">
   <div class="container-fluid d-flex justify-content-start p-3">
-    <!--<img [src]="data.barber.profileImageUrl || '/assets/FtPerfil.svg'" alt="Foto de perfil" class="profile-img">-->
     <span class="name-barber">{{ data.barber.nome }}</span>
     <mat-icon class="hover close-icon" (click)="closeModalInfo()">close</mat-icon>
   </div>
 </div>
 
 <hr>
-
 <div class="services-section">
   <h3 class="fw-bold fs-20 ps-2">Serviços</h3>
   <div class="ps-4" *ngFor="let service of services">
     <p><strong>{{ service.id }}:</strong> {{ service.price | currency }} - {{ service.duration }} min</p>
   </div>
 </div>
-
 <hr>
 
 <div class="services-section">
@@ -31,8 +28,4 @@
 <div class="services-section d-flex justify-content-center align-items-center pt-1">
   <button class=" btn btnContent"> <img class="imgContent " src="assets/whatsapp-logo.svg" height="50" width="50" alt=""></button>
   <button class=" btn btnContent"> <img class="imgContent" src="assets/instagram-logo.svg" height="50" width="50" alt=""></button>
-  <!--<p><strong>WhatsApp:</strong> <a> {{ data.barber.whats }} </a></p>
-  <p><strong>Instagram:</strong> <a>{{ data.barber.instagram }} </a></p>-->
 </div>
-
-<!--<button (click)="close()">Fechar</button>-->

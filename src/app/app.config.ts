@@ -6,7 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch } from "@angular/common/http";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
-import {firebaseConfig} from "../environments/firebase";
+import { firebaseConfig } from '../environments/environment';
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { provideFirestore } from "@angular/fire/firestore";
 import { getFirestore } from "@angular/fire/firestore";

@@ -25,7 +25,6 @@ export class ModalConfirmationOrderComponent {
 
   async confirmOrder() {
     if (this.isProcessing) {
-      console.log('Já está processando o agendamento. Aguarde...');
       return;
     }
 
@@ -61,21 +60,16 @@ export class ModalConfirmationOrderComponent {
         this.data.type === 'combo'
       );
 
-      console.log('Evento criado no Google Calendar do cliente:', clientEvent);
-
       const barberEvent = await this.calendarService.createEventForBarber(
         event,
         this.data.barberId,
         this.data.barbeariaId
       );
 
-      console.log('Evento criado no Google Calendar do barbeiro:', barberEvent);
-
       alert('Agendamento confirmado com sucesso!');
       this.dialogRef.close();
     } catch (error) {
-      console.error('Erro ao criar evento:', error);
-      alert('Erro ao confirmar o agendamento. Verifique os logs.');
+      return;
     } finally {
       this.isProcessing = false;
     }

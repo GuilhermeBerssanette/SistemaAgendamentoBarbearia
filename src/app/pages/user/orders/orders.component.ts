@@ -47,13 +47,11 @@ export class OrdersComponent implements OnInit {
     this.barberName = queryParams['barberName'];
 
     if (!this.barbeariaId || !this.barberId) {
-      console.error('IDs da barbearia ou do barbeiro não encontrados!');
       return;
     }
 
     const user = this.auth.currentUser;
     if (!user) {
-      console.error('Usuário não autenticado!');
       return;
     }
     this.currentUserId = user.uid;
@@ -82,7 +80,7 @@ export class OrdersComponent implements OnInit {
         }
       }
     } catch (error) {
-      console.error('Erro ao carregar horários de trabalho do barbeiro:', error);
+      return;
     }
   }
 
@@ -91,7 +89,6 @@ export class OrdersComponent implements OnInit {
     const bookedSlots = await this.getBookedSlots(cleanDate);
     this.generateAvailableSlots(cleanDate, bookedSlots);
   }
-
 
   async getBookedSlots(date: Date): Promise<string[]> {
     const bookedSlots: string[] = [];
@@ -161,12 +158,10 @@ export class OrdersComponent implements OnInit {
       this.availableSlots.push(timeString);
       currentTime = new Date(currentTime.getTime() + this.selectedServiceDuration * 60000);
     }
-
-    console.log(`Horários disponíveis para ${dayName}:`, this.availableSlots);
   }
 
   async onDateChange(event: any) {
-    const selectedDate = new Date(event.target.value + 'T00:00:00'); // Força a interpretação correta da data
+    const selectedDate = new Date(event.target.value + 'T00:00:00');
 
     if (selectedDate >= new Date(this.todayString)) {
       this.selectedDate = selectedDate;
@@ -175,7 +170,6 @@ export class OrdersComponent implements OnInit {
       alert('Não é possível selecionar uma data anterior a hoje!');
     }
   }
-
 
   openConfirmationModal(slot: string) {
     this.dialog.open(ModalConfirmationOrderComponent, {

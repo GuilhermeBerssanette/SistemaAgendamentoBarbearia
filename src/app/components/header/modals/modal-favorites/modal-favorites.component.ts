@@ -59,4 +59,5 @@ export class ModalFavoritesComponent implements OnInit {
   closeModal(){
     this.dialogRef.close();
   }
+
 }
