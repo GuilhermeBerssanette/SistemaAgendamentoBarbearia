@@ -41,13 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-cloud.ts
-firebase.development.ts
-firebase.ts
-src/environments/
-environment.ts
-environment.development.ts
-
+src/environments
 
 
 
