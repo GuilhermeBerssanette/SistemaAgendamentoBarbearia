@@ -6,8 +6,7 @@ JOÃO VITOR SILVA
 
 MANOEL PEDRO MARTINS NETO
 
-DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM
-BARBEARIAS
+## DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM BARBEARIAS
 
 PONTA GROSSA
 
@@ -19,11 +18,9 @@ JOÃO VITOR SILVA
 
 MANOEL PEDRO MARTINS NETO
 
-DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM
-BARBEARIAS
+## DESENVOLVIMENTO DE UM SISTEMA WEB PARA GERENCIAMENTO DE ATIVIDADES EM BARBEARIAS
 
-DEVELOPMENT OF A WEB SYSTEM FOR MANAGING BARBERSHOP
-ACTIVITIES
+## DEVELOPMENT OF A WEB SYSTEM FOR MANAGING BARBERSHOP ACTIVITIES
 
 > Projeto apresentado ao componente curricular Projeto e Desenvolvimento
 > de Sistemas, do curso Técnico em Informática Integrado ao Ensino Médio
@@ -32,60 +29,13 @@ ACTIVITIES
 >
 > Orientador(a): Prof. Dr. João Henrique Berssanette
 
-[PONTA GROSSA
+PONTA GROSSA
 
 2024
 
-FOLHA DE APROVAÇÃO
-
-NOME COMPLETO E POR EXTENSO DO(A) AUTOR(A)
-
-TÍTULO DO TRABALHO: SUBTÍTULO (SE HOUVER) PRECEDIDO DE DOIS
-PONTOS
-
-O presente trabalho em nível de graduação foi avaliado e aprovado por
-banca examinadora composta pelos seguintes membros:
-
-Nome completo e por extenso do Membro 1 (de acordo com o Currículo
-Lattes)
-
-Titulação (Especialização, Mestrado, Doutorado)
-
-Nome completo e por extenso da instituição a qual possui vínculo
-
-Nome completo e por extenso do Membro 2 (de acordo com o Currículo
-Lattes)
-
-Titulação (Especialização, Mestrado, Doutorado)
-
-Nome completo e por extenso da instituição a qual possui vínculo
-
-Nome completo e por extenso do Membro 3 (de acordo com o Currículo
-Lattes)
-
-Titulação (Especialização, Mestrado, Doutorado)
-
-Nome completo e por extenso da instituição a qual possui vínculo
-
-Certificamos que esta é a versão original e final do Projeto que foi
-julgado adequado para a obtenção do título de Tecnólogo em Análise e
-Desenvolvimento de Sistemas obtido no curso de Tecnologia em Análise e
-Desenvolvimento de Sistemas do Instituto Federal do Paraná (IFPR).
-
-Nome completo e por extenso do Professor Orientador (de acordo com o
-Currículo Lattes)
-
-Professor Orientador
-
-Nome completo e por extenso do Coordenador do Curso (de acordo com o
-Currículo Lattes)
-
-Coordenação do Curso
-
-Local e Data de aprovação: Dia/mês por extenso/ano
 
 
-**AGRADECIMENTOS**
+## AGRADECIMENTOS
 
 Certamente, estas palavras não serão suficientes para expressar toda a
 minha gratidão a todas as pessoas que fizeram parte desta etapa tão
@@ -116,7 +66,8 @@ Se este trabalho pôde ser realizado com sucesso, é graças ao apoio de
 todas essas pessoas e instituições.
 
 
-RESUMO
+
+## RESUMO
 
 O mercado de salões de beleza masculino está em plena expansão, mas
 muitas barbearias ainda enfrentam dificuldades na organização de
@@ -141,7 +92,7 @@ barbearias.
 
 **Palavras-chave:** Sistema web; Controle de agendamento; Barbearia.
 
-ABSTRACT
+## ABSTRACT
 
 The men\'s beauty salon market is booming, but many barbershops still
 face difficulties in organizing their schedules due to the lack of
@@ -222,7 +173,7 @@ LISTA DE ABREVIATURAS E SIGLAS
 </tbody>
 </table>
 
-1.  **INTRODUÇÃO**
+## 1.  **INTRODUÇÃO**
 
 No Brasil, o mercado de barbearias tem se destacado pelo crescimento
 constante. De acordo com um relatório da agência Euromonitor, o consumo
@@ -246,7 +197,7 @@ facilitar a rotina tanto dos clientes quanto dos barbeiros, que
 frequentemente enfrentam a falta de organização em um cotidiano cada vez
 mais acelerado.
 
-## Problema
+## 1.1 Problema
 
 Na atualidade, a busca por praticidade e agilidade leva os clientes a
 preferirem opções que facilitem o agendamento de serviços, como nas
@@ -261,38 +212,28 @@ agenda dos barbeiros, mas também melhorar significativamente o
 relacionamento entre os profissionais e seus clientes, promovendo uma
 experiência mais prática e satisfatória para ambas as partes.
 
-## Objetivos
+## 1.2 Objetivos
 
-### Geral
+### 1.2.1 Geral
 
 O objetivo geral deste trabalho é desenvolver um sistema web de
 agendamento de horários para barbearias, com foco em oferecer maior
 controle e eficiência na organização de horários, atendendo às
 necessidades específicas dos salões de cabeleireiros masculinos.
 
-### Específicos
+### 1.2.2 Específicos
 
-- Identificar os requisitos essenciais do sistema com base nas
-  > necessidades dos barbeiros e barbearias;
+- Identificar os requisitos essenciais do sistema com base nas necessidades dos barbeiros e barbearias;
 
-- Projetar funcionalidades específicas para o sistema, como agendamento
-  > integrado ao Google Calendar, gerenciamento de serviços, cadastro de
-  > barbeiros e criação de galerias de fotos, alinhando-se às demandas
-  > do mercado;
+- Projetar funcionalidades específicas para o sistema, como agendamento integrado ao Google Calendar, gerenciamento de serviços, cadastro de barbeiros e criação de galerias de fotos, alinhando-se às demandas do mercado;
 
-- Modelar o banco de dados no Firebase, garantindo a organização,
-  > segurança e eficiência no armazenamento e recuperação de
-  > informações.
+- Modelar o banco de dados no Firebase, garantindo a organização, segurança e eficiência no armazenamento e recuperação de informações.
 
-- Implementar uma interface responsiva e intuitiva, projetada para
-  > facilitar a interação de diferentes tipos de usuários em
-  > dispositivos móveis e desktop.
+- Implementar uma interface responsiva e intuitiva, projetada para facilitar a interação de diferentes tipos de usuários em dispositivos móveis e desktop.
 
-- Realizar testes e validações em todas as etapas do desenvolvimento,
-  > assegurando a robustez, usabilidade e confiabilidade do sistema
-  > final.
+- Realizar testes e validações em todas as etapas do desenvolvimento, assegurando a robustez, usabilidade e confiabilidade do sistema final.
 
-## Justificativa
+## 1.3 Justificativa
 
 A relevância deste projeto está associada ao crescimento significativo
 do número de barbearias no mercado, muitas das quais ainda não dispõem
@@ -305,7 +246,7 @@ esses desafios. Além de otimizar a organização de horários, o sistema
 tem o potencial de melhorar o relacionamento entre barbeiros e clientes,
 contribuindo para um atendimento mais eficiente e satisfatório
 
-## Organização do Trabalho
+## 1.4 Organização do Trabalho
 
 Este trabalho está organizado em cinco capítulos, estruturados da
 seguinte forma: no capítulo 2, será apresentada a fundamentação teórica,
@@ -319,7 +260,7 @@ longo do projeto. No capítulo 5, serão sintetizados os resultados
 obtidos, os desafios enfrentados e as possíveis direções futuras para o
 aprimoramento do sistema.
 
-2.  **FUNDAMENTAÇÃO TEÓRICA**
+# 2.  **FUNDAMENTAÇÃO TEÓRICA**
 
 Neste capítulo, são apresentados os principais elementos e conceitos que
 sustentam o desenvolvimento do sistema de agendamento para barbearias. A
@@ -331,7 +272,7 @@ contextualizando-o no corpo de conhecimento existente e demonstrando
 como essas bases teóricas foram aplicadas na prática para atender às
 necessidades identificadas.
 
-**2.1 Barbearia**
+## 2.1 Barbearia
 
 Uma barbearia é um estabelecimento comercial dedicado ao tratamento e
 cuidado do cabelo e da barba, oferecendo serviços como modelagem de
@@ -357,7 +298,7 @@ desafios, propondo um sistema de agendamento online para organizar
 horários e melhorar a experiência de ambas as partes, contribuindo para
 a eficiência e a satisfação no setor.
 
-**2.2 Sistema de Agendamento**
+## 2.2 Sistema de Agendamento
 
 O sistema de agendamento é uma ferramenta crucial para a otimização de
 tempo e serviços em muitos tipos de empreendimentos, dentre eles, as
@@ -375,7 +316,7 @@ de extrema importância, visto que, a partir dele, conseguimos erradicar
 problemas comuns como o conflito no momento de encontrar horários,
 proporcionando melhores experiências cliente-barbeiro.
 
-**2.3 Sistema Web**
+## 2.3 Sistema Web
 
 Um sistema web é um software desenvolvido para ser acessado por meio de
 navegadores de internet, como o Google Chrome, exigindo apenas um
@@ -398,7 +339,7 @@ eficiente, acompanhando a tendência de crescimento do uso de
 dispositivos conectados e oferecendo uma solução adaptada às
 necessidades modernas do mercado.
 
-## Sistemas Existentes/ Trabalhos Correlatos
+## 2.4 Sistemas Existentes/ Trabalhos Correlatos
 
 Nesta subseção, são analisados sistemas já existentes no mercado,
 identificados por meio de pesquisas na internet, utilizando os seguintes
@@ -409,32 +350,25 @@ proposto..
 
 - Análise do Sistema Perukas (perukas.com.br):
 
-  - Funcionalidades: Agendamento de horários online e lembretes
-    > automáticos pelo WhatsApp.
+  - Funcionalidades: Agendamento de horários online e lembretes automáticos pelo WhatsApp.
 
-  - Pontos Fortes: Controle financeiro eficiente, ferramenta de pesquisa
-    > de satisfação e interface intuitiva.
+  - Pontos Fortes: Controle financeiro eficiente, ferramenta de pesquisa de satisfação e interface intuitiva.
 
-  - Pontos Fracos: Personalização limitada de lembretes, ausência de
-    > integração com redes sociais e custo elevado para assinatura.
+  - Pontos Fracos: Personalização limitada de lembretes, ausência de integração com redes sociais e custo elevado para assinatura.
 
 - Análise do Sistema AppBarber (https://sites.appbarber.com.br/):
 
   - Funcionalidades: Agendamento online.
 
-  - Pontos Fortes: Permite avaliação das barbearias e localiza a
-    > barbearia mais próxima.
+  - Pontos Fortes: Permite avaliação das barbearias e localiza a barbearia mais próxima.
 
-  - Pontos Fracos: Informações incompletas sobre as barbearias
-    > cadastradas, como preços e endereços, e ausência de filtros para
-    > facilitar a busca.
+  - Pontos Fracos: Informações incompletas sobre as barbearias cadastradas, como preços e endereços, e ausência de filtros para facilitar a busca.
 
 - Análise do Sistema BestBarbers (https://sites.appbarber.com.br/):
 
   - Funcionalidades: Agendamento online.
 
-  - Pontos Fortes: Oferece relatórios mensais sobre o desempenho da
-    > barbearia e possui um design atrativo.
+  - Pontos Fortes: Oferece relatórios mensais sobre o desempenho da barbearia e possui um design atrativo.
 
   - Alto custo para assinatura.
 
@@ -442,14 +376,11 @@ proposto..
 
   - Funcionalidade única: Agendamento via Google Calendar.
 
-  - Vantagem competitiva: Custo de assinatura mensal mais acessível em
-    > comparação com os concorrentes.
+  - Vantagem competitiva: Custo de assinatura mensal mais acessível em comparação com os concorrentes.
 
-  - Melhoria significativa: Integração de um sistema de feedback para
-    > avaliação da experiência do cliente, promovendo a satisfação e
-    > fidelização.
+  - Melhoria significativa: Integração de um sistema de feedback para avaliação da experiência do cliente, promovendo a satisfação e fidelização.
 
-3.  **[METODOLOGIA/ MATERIAIS E MÉTODOS]{.smallcaps}**
+## 3.  METODOLOGIA/ MATERIAIS E MÉTODOS
 
 Este capítulo apresenta a metodologia adotada para o planejamento,
 implementação e validação de um sistema de agendamento online para
@@ -459,7 +390,7 @@ disso, são destacadas as ferramentas e tecnologias empregadas, bem como
 a arquitetura do sistema, proporcionando uma visão completa e detalhada
 do processo de desenvolvimento.
 
-## Abordagem de Desenvolvimento
+## 3.1 Abordagem de Desenvolvimento
 
 Para este projeto, foi adotada a metodologia baseada na prototipação,
 uma abordagem que se destaca pela rapidez e flexibilidade no
@@ -483,48 +414,31 @@ metodologia adotada não apenas garantiu um processo de desenvolvimento
 mais dinâmico, mas também possibilitou a entrega de um sistema alinhado
 às expectativas e demandas dos usuários finais.
 
-## Ferramentas e Tecnologias
+## 3.2 Ferramentas e Tecnologias
 
 As principais ferramentas e tecnologias utilizadas no desenvolvimento do
 sistema são descritas a seguir, destacando suas características e
 funcionalidades:
 
-- Frontend: Desenvolvido utilizando HTML e SCSS para a estrutura e
-  > estilização das páginas, garantindo uma interface responsiva e
-  > visualmente atraente.
+- Frontend: Desenvolvido utilizando HTML e SCSS para a estrutura e estilização das páginas, garantindo uma interface responsiva e visualmente atraente.
 
-- Backend: Implementado em TypeScript e JavaScript, proporcionando uma
-  > base robusta e escalável para o gerenciamento da lógica do sistema.
+- Backend: Implementado em TypeScript e JavaScript, proporcionando uma base robusta e escalável para o gerenciamento da lógica do sistema.
 
-- Frameworks: Angular foi utilizado para o desenvolvimento do sistema,
-  > possibilitando uma arquitetura modular e eficiente, com componentes
-  > reutilizáveis que facilitam a manutenção e expansão.
+- Frameworks: Angular foi utilizado para o desenvolvimento do sistema, possibilitando uma arquitetura modular e eficiente, com componentes reutilizáveis que facilitam a manutenção e expansão.
 
-- Banco de Dados: Firebase foi adotado para o armazenamento dos dados,
-  > devido à sua confiabilidade e integração nativa com outros serviços
-  > do ecossistema Google.
+- Banco de Dados: Firebase foi adotado para o armazenamento dos dados, devido à sua confiabilidade e integração nativa com outros serviços do ecossistema Google.
 
-- Figma: Utilizado para a prototipação das telas, permitindo o
-  > planejamento visual e a definição da interface antes do
-  > desenvolvimento.
+- Figma: Utilizado para a prototipação das telas, permitindo o planejamento visual e a definição da interface antes do desenvolvimento.
 
-- Ambiente de Desenvolvimento: Visual Studio Code foi escolhido como a
-  > IDE principal, por oferecer extensões úteis e um ambiente otimizado
-  > para o desenvolvimento do sistema.
+- Ambiente de Desenvolvimento: Visual Studio Code foi escolhido como a IDE principal, por oferecer extensões úteis e um ambiente otimizado para o desenvolvimento do sistema.
 
-- Controle de Versão: Git e GitHub foram utilizados para versionamento e
-  > colaboração, garantindo o acompanhamento do histórico de alterações
-  > no código.
+- Controle de Versão: Git e GitHub foram utilizados para versionamento e colaboração, garantindo o acompanhamento do histórico de alterações no código.
 
-- Hospedagem: O sistema foi hospedado diretamente no Firebase Hosting,
-  > que oferece uma solução confiável, escalável e de fácil integração
-  > com o backend.
+- Hospedagem: O sistema foi hospedado diretamente no Firebase Hosting, que oferece uma solução confiável, escalável e de fácil integração com o backend.
 
-- API do Google Calendar: Disponibilizada pelo Google Cloud, a API foi
-  > integrada ao sistema para gerenciar agendamentos, garantindo
-  > sincronização e flexibilidade na organização de horários.
+- API do Google Calendar: Disponibilizada pelo Google Cloud, a API foi integrada ao sistema para gerenciar agendamentos, garantindo sincronização e flexibilidade na organização de horários.
 
-## Arquitetura do Sistema
+## 3.3 Arquitetura do Sistema
 
 A arquitetura do sistema de agendamento de barbearia, será detalhada a
 seguir na figura 1 é apresentada a arquitetura geral do sistema, sendo
@@ -535,8 +449,7 @@ divisão entre frontend e backend.
 
 **Figura 1 -- Arquitetura do sistema**
 
-![](media/image4.png){width="4.029752843394576in"
-height="3.7500021872265967in"}
+![Descrição da imagem](src/assets/write-project/arquitetura.png)
 
 **Fonte: Autoria própria (2024)**
 
@@ -546,18 +459,15 @@ O sistema é composto por três componentes principais:
 
 Cliente:
 
-- Interface Web permite que os usuários interajam com o sistema: HTML,
-  > SCSS no Angular
+- Interface Web permite que os usuários interajam com o sistema: HTML, SCSS no Angular
 
 Servidor:
 
-- Processamento de requisições, acesso ao banco de dados e lógica da
-  > aplicação: TypeScript e JavaScript no Angular
+- Processamento de requisições, acesso ao banco de dados e lógica da aplicação: TypeScript e JavaScript no Angular
 
 Banco de dados:
 
-- Armazena as informações dos prestadores de serviços e agendamentos:
-  > Firebase
+- Armazena as informações dos prestadores de serviços e agendamentos: Firebase
 
 Fluxo de Informação:
 
@@ -571,18 +481,15 @@ Fluxo de Informação:
 
 5.  Cliente apresenta os dados ao usuário
 
-6.  Usuário interage com o sistema, realizando pesquisa ou agendando
-    > horário
+6.  Usuário interage com o sistema, realizando pesquisa ou agendando horário
 
-7.  Cliente envia uma nova requisição para o servidor com as informações
-    > da interação do usuário
+7.  Cliente envia uma nova requisição para o servidor com as informações da interação do usuário
 
 8.  Servidor processa a requisição e atualiza o BD
 
 9.  Servidor retorna uma resposta ao cliente
 
-10. Cliente atualiza a interface web de acordo com a resposta do
-    > servidor
+10. Cliente atualiza a interface web de acordo com a resposta do servidor
 
 A arquitetura do sistema segue o padrão cliente-servidor, com uma
 divisão clara entre frontend e backend. No frontend, a aplicação é
@@ -594,7 +501,7 @@ utilizado para armazenar as informações dos prestadores de serviços, com
 comunicação entre o servidor TypeScript e o banco de dados através do
 driver oficial do Firebase.
 
-## Desenvolvimento do Sistema
+## 4. Desenvolvimento do Sistema
 
 Neste capítulo, será apresentado o processo de construção do sistema de
 agendamento online para barbearias, detalhando desde a concepção inicial
@@ -605,7 +512,7 @@ desenvolvimento do sistema, evidenciando as etapas tomadas para atender
 às necessidades identificadas e transformar os requisitos em uma solução
 funcional e prática.
 
-## Descrição do Projeto
+## 4.1 Descrição do Projeto
 
 O sistema de agendamento online para barbearias foi desenvolvido para
 otimizar a organização de horários e melhorar a comunicação entre
@@ -620,7 +527,7 @@ específicas do setor, melhorando a eficiência do atendimento e
 organizando os processos de forma moderna e acessível em diferentes
 dispositivos.
 
-## Análise do Sistema
+## 4.2 Análise do Sistema
 
 A análise do sistema de agendamento online para barbearias foi uma etapa
 essencial para identificar as necessidades de barbearias, barbeiros e
@@ -653,7 +560,7 @@ funcional, intuitivo e alinhado às expectativas dos usuários. Ao
 utilizar esse método, conseguimos construir um sistema robusto e
 prático, adequado às necessidades do mercado de barbearias.
 
-### Levantamento de Requisitos
+### 4.2.1 Levantamento de Requisitos
 
 O levantamento de requisitos foi realizado com base em análises das
 necessidades de barbearias, barbeiros e clientes, coletadas por meio de
@@ -665,41 +572,31 @@ desempenho.
 
 Os requisitos funcionais definidos para o sistema incluem:
 
-- Cadastro e gerenciamento de usuários, permitindo o registro de
-  > barbearias, barbeiros e clientes.
+- Cadastro e gerenciamento de usuários, permitindo o registro de barbearias, barbeiros e clientes.
 
-- Gerenciamento de agendamentos, com integração ao Google Calendar para
-  > evitar conflitos de horários.
+- Gerenciamento de agendamentos, com integração ao Google Calendar para evitar conflitos de horários.
 
-- Registro e edição de serviços e preços, incluindo a criação de combos
-  > promocionais.
+- Registro e edição de serviços e preços, incluindo a criação de combos promocionais.
 
-- Disponibilização de um painel administrativo para visualização de
-  > métricas e geração de relatórios.
+- Disponibilização de um painel administrativo para visualização de métricas e geração de relatórios.
 
 Já os requisitos não funcionais priorizados são:
 
 - Segurança, com autenticação robusta e comunicação criptografada.
 
-- Usabilidade, garantindo uma interface intuitiva e responsiva em
-  > diferentes dispositivos.
+- Usabilidade, garantindo uma interface intuitiva e responsiva em diferentes dispositivos.
 
-- Desempenho, assegurando o suporte a múltiplos usuários simultâneos sem
-  > comprometer a eficiência.
+- Desempenho, assegurando o suporte a múltiplos usuários simultâneos sem comprometer a eficiência.
 
-- Disponibilidade, garantindo operação contínua do sistema, com tempo de
-  > inatividade mínimo.
+- Disponibilidade, garantindo operação contínua do sistema, com tempo de inatividade mínimo.
 
-### Modelagem de Casos de Uso
+### 4.2.2 Modelagem de Casos de Uso
 
-![](media/image2.png){width="4.332292213473316in"
-height="3.1149529746281717in"}
+![Descrição da imagem](src/assets/write-project/barbearia.png)
 
-![](media/image6.png){width="2.7697922134733157in"
-height="4.0635761154855645in"}
+![Descrição da imagem](src/assets/write-project/barbeiro.png)
 
-![](media/image1.png){width="3.978125546806649in"
-height="3.5959897200349955in"}
+![Descrição da imagem](src/assets/write-project/user.png)
 
 Os diagramas apresentados ilustram as interações principais entre os
 atores do sistema de agendamento para barbearias e os casos de uso
@@ -715,7 +612,7 @@ modelados para garantir que o sistema atenda às necessidades de cada
 tipo de usuário de maneira clara e eficiente, promovendo usabilidade e
 alinhamento com os objetivos do projeto.
 
-## Modelagem do Banco de Dados
+### 4.2.3 Modelagem do Banco de Dados
 
 A modelagem do banco de dados para o sistema de agendamento online para
 barbearias foi projetada para atender às necessidades do projeto, com
@@ -729,7 +626,7 @@ Barbearia, Barbeiro, Cliente, Serviço e Agendamento. Cada entidade
 possui atributos específicos que permitem armazenar dados essenciais e
 manter a relação lógica entre os diferentes elementos do sistema.
 
-### **Design de Interface**  {#design-de-interface}
+### 4.2.4 Design de Interface**
 
 O design de interface do sistema de agendamento online para barbearias
 foi desenvolvido com foco na usabilidade, acessibilidade e
@@ -739,19 +636,15 @@ atendendo às necessidades de diferentes perfis de usuários, como
 barbeiros, clientes e administradores, com um visual moderno e elementos
 gráficos que reforçam a identidade profissional das barbearias.
 
-![](media/image7.png){width="5.240625546806649in"
-height="2.9083103674540682in"}
+![Descrição da imagem](src/assets/write-project/img1.png)
 
-![](media/image5.png){width="3.626042213473316in"
-height="5.637661854768154in"}
+![Descrição da imagem](src/assets/write-project/img2.png)
 
-![](media/image8.png){width="4.709375546806649in"
-height="7.327233158355206in"}
+![Descrição da imagem](src/assets/write-project/img3.png)
 
-![](media/image9.png){width="4.4385422134733155in"
-height="5.235755686789151in"}
+![Descrição da imagem](src/assets/write-project/img4.png)
 
-## Implementação das Funcionalidades
+![Descrição da imagem](src/assets/write-project/img5.png)
 
 O sistema de agendamento online para barbearias foi implementado
 utilizando Angular para gerenciar tanto o frontend quanto a lógica de
@@ -770,7 +663,7 @@ seus trabalhos de forma dinâmica. O painel administrativo foi projetado
 para facilitar o gerenciamento, oferecendo uma interface intuitiva e
 responsiva.
 
-## Testes e Validação
+## 4.4 Testes e Validação
 
 Os testes e validações realizados buscaram assegurar a qualidade,
 funcionalidade e robustez do sistema desenvolvido. Foram conduzidos
@@ -780,7 +673,7 @@ biblioteca Charts. Também foram realizados testes de integração,
 garantindo que módulos como a API do Google Calendar e o banco de dados
 Firebase interagissem de forma consistente e confiável.
 
-4.  **[R]{.smallcaps}esultados**
+## 5. Resultados
 
 Neste capítulo, são apresentados os principais resultados obtidos
 durante o processo de desenvolvimento do sistema, com destaque para a
@@ -796,7 +689,7 @@ processos operacionais e na melhoria da experiência dos usuários, além
 de proporcionar uma visão clara do produto final e de suas aplicações
 práticas no setor de barbearias.
 
-## Apresentação do Sistema
+## 5.1 Apresentação do Sistema
 
 O sistema de agendamento online para barbearias foi desenvolvido com o
 objetivo de atender às principais demandas do setor, como organização de
@@ -807,24 +700,15 @@ oferecendo uma experiência fluida e eficiente para todos os usuários.
 
 As funcionalidades incluem:
 
-- Gerenciamento de Usuários: Cadastro de barbearias, barbeiros e
-  > clientes com informações detalhadas, promovendo um controle
-  > organizado.
+- Gerenciamento de Usuários: Cadastro de barbearias, barbeiros e clientes com informações detalhadas, promovendo um controle organizado.
 
-- Agendamento Integrado: Clientes podem agendar horários com barbeiros
-  > específicos, visualizando os serviços disponíveis. A integração com
-  > o Google Calendar evita conflitos e atualiza compromissos em tempo
-  > real.
+- Agendamento Integrado: Clientes podem agendar horários com barbeiros específicos, visualizando os serviços disponíveis. A integração com o Google Calendar evita conflitos e atualiza compromissos em tempo real.
 
-- Painel Administrativo: Oferece métricas como número de serviços
-  > realizados, receitas e gráficos interativos para auxiliar na tomada
-  > de decisões.
+- Painel Administrativo: Oferece métricas como número de serviços realizados, receitas e gráficos interativos para auxiliar na tomada de decisões.
 
-- Galeria de Fotos: Barbeiros podem postar imagens de seus trabalhos,
-  > promovendo seus serviços e atraindo novos clientes.
+- Galeria de Fotos: Barbeiros podem postar imagens de seus trabalhos, promovendo seus serviços e atraindo novos clientes.
 
-- Sistema de Avaliação: Clientes avaliam os serviços realizados,
-  > promovendo melhorias contínuas.
+- Sistema de Avaliação: Clientes avaliam os serviços realizados, promovendo melhorias contínuas.
 
 Os resultados obtidos confirmam que o sistema atende aos requisitos
 levantados durante a análise inicial, sendo uma solução robusta e
@@ -832,7 +716,7 @@ prática para os desafios enfrentados pelas barbearias. Ele demonstra uma
 integração harmoniosa de tecnologias modernas como Angular e Firebase,
 alinhada às expectativas do mercado.
 
-## GitHub do projeto
+## 5.2 GitHub do projeto
 
 O código-fonte do sistema de agendamento online para barbearias está
 hospedado em um repositório público no GitHub, proporcionando acesso
@@ -849,7 +733,7 @@ e compreensão do código.
 
 O projeto pode ser acessado no seguinte endereço: https://github.com/GuilhermeBerssanette/SistemaAgendamentoBarbearia
 
-## Conclusão
+## 6. Conclusão
 
 Este trabalho apresentou o desenvolvimento de um sistema de agendamento
 online para barbearias, concebido para atender às demandas específicas
@@ -875,7 +759,7 @@ relacionamento entre profissionais e clientes. O impacto positivo do
 projeto reforça sua relevância e viabilidade, consolidando-se como uma
 ferramenta inovadora e valiosa para o mercado.
 
-## Dificuldade e Limitações
+## 6.1 Dificuldade e Limitações
 
 Durante o processo de criação do sistema de agendamento online para
 barbearias, foram encontradas algumas dificuldades e limitações. Um dos
@@ -895,7 +779,7 @@ múltiplos idiomas, que poderiam agregar mais valor ao sistema. Essas
 dificuldades destacam áreas que podem ser aprimoradas em futuras versões
 do projeto.
 
-## Trabalhos Futuros
+## 6.2 Trabalhos Futuros
 
 O sistema de agendamento online para barbearias oferece diversas
 possibilidades de expansão e aprimoramento em versões futuras. A
@@ -926,7 +810,7 @@ assegurando a estabilidade mesmo em cenários de alta demanda. Essas
 melhorias alinham-se às tendências do mercado e reforçam o potencial do
 sistema como uma ferramenta indispensável para o setor de barbearias.
 
-**[Referências]{.smallcaps}**
+## Referências
 
 FILHO, João Carlos e RODRIGUES, Luis Fellype. Mercado de barbearias
 atrai mais jovens profissionais na capital federal. Brasilia: Correio
