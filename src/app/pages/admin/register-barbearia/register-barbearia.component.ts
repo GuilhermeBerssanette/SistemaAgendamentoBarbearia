@@ -276,9 +276,11 @@ export class RegisterBarbeariaComponent implements OnInit {
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
+
     if (!this.selectedFile) {
       return;
     }
+
     const userId = this.auth.currentUser?.uid;
     if (!userId) {
       return;
@@ -315,40 +317,32 @@ export class RegisterBarbeariaComponent implements OnInit {
       ownerId: userId
     };
 
-    const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
+    const filePath = `profile/${Date.now()}_${this.selectedFile.name}`;
     const fileRef = ref(this.storage, filePath);
-    const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
+    const uploadTask = uploadBytesResumable(fileRef, this.selectedFile, {
+      customMetadata: {
+        owner: userId,
+      },
+    });
 
     uploadTask.on('state_changed',
-      () => {
-      },
+      () => {},
+      () => {},
       async () => {
         try {
           barbeariaData.profileImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+
           const barbeariaRef = await this.barbeariasService.addBarbearia(barbeariaData);
+
           const userDocRef = doc(this.barbeariasService.firestore, 'users', userId);
-          await setDoc(userDocRef, {userType: 'admin'}, {merge: true});
+          await setDoc(userDocRef, { userType: 'admin' }, { merge: true });
+
           await this.router.navigate(['/barbearia', barbeariaRef.id, 'admin']);
         } catch (error) {
-          return;
+          console.error('Erro ao salvar dados da barbearia:', error);
         }
       }
     );
   }
 
-  isFormValidForSelectedTipoPessoa(): boolean {
-    if (this.isPJ) {
-      const cnpjValid = this.form.get('cnpj')?.valid ?? false;
-      const inscricaoEstadualValid = this.form.get('inscricaoEstadual')?.valid ?? false;
-      return cnpjValid && inscricaoEstadualValid;
-    }
-
-    if (this.isPF) {
-      const cpfValid = this.form.get('cpf')?.valid ?? false;
-      const rgValid = this.form.get('rg')?.valid ?? false;
-      return cpfValid && rgValid;
-    }
-
-    return false;
-  }
 }
