@@ -42,11 +42,11 @@
             </div>
             <div *ngIf="isPJ">
               <div class="row mb-2">
-                <div class="col-lg-7 col-md-12 mb-2">
+                <div class="col-lg-6 col-md-12 mb-2">
                   <input type="text" class="form-control" placeholder="CNPJ" formControlName="cnpj" mask="00.000.000/0000-00">
                 </div>
-                <div class="col-lg-5 col-md-5">
-                  <input type="text" class="form-control inputSyle form-control-lg" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
+                <div class="col-lg-6 col-md-12">
+                  <input type="text" class="form-control" placeholder="Inscrição Estadual" formControlName="inscricaoEstadual">
                     <div *ngIf="form.get('inscricaoEstadual')?.invalid && (form.get('inscricaoEstadual')?.dirty || form.get('inscricaoEstadual')?.touched)">
                       <small *ngIf="form.get('inscricaoEstadual')?.errors?.['required']" class="text-danger">Inscrição Estadual é obrigatória.</small>
                     </div>
@@ -199,7 +199,7 @@
                 <button
                   class="btn w-100 btnCadastro"
                   type="submit"
-                  [disabled]="!form.valid || !isFormValidForSelectedTipoPessoa()">Cadastrar</button>
+                  [disabled]="!form.valid">Cadastrar</button>
               </div>
             </div>
           </div>
