@@ -55,25 +55,31 @@ export class ModalRegisterImageComponent implements OnInit {
 
       const metadata = {
         customMetadata: {
-          comment: this.form.value.comment
-        }
+          owner: this.data.barberId, // Adiciona o owner
+          comment: this.form.value.comment, // Inclui o comentário como metadado
+        },
       };
 
       const uploadTask = uploadBytesResumable(fileRef, this.selectedFile, metadata);
 
-      uploadTask.on('state_changed',
+      uploadTask.on(
+        'state_changed',
         (snapshot) => {
           this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
         (error) => {
-          console.error(error);
+          console.error('Erro ao fazer upload:', error);
+          alert('Erro ao fazer upload da imagem.');
         },
-        () => {
-          this.dialogRef.close(false);
+        async () => {
+          alert('Imagem cadastrada com sucesso!');
+          this.dialogRef.close(true);
         }
       );
     }
   }
+
+
 
   onCancel() {
     this.dialogRef.close(false);
