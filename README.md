@@ -1,3 +1,262 @@
+## Sistema de Agendamento para Barbearias
+
+### Introdução
+
+O Sistema de Agendamento para Barbearias é uma plataforma intuitiva e moderna, desenvolvida para facilitar a gestão de barbearias e a experiência dos clientes. Com funcionalidades robustas, o sistema permite que barbearias organizem seus serviços, gerenciem horários, e interajam diretamente com seus clientes de forma prática e eficiente.
+
+O sistema foi desenvolvido utilizando Angular 17, Firebase (Firestore, Storage, Authentication), e integrações com APIs como o Google Calendar para garantir uma experiência completa e automatizada.
+
+### Tecnologias Utilizadas 
+
+- Angular 17: Para desenvolvimento.
+- Firebase: Firestore, Storage, Authentication.
+- Google Calendar API: Para integração com agendamentos.
+- SCSS e Bootstrap: Para estilização responsiva e moderna.
+- Node.js: Para funções serverless com Firebase Functions.
+
+
+### Apresentação do sistema
+
+![Descrição da imagem](src/assets/doc/img-login.png)
+---
+![Descrição da imagem](src/assets/doc/img-initialPage.png)
+![Descrição da imagem](src/assets/doc/img-filtro.png)
+#### Página Inicial  
+A página inicial do sistema exibe todas as barbearias cadastradas. Essa interface permite que usuários localizem e visualizem as barbearias de forma prática. Na parte superior direita, há um link chamado "Cadastrar barbearia", que permite o registro de um novo estabelecimento no sistema.
+
+Funcionalidades Disponíveis na Página Inicial: 
+- Busca por barbearia ou cidade: Utilize a barra de pesquisa para encontrar barbearias por nome ou localidade.
+- Filtros e Limpar Filtros: Aplique filtros para refinar a busca ou limpe os filtros para ver todas as barbearias.
+- Visualização das Barbearias: Cada card exibe informações como o nome da barbearia e seu endereço.
+- Cadastrar Barbearia: Clique no link no canto superior direito para iniciar o cadastro de sua barbearia.
+Como Cadastrar Sua Barbearia
+- Clique no link "Cadastrar barbearia". 
+
+--- 
+
+![Descrição da imagem](src/assets/doc/img-registerBarbearia.png)
+#### Página de Cadastro de Barbearia  
+Esta é a página de cadastro da barbearia no sistema Agendamento Online. Aqui você poderá registrar sua barbearia para que ela seja exibida na página inicial e possa ser gerenciada.
+
+Interface da Página  
+- A página de cadastro é dividida em seções intuitivas para facilitar o preenchimento.
+
+
+Campos Disponíveis
+- Os campos estão agrupados de acordo com a natureza das informações a serem fornecidas:
+
+Informações Gerais
+
+- Nome Fantasia: Nome comercial da barbearia.
+- Razão Social: Nome registrado oficialmente.
+- Responsável: Nome do responsável pela barbearia.
+- Seleção de Tipo
+
+Pessoa Jurídica ou Pessoa Física: Indique o tipo de cadastro.
+- UF e Cidade: Localização da barbearia.
+- Rua e Número: Endereço completo.  
+
+Contato
+- Email: Endereço de email para contato.
+- Celular: Número de celular.
+- Telefone: Número de telefone fixo.
+- WhatsApp: Número com suporte para comunicação no WhatsApp.
+
+Redes Sociais
+- Instagram
+- Facebook
+- TikTok
+- Twitter
+
+Como Preencher
+- Preencha todos os campos obrigatórios (indicados pelo sistema).
+- Escolha o tipo de cadastro (Pessoa Física ou Jurídica).
+- Insira informações completas e precisas.
+- Clique no botão Cadastrar ao final do formulário.  
+
+Importante
+- Certifique-se de inserir um número válido no campo WhatsApp, pois ele é obrigatório para comunicação com os clientes.
+- As informações de redes sociais são opcionais, mas recomendadas para promover sua barbearia.
+- Após o cadastro, sua barbearia será listada na página inicial e estará pronta para ser gerenciada no sistema.
+
+--- 
+![Descrição da imagem](src/assets/doc/img-admin.png)
+#### Página Admin da Barbearia
+Esta é a página administrativa da barbearia no sistema Agendamento Online. Nela, você poderá visualizar as principais informações da sua barbearia, gerenciar barbeiros, editar o perfil e acompanhar métricas de desempenho.
+
+Interface da Página  
+A página é organizada em três seções principais, acessíveis por botões na parte superior:
+- Dashboard (página inicial da administração)
+- Gerenciar Barbeiros
+- Editar Perfil
+
+Seção: Dashboard  
+O Dashboard oferece um panorama geral do desempenho da barbearia com os seguintes indicadores:
+- Renda Gerada: Valor total obtido pela barbearia.
+- Agendamentos Realizados: Número total de serviços realizados.
+- Gráfico de Renda e Serviços por Barbeiro: Comparativo entre os ganhos e os serviços concluídos por cada barbeiro.
+
+Seção: Gerenciar Barbeiros  
+Nesta seção, você poderá:
+- Adicionar novos barbeiros à barbearia.
+- Visualizar a lista de barbeiros cadastrados.
+- Editar ou excluir barbeiros conforme necessário.
+
+Seção: Editar Perfil  
+A seção de Editar Perfil permite atualizar as informações da barbearia, incluindo:
+- Dados de contato (telefone, email, WhatsApp).
+- Endereço (cidade, estado, rua, número).
+- Redes sociais (Instagram, Facebook, TikTok, Twitter).
+- Imagem de perfil da barbearia.
+
+--- 
+
+![Descrição da imagem](src/assets/doc/img-googleBarbeiro.png)
+#### Tela de Login com Google
+Na primeira vez que o barbeiro acessar o sistema Agendamento Online, será apresentada uma tela de autorização do Google, conforme mostrado na imagem abaixo:    
+
+Por que essa autorização é necessária? 
+O sistema solicita permissão para acessar o Google Agenda do barbeiro. Isso é essencial para:
+- Gerenciar agendamentos: O sistema pode criar, editar ou excluir compromissos diretamente na agenda do barbeiro, garantindo organização e eficiência no gerenciamento dos horários.  
+
+Após conceder a permissão, o barbeiro será direcionado à tela principal do barbeiro, onde poderá visualizar e gerenciar seus serviços, horários e informações pessoais. Essa tela será apresentada a seguir.
+
+--- 
+![Descrição da imagem](src/assets/doc/img-barbeiroAdm.png)
+
+#### Tela de Administração do Barbeiro
+Após o login e a autorização inicial do Google, o barbeiro será direcionado para a tela de administração, conforme mostrado abaixo:  
+
+Funcionalidades disponíveis:
+
+Dashboard  
+Visualize métricas importantes, como:
+- Renda gerada.
+- Quantidade de agendamentos realizados.
+- Acompanhe gráficos de serviços realizados e receita por barbeiro.  
+
+Galeria de Fotos  
+Permite ao barbeiro gerenciar fotos de cortes ou serviços realizados, possibilidade de adicionar imagens com comentários personalizados.  
+- Objetivo: Auxiliar o barbeiro a exibir seu portfólio de trabalho diretamente no sistema, além de ampliar sua presença digital, complementando plataformas como Instagram.  
+
+
+Gerenciar Serviços  
+Configure os serviços oferecidos, como:
+- Nome do serviço (ex.: corte de cabelo, barba).
+- Preços e durações.
+- Editar Perfil
+
+Atualize informações pessoais ou de contato, como:
+- Nome.
+- Redes sociais.
+- Telefone e WhatsApp.
+- Propósito da Tela
+- 
+Essa interface foi projetada para oferecer controle total ao barbeiro sobre seus serviços, agendamentos e informações de exibição, integrando dados diretamente com o Google Agenda para máxima eficiência no gerenciamento de horários. Além disso, a galeria de fotos permite que o barbeiro mostre sua experiência e qualidade, impactando diretamente na atração de novos clientes.
+
+--- 
+
+![Descrição da imagem](src/assets/doc/img-galeria.png)
+![Descrição da imagem](src/assets/doc/img-servicooCadastrado.png)
+![Descrição da imagem](src/assets/doc/img-horarios.png)
+
+---
+
+![Descrição da imagem](src/assets/doc/img-barbearia.png)
+#### Tela da Barbearia
+Na tela da barbearia, você encontrará as principais informações sobre o estabelecimento selecionado. Essa página é projetada para oferecer uma experiência fácil e informativa para os usuários que desejam conhecer mais sobre a barbearia e seus serviços.  
+
+Principais funcionalidades:
+
+Informações da Barbearia:
+- No topo da tela, o nome da barbearia é exibido junto ao logotipo.
+- A localização e outras informações essenciais podem ser acessadas rapidamente.
+
+Favoritar Barbearia:
+- Há um ícone de coração próximo ao nome da barbearia. O usuário pode clicar nele para favoritar o estabelecimento, facilitando o acesso no futuro.
+
+Redes Sociais e Contatos:
+- Os ícones no canto superior direito permitem que o usuário acesse as redes sociais da barbearia, como Instagram, TikTok e WhatsApp, ou encontre a localização diretamente pelo Google Maps. Isso torna o contato mais dinâmico e direto.
+
+Barbeiros Disponíveis:
+- Todos os barbeiros cadastrados na barbearia serão listados nesta tela. Ao lado do nome de cada barbeiro, há um ícone de interrogação (?). Clicando nele, o usuário pode visualizar informações detalhadas sobre aquele profissional, como experiência e especialidades.
+
+
+Essa tela foi pensada para oferecer ao cliente todas as ferramentas necessárias para uma interação completa e eficiente com a barbearia.
+
+___ 
+
+![Descrição da imagem](src/assets/doc/img-barbeiro.png)
+#### Tela do Barbeiro
+A tela do barbeiro é projetada para destacar o profissional e os serviços que ele oferece, permitindo ao cliente conhecer melhor o trabalho do barbeiro e se conectar diretamente com ele.
+
+Funcionalidades principais:
+Perfil do Barbeiro:  
+- Exibe a foto do barbeiro em destaque, junto com o nome logo abaixo, proporcionando uma identidade visual clara.  
+
+
+Tela Inicial:   
+Apresenta uma lista organizada dos serviços que o barbeiro oferece.  
+Para cada serviço, são exibidos:
+- Nome do serviço.
+- Valor cobrado.
+- Duração estimada.
+
+Fotos: Direciona para a galeria de fotos do barbeiro , onde o cliente pode visualizar imagens de trabalhos realizados.
+
+Essa tela oferece uma experiência completa e personalizada para os clientes, permitindo conhecer o barbeiro, seus serviços e entrar em contato de maneira prática.
+
+--- 
+
+![Descrição da imagem](src/assets/doc/img-calendario.png)
+![Descrição da imagem](src/assets/doc/img-confirm.png)
+
+#### Agendamento de Serviço
+Após escolher o serviço desejado, o usuário será redirecionado para a página de Agendar Serviço. Nesta tela, o sistema exibirá um calendário com todos os horários disponíveis para o dia selecionado. O usuário pode:
+- Selecionar uma data usando o campo fornecido na parte superior.
+- Escolher um dos horários disponíveis, que são exibidos em formato de botões para facilitar a navegação.
+- Confirmação do Agendamento  
+
+
+Depois de selecionar o horário, será aberta uma janela de Confirmação com as seguintes informações:
+- Data: Data escolhida para o agendamento.
+- Horário: Horário selecionado.
+- Serviço: Nome do serviço escolhido (ex.: Barba, Cabelo).
+- Barbeiro: Nome do barbeiro que realizará o serviço.
+- Preço: Valor do serviço.  
+
+O usuário precisará inserir o seu nome no campo disponível para finalizar o agendamento. Após preencher o nome, basta clicar em Confirmar.
+
+--- 
+![Descrição da imagem](src/assets/doc/img-confirmation.png)
+![Descrição da imagem](src/assets/doc/img-googleAgendas.png)
+#### Agendamento Confirmado no Google Agenda
+Após o cliente clicar no botão "Confirmar" na tela de confirmação do agendamento, o sistema solicitará a autorização para acessar o Google Agenda. Esta permissão é necessária para criar e gerenciar eventos na conta do Google do cliente.
+
+Na primeira imagem acima, é exibida a tela de consentimento do Google, onde o cliente poderá conceder acesso ao BarberHub para visualizar e adicionar eventos em sua agenda. Esta etapa é essencial para garantir que o sistema possa realizar a integração de agendamentos diretamente no Google Agenda.
+
+Assim que a permissão é concedida, o sistema cria automaticamente um evento tanto na agenda do cliente quanto na agenda do barbeiro. A segunda imagem mostra o evento adicionado no Google Agenda, contendo as seguintes informações:
+
+- Título do Evento: Agendamento: Barbearia
+- Data e Horário: Data e horário escolhidos pelo cliente.
+- Serviço: Serviço agendado (exemplo: Barba).
+- Barbeiro: Nome do barbeiro responsável pelo serviço.
+- Link de Localização: Endereço da barbearia integrado ao Google Maps.
+- Notificação Prévia: Alerta configurado para 30 minutos antes do agendamento.
+
+Essa funcionalidade é uma maneira prática e eficiente de organizar os compromissos, tanto para os clientes quanto para os barbeiros, utilizando o Google Agenda para garantir que nenhum horário seja esquecido.
+
+---
+
+A seguir, apresentamos a parte escrita do Trabalho de Conclusão de Curso (TCC).
+
+---
+
+
+
+
+
+
 INSTITUTO FEDERAL DO PARANÁ
 
 GUILHERME OTAVIO ESPIRITO SANTO BERSSANETTE

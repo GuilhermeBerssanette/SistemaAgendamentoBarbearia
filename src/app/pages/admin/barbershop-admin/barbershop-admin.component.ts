@@ -8,13 +8,13 @@ import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ModalRegisterBarbeiroComponent } from "./modals/modal-register-barbeiro/modal-register-barbeiro.component";
 import { HeaderComponent } from '../../../components/header/header.component';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { Firestore, doc, getDoc, updateDoc, collection, getDocs, addDoc, deleteDoc } from "@angular/fire/firestore";
+import { Firestore, doc, updateDoc, collection, getDocs, addDoc, deleteDoc } from "@angular/fire/firestore";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { HeaderAdminComponent } from "../../../components/header-admin/header-admin.component";
 import { Timestamp } from 'firebase/firestore';
 import { MatIcon } from '@angular/material/icon';
-import {DashboardComponent} from "../../../components/dashboard/dashboard.component";
+import { DashboardComponent } from "../../../components/dashboard/dashboard.component";
 
 @Component({
   selector: 'app-barbershop-admin',
@@ -43,7 +43,6 @@ export class BarbershopAdminComponent implements OnInit {
   route = inject(ActivatedRoute);
   firestore = inject(Firestore);
 
-
   barbeariaId!: string;
   profileForm!: FormGroup;
   selectedFile: File | null = null;
@@ -54,24 +53,12 @@ export class BarbershopAdminComponent implements OnInit {
   click: any;
   imagePreview: string | ArrayBuffer | null = null;
 
-  onFileSelected(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-
-      reader.readAsDataURL(file);
-    }
-  }
-
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.barbeariaId = this.route.snapshot.paramMap.get('id')!;
+    this.initForm();
+    this.loadBarbeiros();
   }
 
   initForm() {
@@ -95,6 +82,16 @@ export class BarbershopAdminComponent implements OnInit {
     });
   }
 
+  async loadBarbeiros(): Promise<void> {
+    try {
+      const barbersCollectionRef = collection(this.firestore, `barbearia/${this.barbeariaId}/barbers`);
+      const querySnapshot = await getDocs(barbersCollectionRef);
+      this.barbeiros = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      alert('Não foi possível carregar os barbeiros.');
+    }
+  }
+
   confirmDeleteBarbeiro(barbeiro: any) {
     const confirmed = confirm(`Tem certeza que deseja excluir o barbeiro ${barbeiro.nome}?`);
     if (confirmed) {
@@ -115,7 +112,7 @@ export class BarbershopAdminComponent implements OnInit {
       this.barbeiros = this.barbeiros.filter(b => b.id !== barbeiro.id);
       alert('Barbeiro excluído com sucesso!');
     } catch (error) {
-     return;
+      alert('Não foi possível excluir o barbeiro.');
     }
   }
 
@@ -151,7 +148,7 @@ export class BarbershopAdminComponent implements OnInit {
       await updateDoc(barbeariaDocRef, data);
       alert('Perfil atualizado com sucesso!');
     } catch (error) {
-      return;
+      alert('Não foi possível atualizar o perfil.');
     }
   }
 
@@ -188,10 +185,28 @@ export class BarbershopAdminComponent implements OnInit {
   }
 
   openModalRegisterBarber() {
-    this.dialog.open(ModalRegisterBarbeiroComponent, {
+    const dialogRef = this.dialog.open(ModalRegisterBarbeiroComponent, {
       data: { barbeariaId: this.barbeariaId },
       width: '400px',
       height: '700px',
     });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadBarbeiros();
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
   }
 }

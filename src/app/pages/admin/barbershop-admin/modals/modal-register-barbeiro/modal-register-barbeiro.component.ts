@@ -72,8 +72,7 @@ export class ModalRegisterBarbeiroComponent {
       return;
     }
 
-    const email = this.form.value.email;
-    const password = this.form.value.password;
+    const { email, password } = this.form.value;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
@@ -81,14 +80,24 @@ export class ModalRegisterBarbeiroComponent {
 
       const filePath = `profile/${Date.now()}_${this.selectedFile!.name}`;
       const fileRef = ref(this.storage, filePath);
-      const uploadTask = uploadBytesResumable(fileRef, this.selectedFile);
+      const uploadTask = uploadBytesResumable(fileRef, this.selectedFile, {
+        customMetadata: {
+          owner: barberId
+        }
+      });
 
-      uploadTask.on('state_changed',
+      uploadTask.on(
+        'state_changed',
         () => { },
+        () => {
+          alert('Erro ao fazer upload da imagem.');
+          return;
+        },
         async () => {
           this.downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
           const barberData: Barbeiros = {
+            password: "",
             id: barberId,
             nome: this.form.value.nome,
             rg: this.form.value.rg,
@@ -96,7 +105,6 @@ export class ModalRegisterBarbeiroComponent {
             telefone: this.form.value.telefone,
             whats: this.form.value.whats,
             email: this.form.value.email,
-            password: this.form.value.password,
             instagram: this.form.value.instagram || '',
             facebook: this.form.value.facebook || '',
             tiktok: this.form.value.tiktok || '',
@@ -106,18 +114,14 @@ export class ModalRegisterBarbeiroComponent {
             atendeDomicilio: this.form.value.atendeDomicilio,
             experienciaCrespo: this.form.value.experienciaCrespo,
             servicoEventos: this.form.value.servicoEventos,
-            profileImageUrl: this.downloadURL,
+            profileImageUrl: this.downloadURL
           };
 
           const barbersCollectionRef = collection(this.firestore, `barbearia/${this.data.barbeariaId}/barbers`);
-          const newBarberDocRef = doc(barbersCollectionRef, barberId);
-          await setDoc(newBarberDocRef, barberData);
+          await setDoc(doc(barbersCollectionRef, barberId), barberData);
 
           const userDocRef = doc(this.firestore, 'users', barberId);
-          await setDoc(userDocRef, {
-            email: this.form.value.email,
-            userType: 'barber',
-          });
+          await setDoc(userDocRef, { email: this.form.value.email, userType: 'barber' });
 
           const barbeariaRef = doc(this.firestore, `barbearia/${this.data.barbeariaId}`);
           const updatedBarbeariaData = {
@@ -127,15 +131,18 @@ export class ModalRegisterBarbeiroComponent {
             ...(barberData.experienciaCrespo ? { experienciaCrespo: true } : {}),
             ...(barberData.servicoEventos ? { servicoEventos: true } : {}),
           };
-
           await setDoc(barbeariaRef, updatedBarbeariaData, { merge: true });
 
-          alert('Barbeiro registrado com sucesso e conta de acesso criada!');
+          alert('Barbeiro registrado com sucesso!');
           this.dialogRef.close();
         }
       );
     } catch (error: any) {
-      return;
+      if (error.code === 'auth/email-already-in-use') {
+        alert('O email já está em uso. Por favor, escolha outro email.');
+      } else {
+        alert('Ocorreu um erro ao registrar o barbeiro.');
+      }
     }
   }
 
