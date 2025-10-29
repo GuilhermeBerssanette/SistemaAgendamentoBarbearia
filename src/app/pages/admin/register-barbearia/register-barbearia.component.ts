@@ -8,7 +8,7 @@ import {
   ValidatorFn,
   Validators
 } from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {BarbeariasService} from "../../../services/barbearias.service";
 import {Router} from "@angular/router";
 import {Barbearias} from "../../../interfaces/barbearias";
